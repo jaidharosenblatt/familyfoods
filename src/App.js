@@ -5,8 +5,10 @@ import RandomChooser from "./pages/RandomChooser";
 import AddRestaurant from "./pages/AddRestaurant";
 import Restaurants from "./pages/Restaurants";
 import NavBar from "./components/navbar/NavBar";
+import useRandomRestaurants from "./hooks/useRandomRestaurants";
 
 const App = () => {
+  useRandomRestaurants();
   return (
     <div className="App">
       <BrowserRouter>

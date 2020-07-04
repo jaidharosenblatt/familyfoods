@@ -24,7 +24,6 @@ const COLORS_MAP = {
 };
 
 const Tags = ({ tags = [] }) => {
-  console.log(tags);
   return (
     <>
       {tags.map((tag) => {

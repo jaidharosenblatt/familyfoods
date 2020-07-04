@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Menu, Row, Col, Space } from "antd";
+import { Menu, Row, Space } from "antd";
 import { Logo } from "../../static/Images";
 import "./navbar.css";
 

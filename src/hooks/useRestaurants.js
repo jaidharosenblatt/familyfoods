@@ -11,7 +11,6 @@ const useRestaurants = () => {
     async function getRestaurants() {
       const res = await API.getRestaurants();
       const data = res.records.map((element) => element.fields);
-      console.log(data);
       setRestaurants(data);
     }
     getRestaurants();
