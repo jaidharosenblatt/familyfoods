@@ -5,10 +5,10 @@ import RandomChooser from "./pages/RandomChooser";
 import AddRestaurant from "./pages/AddRestaurant";
 import Restaurants from "./pages/Restaurants";
 import NavBar from "./components/navbar/NavBar";
-import useRandomRestaurants from "./hooks/useRandomRestaurants";
+import useWeightedRestaurants from "./hooks/useWeightedRestaurants";
 
 const App = () => {
-  useRandomRestaurants();
+  useWeightedRestaurants();
   return (
     <div className="App">
       <BrowserRouter>
