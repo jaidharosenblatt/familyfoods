@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import RandomChooser from "./pages/RandomChooser";
 import AddRestaurant from "./pages/AddRestaurant";
 import Restaurants from "./pages/Restaurants";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/navbar/NavBar";
 
 const App = () => {
   return (

@@ -1,13 +1,26 @@
 @import "~antd/dist/antd.css";
 
 .navbar {
+  margin: 5px 0px;
+  height: 68px;
+  background-color: white;
+  z-index: 2;
   overflow: hidden;
-  background-color: #333;
   position: fixed; /* Set the navbar to fixed position */
   top: 0; /* Position the navbar at the top of the page */
-  width: 100%; /* Full width */
+  width: 100vw; /* Full width */
 }
 
 .navbar-container {
-  padding: 68px 20px;
+  padding: 100px 20px;
+}
+
+h1 {
+  margin-bottom: 0;
+  color: #595959;
+  font-size: 20px;
+}
+
+.ant-card-bordered {
+  margin: 20px 0px;
 }
