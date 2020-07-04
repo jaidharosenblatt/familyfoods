@@ -1,19 +1,10 @@
 import React from "react";
-import API from "../api/API";
 import { Col } from "antd";
 import RestaurantCard from "../components/restaurantcard/RestaurantCard";
+import useRestaurants from "../functions/useRestaurants";
 
 const Restaurants = () => {
-  const [restaurants, setRestaurants] = React.useState([]);
-  React.useEffect(() => {
-    async function getRestaurants() {
-      const res = await API.getRestaurants();
-      const data = res.records.map((element) => element.fields);
-      console.log(data);
-      setRestaurants(data);
-    }
-    getRestaurants();
-  }, []);
+  const [restaurants] = useRestaurants();
   return (
     <Col>
       {restaurants.map((restaurant) => {
