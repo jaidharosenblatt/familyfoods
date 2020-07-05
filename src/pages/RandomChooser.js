@@ -5,17 +5,8 @@ import getWeightedRestaurants from "../hooks/getWeightedRestaurants";
 import useRestaurants from "../hooks/useRestaurants";
 import "./pages.css";
 
-const RenderCard = ({ restaurants }) => {
-  return (
-    <>
-      {restaurants.map((restaurant) => {
-        return <RestaurantCard key={restaurant.name} restaurant={restaurant} />;
-      })}
-    </>
-  );
-};
-
 const RandomChooser = () => {
+  const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState(["Kaden", "Jaidha", "CJ", "Gid"]);
   const [sortedRestaurants, setSortedRestaurants] = useState({
     all: [],
@@ -36,13 +27,34 @@ const RandomChooser = () => {
     setSortedRestaurants({ all: res, col1: temp1, col2: temp2 });
   }
 
+  const RenderCard = ({ restaurants }) => {
+    return (
+      <>
+        {restaurants.map((restaurant) => {
+          return (
+            <RestaurantCard
+              loading={loading}
+              key={restaurant.name}
+              restaurant={restaurant}
+            />
+          );
+        })}
+      </>
+    );
+  };
+
   const handleClick = () => {
+    setLoading(true);
     setOrder(rotateOrder());
     calc();
+    setTimeout(function() {
+      setLoading(false);
+    }, 700);
   };
 
   useEffect(() => {
     calc();
+    setLoading(false);
   }, [restaurants]);
 
   //Shift order over by one
@@ -65,7 +77,7 @@ const RandomChooser = () => {
           <div>
             <h1>Random Restaurants</h1>
             <p>Click below to change who has the greatest preference</p>
-            <Button type="primary" onClick={handleClick}>
+            <Button disabled={loading} type="primary" onClick={handleClick}>
               Next in line!
             </Button>
           </div>

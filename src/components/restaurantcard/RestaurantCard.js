@@ -25,24 +25,27 @@ const StarName = ({ score, name, width, overall }) => {
   );
 };
 
-const RestaurantCard = ({ restaurant }) => {
+const RestaurantCard = ({ loading, restaurant }) => {
   const people = ["Kaden", "Jaidha", "CJ", "Gid"];
   return (
-    <Card
-      extra={<Tags tags={restaurant.tags} />}
-      title={
-        <Space>
-          <p>{restaurant.name}</p>
-        </Space>
-      }
-    >
+    <Card loading={loading}>
+      <div className="card-header">
+        <Row>
+          <Col span={12}>
+            <h1>{restaurant.name}</h1>
+            <StarName
+              color="#FFD203"
+              width={6}
+              score={restaurant["score"]}
+              overall
+            />
+          </Col>
+          <Col span={12} align="right">
+            <Tags tags={restaurant.tags} />
+          </Col>
+        </Row>
+      </div>
       <Space>
-        <StarName
-          color="#FFD203"
-          width={6}
-          score={restaurant["score"]}
-          overall
-        />
         {restaurant.price && (
           <p style={{ color: "#7AC289" }}>{restaurant.price}</p>
         )}
