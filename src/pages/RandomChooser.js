@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Col, Button, List } from "antd";
+import { Col, Button, Row } from "antd";
 import RestaurantCard from "../components/restaurantcard/RestaurantCard";
 import getWeightedRestaurants from "../hooks/getWeightedRestaurants";
 import useRestaurants from "../hooks/useRestaurants";
-
+import "./pages.css";
 const RandomChooser = () => {
   const [order, setOrder] = useState(["kaden", "jaidha", "cj", "gid"]);
   const [sortedRestaurants, setSortedRestaurants] = useState([]);
@@ -31,22 +31,20 @@ const RandomChooser = () => {
   return (
     <div className="chooser">
       <Col>
-        <Button onClick={() => setOrder(rotateOrder())}>Hi</Button>
+        <Button block type="primary" onClick={() => setOrder(rotateOrder())}>
+          Next in line!
+        </Button>
 
-        <List>
+        <Row gutter={8}>
           {order.map((item, index) => {
             return (
-              <List.Item key={item}>
-                <List.Item.Meta
-                  title={<p>{`Preference ${index}`}</p>}
-                  description={
-                    <p>{item.charAt(0).toUpperCase() + item.slice(1)}</p>
-                  }
-                />
-              </List.Item>
+              <Col>
+                <b> {`Preference ${index + 1}`} </b>
+                <p>{item.charAt(0).toUpperCase() + item.slice(1)} </p>
+              </Col>
             );
           })}
-        </List>
+        </Row>
 
         {sortedRestaurants.map((restaurant) => {
           return (

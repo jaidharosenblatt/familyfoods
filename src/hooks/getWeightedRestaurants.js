@@ -5,7 +5,7 @@
  * a weighted preference
  */
 function getWeightedRestaurants(restaurants, order) {
-  const weights = [0.15, 0.2, 0.25, 0.4];
+  const weights = [0.6, 0.2, 0.1, 0.1];
 
   //Create a map of person and their average score
   const personAverageScore = {};
