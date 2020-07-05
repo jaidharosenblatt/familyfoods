@@ -4,18 +4,17 @@ import Tags from "../tags/Tags";
 import { StarFilled, CarFilled, ClockCircleFilled } from "@ant-design/icons";
 
 const attributeIconMap = {
-  score: <StarFilled style={{ color: "#FFD203" }} />,
   distance: <CarFilled />,
   type: <ClockCircleFilled />,
 };
 
-const StarName = ({ score, name, width, align }) => {
+const StarName = ({ score, name, width, color }) => {
   return (
-    <Col span={width} align={align}>
+    <Col span={width} style={{ color: color }}>
       <Space size={2}>
-        <b>{score}</b>
-        {attributeIconMap["score"]}
-        <p>{`${name} `}</p>
+        <StarFilled />
+        <p>{score}</p>
+        {name && <p>{name}</p>}
       </Space>
     </Col>
   );
@@ -33,20 +32,9 @@ const RestaurantCard = ({ restaurant }) => {
         </Space>
       }
     >
-      <Row gutter={8}>
-        <StarName width={6} score={restaurant["score"]} name="Overall" />
-        {people.map((person) => {
-          return (
-            <StarName
-              align="right"
-              width={4}
-              score={restaurant[person]}
-              name={person}
-            />
-          );
-        })}
-      </Row>
       <Space>
+        <StarName color="#FFD203" width={6} score={restaurant["score"]} />
+
         {restaurant.distance && (
           <Space>
             {attributeIconMap["distance"]}
@@ -60,6 +48,18 @@ const RestaurantCard = ({ restaurant }) => {
           </Space>
         )}
       </Space>
+      <Row gutter={4}>
+        {people.map((person) => {
+          return (
+            <StarName
+              color="#bfbfbf"
+              width={24 / people.length}
+              score={restaurant[person]}
+              name={person}
+            />
+          );
+        })}
+      </Row>
     </Card>
   );
 };

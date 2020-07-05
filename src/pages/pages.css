@@ -15,7 +15,8 @@
 }
 
 .chooser {
-  max-width: 1000px;
+  width: 100%;
+  max-width: 800px;
 }
 
 .chooser-container {
