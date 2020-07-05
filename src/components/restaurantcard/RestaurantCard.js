@@ -4,8 +4,18 @@ import Tags from "../tags/Tags";
 
 const RestaurantCard = ({ restaurant }) => {
   return (
-    <Card extra={<Tags tags={restaurant.tags} />} title={restaurant.name}>
-      hi
+    <Card
+      extra={<Tags tags={restaurant.tags} />}
+      title={
+        <div>
+          <p>{restaurant.name}</p>
+          <p>
+            <p>{restaurant.price}</p>{" "}
+          </p>
+        </div>
+      }
+    >
+      {restaurant.score && <p> {`Score: ${restaurant.score}`}</p>}
     </Card>
   );
 };
