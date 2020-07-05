@@ -10,7 +10,7 @@ const attributeIconMap = {
 
 const StarName = ({ score, name, width, color }) => {
   return (
-    <Col span={width} style={{ color: color }}>
+    <Col xs={24} md={width} style={{ color: color }}>
       <Space size={2}>
         <StarFilled />
         <p>{score}</p>
@@ -28,13 +28,14 @@ const RestaurantCard = ({ restaurant }) => {
       title={
         <Space>
           <p>{restaurant.name}</p>
-          <p style={{ color: "#7AC289" }}>{restaurant.price}</p>
         </Space>
       }
     >
       <Space>
         <StarName color="#FFD203" width={6} score={restaurant["score"]} />
-
+        {restaurant.price && (
+          <p style={{ color: "#7AC289" }}>{restaurant.price}</p>
+        )}
         {restaurant.distance && (
           <Space>
             {attributeIconMap["distance"]}
