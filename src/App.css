@@ -21,6 +21,10 @@ h1 {
   font-size: 20px;
 }
 
-.ant-card-bordered {
-  margin: 20px 0px;
+.ant-space .full {
+  width: 100%;
+}
+
+.ant-space-item .full {
+  width: 100%;
 }
