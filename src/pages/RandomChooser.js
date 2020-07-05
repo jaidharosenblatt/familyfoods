@@ -30,29 +30,31 @@ const RandomChooser = () => {
   };
 
   return (
-    <div className="chooser">
-      <Space size={16} class="full" direction="vertical" align="center">
-        <Button block type="primary" onClick={() => setOrder(rotateOrder())}>
-          Next in line!
-        </Button>
+    <div className="chooser-container">
+      <div className="chooser">
+        <Space size={16} class="full" direction="vertical" align="center">
+          <Button block type="primary" onClick={() => setOrder(rotateOrder())}>
+            Next in line!
+          </Button>
 
-        <Row gutter={8}>
-          {order.map((item, index) => {
+          <Row gutter={8}>
+            {order.map((item, index) => {
+              return (
+                <Col span={24 / order.length} key={index}>
+                  <b> {`Preference ${index + 1}`} </b>
+                  <p>{item} </p>
+                </Col>
+              );
+            })}
+          </Row>
+
+          {sortedRestaurants.map((restaurant) => {
             return (
-              <Col span={24 / order.length} key={index}>
-                <b> {`Preference ${index + 1}`} </b>
-                <p>{item} </p>
-              </Col>
+              <RestaurantCard key={restaurant.name} restaurant={restaurant} />
             );
           })}
-        </Row>
-
-        {sortedRestaurants.map((restaurant) => {
-          return (
-            <RestaurantCard key={restaurant.name} restaurant={restaurant} />
-          );
-        })}
-      </Space>
+        </Space>
+      </div>
     </div>
   );
 };

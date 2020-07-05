@@ -13,3 +13,13 @@
 .chooser li.ant-list-item {
   padding: 4px 0;
 }
+
+.chooser {
+  max-width: 1000px;
+}
+
+.chooser-container {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}

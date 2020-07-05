@@ -26,7 +26,12 @@ const RestaurantCard = ({ restaurant }) => {
   return (
     <Card
       extra={<Tags tags={restaurant.tags} />}
-      title={<p>{restaurant.name}</p>}
+      title={
+        <Space>
+          <p>{restaurant.name}</p>
+          <p style={{ color: "#7AC289" }}>{restaurant.price}</p>
+        </Space>
+      }
     >
       <Row gutter={8}>
         <StarName width={6} score={restaurant["score"]} name="Overall" />
@@ -41,7 +46,20 @@ const RestaurantCard = ({ restaurant }) => {
           );
         })}
       </Row>
-      <p>{restaurant.name} </p>
+      <Space>
+        {restaurant.distance && (
+          <Space>
+            {attributeIconMap["distance"]}
+            <p>{restaurant.distance} </p>
+          </Space>
+        )}
+        {restaurant.type && (
+          <Space>
+            {attributeIconMap["type"]}
+            <p>{restaurant.type.join(", ")} </p>
+          </Space>
+        )}
+      </Space>
     </Card>
   );
 };
