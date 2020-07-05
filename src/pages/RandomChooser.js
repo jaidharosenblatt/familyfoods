@@ -7,7 +7,6 @@ import useRestaurants from "../hooks/useRestaurants";
 const RandomChooser = () => {
   const [order, setOrder] = useState(["kaden", "jaidha", "cj", "gid"]);
   const [sortedRestaurants, setSortedRestaurants] = useState([]);
-
   const [restaurants] = useRestaurants();
 
   useEffect(() => {
