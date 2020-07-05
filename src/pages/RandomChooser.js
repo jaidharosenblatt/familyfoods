@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Col, Button, Row, Space } from "antd";
+import { Col, Spin, Button, Row, Space } from "antd";
 import RestaurantCard from "../components/restaurantcard/RestaurantCard";
 import getWeightedRestaurants from "../hooks/getWeightedRestaurants";
 import useRestaurants from "../hooks/useRestaurants";
@@ -24,9 +24,8 @@ const RandomChooser = () => {
   });
   const [restaurants] = useRestaurants();
 
-  useEffect(() => {
+  function calc() {
     const res = getWeightedRestaurants(restaurants, order);
-
     var temp1 = [];
     var temp2 = [];
 
@@ -35,7 +34,16 @@ const RandomChooser = () => {
       else temp2.push(element);
     });
     setSortedRestaurants({ all: res, col1: temp1, col2: temp2 });
-  }, [restaurants, order]);
+  }
+
+  const handleClick = () => {
+    setOrder(rotateOrder());
+    calc();
+  };
+
+  useEffect(() => {
+    calc();
+  }, [restaurants]);
 
   //Shift order over by one
   const rotateOrder = () => {
@@ -53,10 +61,14 @@ const RandomChooser = () => {
   return (
     <div className="chooser-container">
       <div className="chooser">
-        <Space size={16} class="full" direction="vertical" align="center">
-          <Button block type="primary" onClick={() => setOrder(rotateOrder())}>
-            Next in line!
-          </Button>
+        <Space size={16} style={{ width: "100%" }} direction="vertical">
+          <div>
+            <h1>Random Restaurants</h1>
+            <p>Click below to change who has the greatest preference</p>
+            <Button type="primary" onClick={handleClick}>
+              Next in line!
+            </Button>
+          </div>
 
           <Row gutter={8}>
             {order.map((item, index) => {
@@ -68,6 +80,11 @@ const RandomChooser = () => {
               );
             })}
           </Row>
+          {sortedRestaurants.all.length === 0 && (
+            <Row align="center">
+              <Spin size="large" />
+            </Row>
+          )}
           <Row gutter={8}>
             <Col xs={24} md={0}>
               <RenderCard restaurants={sortedRestaurants.all} />

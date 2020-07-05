@@ -1,18 +1,23 @@
 import React from "react";
 import { Card, Row, Col, Space } from "antd";
 import Tags from "../tags/Tags";
-import { StarFilled, CarFilled, ClockCircleFilled } from "@ant-design/icons";
+import {
+  StarFilled,
+  StarOutlined,
+  CarFilled,
+  ClockCircleFilled,
+} from "@ant-design/icons";
 
 const attributeIconMap = {
   distance: <CarFilled />,
   type: <ClockCircleFilled />,
 };
 
-const StarName = ({ score, name, width, color }) => {
+const StarName = ({ score, name, width, overall }) => {
   return (
-    <Col xs={24} md={width} style={{ color: color }}>
+    <Col xs={24} md={width} style={{ color: overall ? "#FFD203" : "#bfbfbf" }}>
       <Space size={2}>
-        <StarFilled />
+        {overall ? <StarFilled /> : <StarOutlined />}
         <p>{score}</p>
         {name && <p>{name}</p>}
       </Space>
@@ -32,7 +37,12 @@ const RestaurantCard = ({ restaurant }) => {
       }
     >
       <Space>
-        <StarName color="#FFD203" width={6} score={restaurant["score"]} />
+        <StarName
+          color="#FFD203"
+          width={6}
+          score={restaurant["score"]}
+          overall
+        />
         {restaurant.price && (
           <p style={{ color: "#7AC289" }}>{restaurant.price}</p>
         )}
@@ -53,7 +63,7 @@ const RestaurantCard = ({ restaurant }) => {
         {people.map((person) => {
           return (
             <StarName
-              color="#bfbfbf"
+              key={person}
               width={24 / people.length}
               score={restaurant[person]}
               name={person}

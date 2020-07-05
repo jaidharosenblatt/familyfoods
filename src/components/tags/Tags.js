@@ -16,9 +16,7 @@ const COLORS = [
 ];
 
 const COLORS_MAP = {
-  Breakfast: "green",
-  Dinner: "cyan",
-  Expensive: "magenta",
+  Healthy: "green",
   "Long Wait": "volcano",
   "Short Wait": "purple",
 };
