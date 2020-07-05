@@ -1,17 +1,20 @@
-import React, { useState } from "react";
-import { Col, Button } from "antd";
+import React, { useState, useEffect } from "react";
+import { Col, Button, List } from "antd";
 import RestaurantCard from "../components/restaurantcard/RestaurantCard";
-import useWeightedRestaurants from "../hooks/useWeightedRestaurants";
+import getWeightedRestaurants from "../hooks/getWeightedRestaurants";
+import useRestaurants from "../hooks/useRestaurants";
 
 const RandomChooser = () => {
   const [order, setOrder] = useState(["kaden", "jaidha", "cj", "gid"]);
-  // const [restaurants, setRestaurants] = useState([]);
-  const [restaurants] = useWeightedRestaurants([
-    "kaden",
-    "jaidha",
-    "cj",
-    "gid",
-  ]);
+  const [sortedRestaurants, setSortedRestaurants] = useState([]);
+
+  const [restaurants] = useRestaurants();
+
+  useEffect(() => {
+    const res = getWeightedRestaurants(restaurants, order);
+    setSortedRestaurants(res);
+    console.log(res);
+  }, [restaurants, order]);
 
   //Shift order over by one
   const rotateOrder = () => {
@@ -22,20 +25,36 @@ const RandomChooser = () => {
       rotatedArray[i] = rotatedArray[i - 1];
     }
     rotatedArray[0] = x;
-
-    console.log(rotatedArray);
     setOrder(rotatedArray);
   };
 
   return (
-    <Col>
-      <p>{order}</p>
-      <Button onClick={rotateOrder}>Hi</Button>
+    <div className="chooser">
+      <Col>
+        <Button onClick={rotateOrder}>Hi</Button>
 
-      {restaurants.map((restaurant) => {
-        return <RestaurantCard key={restaurant.name} restaurant={restaurant} />;
-      })}
-    </Col>
+        {/* <List>
+          {order.map((item, index) => {
+            return (
+              <List.Item key={item}>
+                <List.Item.Meta
+                  title={<p>{`Preference ${index}`}</p>}
+                  description={
+                    <p>{item.charAt(0).toUpperCase() + item.slice(1)}</p>
+                  }
+                />
+              </List.Item>
+            );
+          })}
+        </List> */}
+
+        {sortedRestaurants.map((restaurant) => {
+          return (
+            <RestaurantCard key={restaurant.name} restaurant={restaurant} />
+          );
+        })}
+      </Col>
+    </div>
   );
 };
 

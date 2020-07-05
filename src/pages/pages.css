@@ -1,0 +1,12 @@
+.chooser .ant-card-body {
+  padding: 0px 16px;
+}
+
+.chooser .ant-list-item-meta {
+  align-items: center;
+}
+
+.chooser .ant-list-item-meta-title {
+  margin-bottom: 0;
+  line-height: 1;
+}

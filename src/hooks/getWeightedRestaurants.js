@@ -1,14 +1,10 @@
-import { useState } from "react";
-import useRestaurants from "./useRestaurants";
-
 // Don't hate me I didn't wanna make a real backend :)
 
 /**
  * GETs all restaurants in the database and sorts based on
  * a weighted preference
  */
-const useWeightedRestaurants = (initialOrder = []) => {
-  const [order] = useState(initialOrder);
+function getWeightedRestaurants(restaurants, order) {
   const weights = [0.15, 0.2, 0.25, 0.4];
 
   /**
@@ -70,7 +66,6 @@ const useWeightedRestaurants = (initialOrder = []) => {
     return restaurantSorted;
   };
 
-  const [restaurants] = useRestaurants();
   var weightedRestaurants = {};
 
   restaurants.forEach((restaurant) => {
@@ -78,7 +73,7 @@ const useWeightedRestaurants = (initialOrder = []) => {
     weightedRestaurants[restaurant.name] = { score, ...restaurant };
   });
   const sorted = sortRestaurants(weightedRestaurants);
-  return [sorted];
-};
+  return sorted;
+}
 
-export default useWeightedRestaurants;
+export default getWeightedRestaurants;

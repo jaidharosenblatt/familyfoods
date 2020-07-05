@@ -9,9 +9,7 @@ const RestaurantCard = ({ restaurant }) => {
       title={
         <div>
           <p>{restaurant.name}</p>
-          <p>
-            <p>{restaurant.price}</p>{" "}
-          </p>
+          <p>{restaurant.price}</p>
         </div>
       }
     >
