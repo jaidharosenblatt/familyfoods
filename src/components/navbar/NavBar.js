@@ -1,17 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Menu, Row, Space } from "antd";
-import { Logo } from "../../static/Images";
 import "./navbar.css";
+import { HomeFilled } from "@ant-design/icons";
 
 const NavBar = () => {
   return (
     <div className="navbar">
       <Row align="middle" gutter={8}>
         <Link to="/">
-          <Space align="center">
-            <img src={Logo} alt="logo" className="Logo" />
-            <h1>Family Foods</h1>
+          <Space align="center" size={0}>
+            <HomeFilled className="Logo" />
+            <p>Family Foods</p>
           </Space>
         </Link>
 

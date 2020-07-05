@@ -1,7 +1,6 @@
 @import "~antd/dist/antd.css";
 
 .navbar {
-  margin: 5px 0px;
   height: 68px;
   background-color: white;
   z-index: 2;
@@ -16,7 +15,7 @@ p {
 }
 
 .navbar-container {
-  padding: 100px 20px;
+  padding: 68px 20px;
 }
 
 h1 {
