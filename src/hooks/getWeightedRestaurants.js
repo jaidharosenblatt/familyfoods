@@ -18,7 +18,7 @@ function getWeightedRestaurants(restaurants, order) {
         score = score + restaurant[person];
       }
     });
-    personAverageScore[person] = score / ratings;
+    personAverageScore[person] = (score / ratings).toFixed(2);
   });
 
   //Add person's average score for blank values

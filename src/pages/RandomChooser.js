@@ -4,6 +4,7 @@ import RestaurantCard from "../components/restaurantcard/RestaurantCard";
 import getWeightedRestaurants from "../hooks/getWeightedRestaurants";
 import useRestaurants from "../hooks/useRestaurants";
 import "./pages.css";
+
 const RandomChooser = () => {
   const [order, setOrder] = useState(["Kaden", "Jaidha", "CJ", "Gid"]);
   const [sortedRestaurants, setSortedRestaurants] = useState([]);
