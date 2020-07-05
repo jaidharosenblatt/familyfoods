@@ -11,6 +11,10 @@
   width: 100vw; /* Full width */
 }
 
+p {
+  margin: 0px;
+}
+
 .navbar-container {
   padding: 100px 20px;
 }
@@ -27,4 +31,8 @@ h1 {
 
 .ant-space-item .full {
   width: 100%;
+}
+
+.ant-card-head {
+  padding: 0 16px;
 }

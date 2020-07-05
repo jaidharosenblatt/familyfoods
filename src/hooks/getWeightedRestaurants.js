@@ -32,7 +32,7 @@ function getWeightedRestaurants(restaurants, order) {
 
   /**
    * Maps names to their weighting
-   * ex: "kaden":0.15
+   * ex: "Kaden":0.15
    */
   const getWeightedMap = () => {
     var map = {};
@@ -52,12 +52,10 @@ function getWeightedRestaurants(restaurants, order) {
     const { map } = getWeightedMap();
     var score = 0;
 
-    if (restaurant.kaden === undefined) {
-      return score;
-    }
-
     Object.keys(map).forEach((person) => {
-      score = score + map[person] * restaurant[person];
+      if (restaurant[person]) {
+        score = score + map[person] * restaurant[person];
+      }
     });
     score = score.toFixed(2);
     return score;

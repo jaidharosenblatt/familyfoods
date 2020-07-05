@@ -5,7 +5,7 @@ import getWeightedRestaurants from "../hooks/getWeightedRestaurants";
 import useRestaurants from "../hooks/useRestaurants";
 import "./pages.css";
 const RandomChooser = () => {
-  const [order, setOrder] = useState(["kaden", "jaidha", "cj", "gid"]);
+  const [order, setOrder] = useState(["Kaden", "Jaidha", "CJ", "Gid"]);
   const [sortedRestaurants, setSortedRestaurants] = useState([]);
   const [restaurants] = useRestaurants();
 
@@ -40,7 +40,7 @@ const RandomChooser = () => {
             return (
               <Col span={24 / order.length} key={index}>
                 <b> {`Preference ${index + 1}`} </b>
-                <p>{item.charAt(0).toUpperCase() + item.slice(1)} </p>
+                <p>{item} </p>
               </Col>
             );
           })}
