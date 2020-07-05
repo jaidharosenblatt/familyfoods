@@ -20,7 +20,6 @@ function getWeightedRestaurants(restaurants, order) {
     });
     personAverageScore[person] = score / ratings;
   });
-  console.log(personAverageScore);
 
   //Add person's average score for blank values
   order.forEach((person) => {
@@ -30,8 +29,6 @@ function getWeightedRestaurants(restaurants, order) {
       }
     });
   });
-
-  console.log(restaurants);
 
   /**
    * Maps names to their weighting

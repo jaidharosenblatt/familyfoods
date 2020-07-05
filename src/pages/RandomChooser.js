@@ -17,22 +17,23 @@ const RandomChooser = () => {
 
   //Shift order over by one
   const rotateOrder = () => {
-    var rotatedArray = order;
+    var rotatedArray = [...order];
     const x = order[order.length - 1];
 
     for (let i = order.length - 1; i > 0; i--) {
       rotatedArray[i] = rotatedArray[i - 1];
     }
+
     rotatedArray[0] = x;
-    setOrder(rotatedArray);
+    return rotatedArray;
   };
 
   return (
     <div className="chooser">
       <Col>
-        <Button onClick={rotateOrder}>Hi</Button>
+        <Button onClick={() => setOrder(rotateOrder())}>Hi</Button>
 
-        {/* <List>
+        <List>
           {order.map((item, index) => {
             return (
               <List.Item key={item}>
@@ -45,7 +46,7 @@ const RandomChooser = () => {
               </List.Item>
             );
           })}
-        </List> */}
+        </List>
 
         {sortedRestaurants.map((restaurant) => {
           return (
