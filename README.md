@@ -28,7 +28,6 @@ Web-app to help my family choose a restaurant to go out to eat to
 
 ### TODO
 
-- Filter onChange instead of with button
 - Improve mobile navigation
   - Collapse filters
 

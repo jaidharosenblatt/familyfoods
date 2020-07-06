@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Select } from "antd";
+import { Space, Select } from "antd";
 
 const { Option } = Select;
 
@@ -15,20 +15,16 @@ const { Option } = Select;
  * @param {props} name the value to be used in a form
  * @param {props} mode "tags" or "multiple" (default)
  * @param {props} placeholder placeholder in field
- * @param {props} handleChange callback function for field change
+ * @param {props} onChange callback function for field change
  */
 const DataSelect = (props) => {
   return (
-    <Form.Item
-      name={props.name}
-      colon={false}
-      label={props.label}
-      rules={[{ required: props.required, message: props.message }]}
-    >
+    <Space direction="vertical" style={{ width: "100%" }}>
+      <p>{props.label}</p>
       <Select
         style={{ width: "100%" }}
         placeholder={props.placeholder}
-        onChange={props.handleChange}
+        onChange={props.onChange}
       >
         {props.options.map((option, index) => {
           return (
@@ -38,7 +34,7 @@ const DataSelect = (props) => {
           );
         })}
       </Select>
-    </Form.Item>
+    </Space>
   );
 };
 
