@@ -5,6 +5,7 @@ import RandomChooser from "./pages/Weighted";
 import AddRestaurant from "./pages/AddRestaurant";
 import Restaurants from "./pages/Restaurants";
 import NavBar from "./components/navbar/NavBar";
+import MobileFooter from "./components/navbar/MobileFooter";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
             <Route path="/all" exact component={Restaurants} />
           </Switch>
         </div>
+        <MobileFooter />
       </BrowserRouter>
     </div>
   );

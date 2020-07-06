@@ -21,3 +21,11 @@
   color: white;
   font-weight: bold;
 }
+
+.navbar-footer a {
+  color: #595959;
+}
+
+.navbar-footer a :hover {
+  color: #1890ff;
+}

@@ -30,5 +30,10 @@ Web-app to help my family choose a restaurant to go out to eat to
 
 - Filter onChange instead of with button
 - Improve mobile navigation
-  - Bottom navbar
   - Collapse filters
+
+### Additional Feature Idea
+
+- Random restaurant based on min range
+- Save state for last order
+- Add new restaurants

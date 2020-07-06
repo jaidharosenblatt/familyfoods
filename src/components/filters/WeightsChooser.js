@@ -16,7 +16,7 @@ const WeightsChooser = ({ order, initialWeights, onWeightChange }) => {
         <Space direction="vertical" style={{ width: "100%" }}>
           {order.map((item, index) => {
             return (
-              <Row align="middle">
+              <Row key={index} align="middle">
                 <Col span={14}>
                   <Space>
                     <EditFilled />
