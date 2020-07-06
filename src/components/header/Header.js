@@ -1,12 +1,12 @@
 import React from "react";
 import { Col, Card } from "antd";
 
-const Header = () => {
+const Header = ({ h1, p }) => {
   return (
     <Col span={24}>
       <Card>
-        <h1>Weighted Restaurants</h1>
-        <p>The only way that everyone (kinda) gets what they want </p>
+        <h1>{h1}</h1>
+        <p>{p}</p>
       </Card>
     </Col>
   );

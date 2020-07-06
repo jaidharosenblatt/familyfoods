@@ -48,6 +48,10 @@ h1 {
   margin: 8px 0;
 }
 
+.navbar-footer {
+  display: none;
+}
+
 @media only screen and (max-width: 500px) {
   .navbar {
     height: 50px;
@@ -56,5 +60,9 @@ h1 {
 
   .navbar-container {
     margin: 60px 10px;
+  }
+
+  .navbar-footer {
+    display: grid;
   }
 }

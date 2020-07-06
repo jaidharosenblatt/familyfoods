@@ -3,11 +3,11 @@ import { Col, Row } from "antd";
 import RestaurantCard from "../components/restaurantcard/RestaurantCard";
 import getWeightedRestaurants from "../functions/getWeightedRestaurants";
 import useRestaurants from "../functions/useRestaurants";
+import rotateOrder from "../functions/rotateOrder";
 import "./pages.css";
 import WeightsChooser from "../components/filters/WeightsChooser";
 import FilterCard from "../components/filters/FilterCard";
 import Order from "../components/filters/Order";
-
 import Header from "../components/header/Header";
 
 const RandomChooser = () => {
@@ -19,14 +19,9 @@ const RandomChooser = () => {
   const initialWeights = [60, 20, 10, 10];
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
   const [weights, setWeights] = useState(initialWeights);
   const [order, setOrder] = useState(["Kaden", "Jaidha", "CJ", "Gid"]);
-  const [sortedRestaurants, setSortedRestaurants] = useState({
-    all: [],
-    col1: [],
-    col2: [],
-  });
+  const [sortedRestaurants, setSortedRestaurants] = useState([]);
 
   const [restaurants] = useRestaurants();
 
@@ -60,7 +55,7 @@ const RandomChooser = () => {
 
   const handleClick = () => {
     setLoading(true);
-    setOrder(rotateOrder());
+    setOrder(rotateOrder(order));
     calc();
     setTimeout(function() {
       setLoading(false);
@@ -69,14 +64,7 @@ const RandomChooser = () => {
 
   function calc() {
     const res = getWeightedRestaurants(restaurants, order, weights, filters);
-    var temp1 = [];
-    var temp2 = [];
-
-    res.forEach((element, index) => {
-      if (index % 2 === 0) temp1.push(element);
-      else temp2.push(element);
-    });
-    setSortedRestaurants({ all: res, col1: temp1, col2: temp2 });
+    setSortedRestaurants(res);
   }
 
   const RenderCard = ({ restaurants }) => {
@@ -95,24 +83,14 @@ const RandomChooser = () => {
     );
   };
 
-  //Shift order over by one
-  const rotateOrder = () => {
-    var rotatedArray = [...order];
-    const x = order[order.length - 1];
-
-    for (let i = order.length - 1; i > 0; i--) {
-      rotatedArray[i] = rotatedArray[i - 1];
-    }
-
-    rotatedArray[0] = x;
-    return rotatedArray;
-  };
-
   return (
     <div className="chooser-container">
       <div className="chooser">
         <Col>
-          <Header />
+          <Header
+            h1="Weighted Restaurants"
+            p="The only way that everyone (kinda) gets what they want "
+          />
           {error !== "" && (
             <p style={{ margin: 8, color: "#EF4138" }}> {error}</p>
           )}
@@ -133,11 +111,9 @@ const RandomChooser = () => {
             </Col>
             <Col xs={24} md={14}>
               <Row align="center">
-                {sortedRestaurants.all.length === 0 && (
-                  <p> No restaurants found</p>
-                )}
+                {sortedRestaurants.length === 0 && <p> No restaurants found</p>}
               </Row>
-              <RenderCard restaurants={sortedRestaurants.all} />
+              <RenderCard restaurants={sortedRestaurants} />
             </Col>
           </Row>
         </Col>
