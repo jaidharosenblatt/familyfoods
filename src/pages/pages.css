@@ -26,9 +26,11 @@
 }
 
 .chooser .ant-card-bordered {
-  margin: 8px 0px;
+  margin: 8px;
 }
-
+.chooser .ant-card-body {
+  padding: 16px;
+}
 .chooser h1 {
   margin: 0px;
 }
@@ -39,5 +41,5 @@
 
 .chooser .ant-form-item {
   line-height: 1;
-  margin: 4px;
+  margin: 8px 0;
 }

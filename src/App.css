@@ -29,6 +29,9 @@ h1 {
 .ant-card-head {
   padding: 0 16px;
 }
+.ant-card-body {
+  padding: 16px;
+}
 
 .card-header {
   margin: 8px 0;

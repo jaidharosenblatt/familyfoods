@@ -5,12 +5,12 @@ import {
   StarFilled,
   StarOutlined,
   CarFilled,
-  ClockCircleFilled,
+  EnvironmentFilled,
 } from "@ant-design/icons";
 
 const attributeIconMap = {
   distance: <CarFilled />,
-  type: <ClockCircleFilled />,
+  type: <EnvironmentFilled />,
 };
 
 const StarName = ({ score, name, width, overall }) => {

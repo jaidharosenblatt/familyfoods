@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Col, Spin, Button, Row, Space, InputNumber, Form } from "antd";
+import { Col, Row } from "antd";
 import RestaurantCard from "../components/restaurantcard/RestaurantCard";
 import getWeightedRestaurants from "../hooks/getWeightedRestaurants";
 import useRestaurants from "../hooks/useRestaurants";
 import "./pages.css";
-import DataSelect from "../components/form/DataSelect";
-import SubmitButton from "../components/form/SubmitButton";
-import { FilterFilled } from "@ant-design/icons";
+import WeightsChooser from "../components/filters/WeightsChooser";
 import FilterCard from "../components/filters/FilterCard";
+import Header from "../components/header/Header";
 
 const RandomChooser = () => {
   const [filters, setFilters] = useState({
@@ -45,7 +44,7 @@ const RandomChooser = () => {
       sum += weight;
     });
     if (sum !== 100) {
-      setError("Please create a total that adds up to 100");
+      setError("Please create an order total that adds up to 100");
     } else {
       setError("");
     }
@@ -53,7 +52,6 @@ const RandomChooser = () => {
 
     setTimeout(function() {
       calc();
-
       setLoading(false);
     }, 700);
   };
@@ -111,59 +109,33 @@ const RandomChooser = () => {
   return (
     <div className="chooser-container">
       <div className="chooser">
-        <Space size={16} style={{ width: "100%" }} direction="vertical">
-          <Row>
-            <Col span={14}>
-              <h1>Random Restaurants</h1>
-              <p>Click below to change who has the greatest preference</p>
-              <Button disabled={loading} type="primary" onClick={handleClick}>
-                Next in line!
-              </Button>
-            </Col>
-          </Row>
-
-          <FilterCard filters={filters} setFilters={setFilters} />
-          <Row gutter={8}>
-            {order.map((item, index) => {
-              return (
-                <Col span={24 / order.length} key={index}>
-                  <b> {`${index + 1}. ${item}`} </b>
-                  <br />
-                  <Space>
-                    <p>Weight </p>
-                    <InputNumber
-                      defaultValue={initialWeights[index]}
-                      min={0}
-                      max={100}
-                      formatter={(value) => `${value}%`}
-                      parser={(value) => value.replace("%", "")}
-                      onChange={(value) => {
-                        onWeightChange(value, index);
-                      }}
-                    />
-                  </Space>
-                </Col>
-              );
-            })}
-          </Row>
-          {error !== "" && <p style={{ color: "#EF4138" }}> {error}</p>}
-          {sortedRestaurants.all.length === 0 && (
-            <Row align="center">
-              <Spin size="large" />
-            </Row>
+        <Col>
+          <Header />
+          {error !== "" && (
+            <p style={{ margin: 8, color: "#EF4138" }}> {error}</p>
           )}
-          <Row gutter={8}>
-            <Col xs={24} md={0}>
+
+          <Row>
+            <Col xs={24} md={10}>
+              <WeightsChooser
+                loading={loading}
+                handleClick={handleClick}
+                order={order}
+                initialWeights={initialWeights}
+                onWeightChange={onWeightChange}
+              />
+              <FilterCard filters={filters} setFilters={setFilters} />
+            </Col>
+            <Col xs={24} md={14}>
+              <Row align="center">
+                {sortedRestaurants.all.length === 0 && (
+                  <p> No restaurants found</p>
+                )}
+              </Row>
               <RenderCard restaurants={sortedRestaurants.all} />
             </Col>
-            <Col xs={0} md={12}>
-              <RenderCard restaurants={sortedRestaurants.col1} />
-            </Col>
-            <Col xs={0} md={12}>
-              <RenderCard restaurants={sortedRestaurants.col2} />
-            </Col>
           </Row>
-        </Space>
+        </Col>
       </div>
     </div>
   );

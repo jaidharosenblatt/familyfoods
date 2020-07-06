@@ -6,18 +6,19 @@ import { FilterFilled } from "@ant-design/icons";
 
 const FilterCard = ({ filters, setFilters }) => {
   return (
-    <Card
-      title={
-        <Space>
-          <FilterFilled />
-          <p>Filters</p>
-        </Space>
-      }
+    <Form
+      initialValues={filters}
+      layout="vertical"
+      onFinish={(values) => setFilters(values)}
     >
-      <Form
-        initialValues={filters}
-        layout="vertical"
-        onFinish={(values) => setFilters(values)}
+      <Card
+        title={
+          <Space>
+            <FilterFilled />
+            <p>Filters</p>
+          </Space>
+        }
+        extra={<SubmitButton CTA="Filter!" />}
       >
         <DataSelect
           name="type"
@@ -41,9 +42,8 @@ const FilterCard = ({ filters, setFilters }) => {
             "20+ mins",
           ]}
         />
-        <SubmitButton CTA="Filter Restaurants" />
-      </Form>
-    </Card>
+      </Card>
+    </Form>
   );
 };
 
