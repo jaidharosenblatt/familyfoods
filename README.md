@@ -9,7 +9,7 @@ Web-app to help my family choose a restaurant to go out to eat to
 ### Screenshots
 
 ![](https://i.imgur.com/EuYpfKF.png)
-![](https://i.imgur.com/AFJ2qKE.png)
+![](https://i.imgur.com/AFJ2qKE.png =250x)
 
 ### Features
 
@@ -17,6 +17,8 @@ Web-app to help my family choose a restaurant to go out to eat to
 - Allow users to take turns having the highest preference weighting
 - Change weighting real time
 - Filter by restaurant attributes
+- Collapse filter cards
+- Mobile navbar and footer
 - See all restaurants
 
 ### Teach Stack
@@ -31,7 +33,7 @@ Web-app to help my family choose a restaurant to go out to eat to
 2. npm install
 3. npm start
 
-### Additional Feature Idea
+### Ideas for Additional Features
 
 - Random restaurant based on min range
 - Save state for last order
