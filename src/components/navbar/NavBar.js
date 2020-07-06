@@ -17,7 +17,7 @@ const NavBar = () => {
 
         <Menu mode="horizontal">
           <Menu.Item key="random">
-            <Link to="/random">Random</Link>
+            <Link to="/">Weighted</Link>
           </Menu.Item>
           <Menu.Item key="all">
             <Link to="/all">Show All</Link>
