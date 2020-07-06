@@ -5,8 +5,8 @@ const Header = () => {
   return (
     <Col span={24}>
       <Card>
-        <h1>Random Restaurants</h1>
-        <p>Click below to change who has the greatest preference</p>
+        <h1>Weighted Restaurants</h1>
+        <p>The only way that everyone (kinda) gets what they want </p>
       </Card>
     </Col>
   );

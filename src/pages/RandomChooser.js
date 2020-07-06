@@ -6,6 +6,8 @@ import useRestaurants from "../hooks/useRestaurants";
 import "./pages.css";
 import WeightsChooser from "../components/filters/WeightsChooser";
 import FilterCard from "../components/filters/FilterCard";
+import Order from "../components/filters/Order";
+
 import Header from "../components/header/Header";
 
 const RandomChooser = () => {
@@ -117,14 +119,17 @@ const RandomChooser = () => {
 
           <Row>
             <Col xs={24} md={10}>
-              <WeightsChooser
+              <Order
                 loading={loading}
                 handleClick={handleClick}
+                order={order}
+              />
+              <FilterCard filters={filters} setFilters={setFilters} />
+              <WeightsChooser
                 order={order}
                 initialWeights={initialWeights}
                 onWeightChange={onWeightChange}
               />
-              <FilterCard filters={filters} setFilters={setFilters} />
             </Col>
             <Col xs={24} md={14}>
               <Row align="center">
