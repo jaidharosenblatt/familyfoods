@@ -1,18 +1,35 @@
-import React from "react";
-import { Card } from "antd";
+import React, { useState } from "react";
+import { Card, Row, Col } from "antd";
+import { UpOutlined, DownOutlined } from "@ant-design/icons";
+
 import "./filters.css";
 
 const CollapseCard = (props) => {
+  const [hidden, setHidden] = useState(true);
   return (
     <div>
-      {true ? (
+      {hidden ? (
         <Card>
-          <div className="card-header" style={{ margin: 0 }}>
-            {props.title}
+          <div className="card-header">
+            <Row>
+              <Col span={20}>{props.title}</Col>
+              <Col span={4} align="right" onClick={() => setHidden(!hidden)}>
+                <UpOutlined />
+              </Col>
+            </Row>
           </div>
         </Card>
       ) : (
-        <Card title={props.title}>{props.children}</Card>
+        <Card
+          extra={
+            <div className="card-header" onClick={() => setHidden(!hidden)}>
+              <DownOutlined />
+            </div>
+          }
+          title={props.title}
+        >
+          {props.children}
+        </Card>
       )}
     </div>
   );

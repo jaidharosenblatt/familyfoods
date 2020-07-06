@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Col, Row } from "antd";
+import { Col, Row, Button } from "antd";
 import RestaurantCard from "../components/restaurantcard/RestaurantCard";
 import getWeightedRestaurants from "../functions/getWeightedRestaurants";
 import useRestaurants from "../functions/useRestaurants";
@@ -94,6 +94,9 @@ const RandomChooser = () => {
           {error !== "" && (
             <p style={{ margin: 8, color: "#EF4138" }}> {error}</p>
           )}
+          <Button disabled={loading} type="primary" onClick={handleClick}>
+            Next in line!
+          </Button>
 
           <Row>
             <Col xs={24} md={10}>

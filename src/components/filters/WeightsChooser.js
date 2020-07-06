@@ -1,10 +1,11 @@
 import React from "react";
 import { Col, Row, Card, Space, InputNumber } from "antd";
 import { SettingFilled, EditFilled } from "@ant-design/icons";
+import CollapseCard from "./CollapseCard";
 
 const WeightsChooser = ({ order, initialWeights, onWeightChange }) => {
   return (
-    <Card
+    <CollapseCard
       title={
         <Space>
           <SettingFilled />
@@ -40,7 +41,7 @@ const WeightsChooser = ({ order, initialWeights, onWeightChange }) => {
           })}
         </Space>
       </Col>
-    </Card>
+    </CollapseCard>
   );
 };
 

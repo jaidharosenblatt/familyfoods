@@ -1,20 +1,15 @@
 import React from "react";
 import { Button, Row, Col, Card, Space } from "antd";
 import { SignalFilled } from "@ant-design/icons";
-
+import CollapseCard from "./CollapseCard";
 const WeightsChooser = ({ order, loading, handleClick }) => {
   return (
-    <Card
+    <CollapseCard
       title={
         <Space>
           <SignalFilled />
           <p>Order</p>
         </Space>
-      }
-      extra={
-        <Button disabled={loading} type="primary" onClick={handleClick}>
-          Next in line!
-        </Button>
       }
     >
       <Col span={24}>
@@ -28,7 +23,7 @@ const WeightsChooser = ({ order, loading, handleClick }) => {
           })}
         </Space>
       </Col>
-    </Card>
+    </CollapseCard>
   );
 };
 
