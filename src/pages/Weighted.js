@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row } from "antd";
 import RestaurantCard from "../components/restaurantcard/RestaurantCard";
-import getWeightedRestaurants from "../hooks/getWeightedRestaurants";
-import useRestaurants from "../hooks/useRestaurants";
+import getWeightedRestaurants from "../functions/getWeightedRestaurants";
+import useRestaurants from "../functions/useRestaurants";
 import "./pages.css";
 import WeightsChooser from "../components/filters/WeightsChooser";
 import FilterCard from "../components/filters/FilterCard";

@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import RandomChooser from "./pages/RandomChooser";
+import RandomChooser from "./pages/Weighted";
 import AddRestaurant from "./pages/AddRestaurant";
 import Restaurants from "./pages/Restaurants";
 import NavBar from "./components/navbar/NavBar";
