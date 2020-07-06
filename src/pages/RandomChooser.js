@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Col, Spin, Button, Row, Space, InputNumber } from "antd";
+import { Col, Spin, Button, Row, Space, InputNumber, Form } from "antd";
 import RestaurantCard from "../components/restaurantcard/RestaurantCard";
 import getWeightedRestaurants from "../hooks/getWeightedRestaurants";
 import useRestaurants from "../hooks/useRestaurants";
 import "./pages.css";
+import DataSelect from "../components/form/DataSelect";
+import SubmitButton from "../components/form/SubmitButton";
+import { FilterFilled } from "@ant-design/icons";
 
 const RandomChooser = () => {
-  const filters = { attribute: "price", value: "$$" };
+  const [filters, setFilters] = useState({
+    type: "All",
+    price: "All",
+    distance: "All",
+  });
   const initialWeights = [60, 20, 10, 10];
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -25,7 +32,7 @@ const RandomChooser = () => {
     calc();
     setLoading(false);
     // eslint-disable-next-line
-  }, [restaurants, weights, order]);
+  }, [restaurants, weights, order, filters]);
 
   const onWeightChange = (value, index) => {
     setLoading(true);
@@ -104,13 +111,53 @@ const RandomChooser = () => {
     <div className="chooser-container">
       <div className="chooser">
         <Space size={16} style={{ width: "100%" }} direction="vertical">
-          <div>
-            <h1>Random Restaurants</h1>
-            <p>Click below to change who has the greatest preference</p>
-            <Button disabled={loading} type="primary" onClick={handleClick}>
-              Next in line!
-            </Button>
-          </div>
+          <Row>
+            <Col span={14}>
+              <h1>Random Restaurants</h1>
+              <p>Click below to change who has the greatest preference</p>
+              <Button disabled={loading} type="primary" onClick={handleClick}>
+                Next in line!
+              </Button>
+            </Col>
+            <Col span={10}>
+              <Space>
+                <FilterFilled />
+                <p>Filters</p>
+              </Space>
+
+              <Form
+                initialValues={filters}
+                layout="vertical"
+                onFinish={(values) => setFilters(values)}
+              >
+                <DataSelect
+                  name="type"
+                  label="Category"
+                  options={["All", "Breakfast", "Dinner", "Takeout"]}
+                />
+                <DataSelect
+                  label="Price"
+                  name="price"
+                  options={["All", "$", "$$", "$$$"]}
+                />
+                <DataSelect
+                  label="Distance"
+                  name="distance"
+                  options={[
+                    "All",
+                    "0-5 mins",
+                    "5-10 mins",
+                    "10-15 mins",
+                    "15-20 mins",
+                    "20+ mins",
+                  ]}
+                />
+                <Space>
+                  <SubmitButton CTA="Filter Restaurants" />
+                </Space>
+              </Form>
+            </Col>
+          </Row>
 
           <Row gutter={8}>
             {order.map((item, index) => {

@@ -36,3 +36,8 @@
 .chooser .title p {
   margin-bottom: 8px;
 }
+
+.chooser .ant-form-item {
+  line-height: 1;
+  margin: 4px;
+}

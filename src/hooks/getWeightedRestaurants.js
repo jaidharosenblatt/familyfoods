@@ -4,7 +4,7 @@
  * GETs all restaurants in the database and sorts based on
  * a weighted preference
  */
-function getWeightedRestaurants(restaurants, order, weights, filter) {
+function getWeightedRestaurants(restaurants, order, weights, filters) {
   //Create a map of person and their average score
   const personAverageScore = {};
   order.forEach((person) => {
@@ -93,9 +93,34 @@ function getWeightedRestaurants(restaurants, order, weights, filter) {
   });
   const sorted = sortRestaurants(weightedRestaurants);
 
-  const filtered = sorted.filter(
-    (restaurant) => restaurant[filter.attribute] === filter.value
-  );
+  //Filter restaurant by map of filters (attribute : value)
+  function includeRestaurant(restaurant) {
+    var include = true;
+    if (!filters) return true;
+    Object.keys(filters).forEach((attribute) => {
+      if (filters[attribute] !== "All") {
+        // If attribute is an array then need to check array not just equals
+        if (
+          restaurant[attribute] &&
+          Array.isArray(restaurant[attribute]) &&
+          !restaurant[attribute].includes(filters[attribute])
+        ) {
+          include = false;
+        }
+        // otherwise not an array
+        if (
+          !Array.isArray(restaurant[attribute]) &&
+          filters[attribute] !== restaurant[attribute]
+        ) {
+          include = false;
+        }
+      }
+    });
+
+    return include;
+  }
+
+  const filtered = sorted.filter((restaurant) => includeRestaurant(restaurant));
   return filtered;
 }
 
