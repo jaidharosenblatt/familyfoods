@@ -1,22 +1,65 @@
 import React, { useState, useEffect } from "react";
-import { Col, Spin, Button, Row, Space } from "antd";
+import { Col, Spin, Button, Row, Space, InputNumber } from "antd";
 import RestaurantCard from "../components/restaurantcard/RestaurantCard";
 import getWeightedRestaurants from "../hooks/getWeightedRestaurants";
 import useRestaurants from "../hooks/useRestaurants";
 import "./pages.css";
 
 const RandomChooser = () => {
+  const initialWeights = [60, 20, 10, 10];
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const [weights, setWeights] = useState(initialWeights);
   const [order, setOrder] = useState(["Kaden", "Jaidha", "CJ", "Gid"]);
   const [sortedRestaurants, setSortedRestaurants] = useState({
     all: [],
     col1: [],
     col2: [],
   });
+
   const [restaurants] = useRestaurants();
 
+  useEffect(() => {
+    calc();
+    setLoading(false);
+    // eslint-disable-next-line
+  }, [restaurants]);
+
+  const onWeightChange = (value, index) => {
+    setLoading(true);
+
+    var newWeights = weights;
+    newWeights[index] = value;
+    let sum = 0;
+    weights.forEach((weight) => {
+      sum += weight;
+    });
+    if (sum !== 100) {
+      setError("Please create a total that adds up to 100");
+    } else {
+      setError("");
+    }
+    setWeights(newWeights);
+
+    setTimeout(function() {
+      calc();
+
+      setLoading(false);
+    }, 700);
+  };
+
+  const handleClick = () => {
+    setLoading(true);
+    setOrder(rotateOrder());
+    calc();
+    setTimeout(function() {
+      setLoading(false);
+    }, 700);
+  };
+
   function calc() {
-    const res = getWeightedRestaurants(restaurants, order);
+    const res = getWeightedRestaurants(restaurants, order, weights);
     var temp1 = [];
     var temp2 = [];
 
@@ -42,20 +85,6 @@ const RandomChooser = () => {
       </>
     );
   };
-
-  const handleClick = () => {
-    setLoading(true);
-    setOrder(rotateOrder());
-    calc();
-    setTimeout(function() {
-      setLoading(false);
-    }, 700);
-  };
-
-  useEffect(() => {
-    calc();
-    setLoading(false);
-  }, [restaurants]);
 
   //Shift order over by one
   const rotateOrder = () => {
@@ -86,12 +115,26 @@ const RandomChooser = () => {
             {order.map((item, index) => {
               return (
                 <Col span={24 / order.length} key={index}>
-                  <b> {`Preference ${index + 1}`} </b>
-                  <p>{item} </p>
+                  <b> {`${index + 1}. ${item}`} </b>
+                  <br />
+                  <Space>
+                    <p>Weight </p>
+                    <InputNumber
+                      defaultValue={initialWeights[index]}
+                      min={0}
+                      max={100}
+                      formatter={(value) => `${value}%`}
+                      parser={(value) => value.replace("%", "")}
+                      onChange={(value) => {
+                        onWeightChange(value, index);
+                      }}
+                    />
+                  </Space>
                 </Col>
               );
             })}
           </Row>
+          {error !== "" && <p style={{ color: "#EF4138" }}> {error}</p>}
           {sortedRestaurants.all.length === 0 && (
             <Row align="center">
               <Spin size="large" />

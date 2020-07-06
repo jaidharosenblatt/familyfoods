@@ -33,12 +33,14 @@ const RestaurantCard = ({ loading, restaurant }) => {
         <Row>
           <Col span={12}>
             <h1>{restaurant.name}</h1>
-            <StarName
-              color="#FFD203"
-              width={6}
-              score={restaurant["score"]}
-              overall
-            />
+            {restaurant.score && (
+              <StarName
+                color="#FFD203"
+                width={6}
+                score={restaurant["score"]}
+                overall
+              />
+            )}
           </Col>
           <Col span={12} align="right">
             <Tags tags={restaurant.tags} />

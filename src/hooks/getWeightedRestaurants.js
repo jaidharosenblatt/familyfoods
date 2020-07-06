@@ -4,9 +4,7 @@
  * GETs all restaurants in the database and sorts based on
  * a weighted preference
  */
-function getWeightedRestaurants(restaurants, order) {
-  const weights = [0.6, 0.2, 0.1, 0.1];
-
+function getWeightedRestaurants(restaurants, order, weights) {
   //Create a map of person and their average score
   const personAverageScore = {};
   order.forEach((person) => {
@@ -38,7 +36,7 @@ function getWeightedRestaurants(restaurants, order) {
     var map = {};
     for (let i = 0; i < order.length; i++) {
       let person = order[i];
-      let weight = weights[i];
+      let weight = weights[i] * 0.01;
       map[person] = weight;
     }
     return { map };

@@ -19,11 +19,11 @@ const NavBar = () => {
           <Menu.Item key="random">
             <Link to="/random">Random</Link>
           </Menu.Item>
-          <Menu.Item key="add">
-            <Link to="/add">Add Restaurant</Link>
-          </Menu.Item>
           <Menu.Item key="all">
             <Link to="/all">Show All</Link>
+          </Menu.Item>
+          <Menu.Item key="add">
+            <Link to="/add">Add Restaurant</Link>
           </Menu.Item>
         </Menu>
       </Row>
