@@ -7,6 +7,7 @@ import "./pages.css";
 import DataSelect from "../components/form/DataSelect";
 import SubmitButton from "../components/form/SubmitButton";
 import { FilterFilled } from "@ant-design/icons";
+import FilterCard from "../components/filters/FilterCard";
 
 const RandomChooser = () => {
   const [filters, setFilters] = useState({
@@ -119,46 +120,9 @@ const RandomChooser = () => {
                 Next in line!
               </Button>
             </Col>
-            <Col span={10}>
-              <Space>
-                <FilterFilled />
-                <p>Filters</p>
-              </Space>
-
-              <Form
-                initialValues={filters}
-                layout="vertical"
-                onFinish={(values) => setFilters(values)}
-              >
-                <DataSelect
-                  name="type"
-                  label="Category"
-                  options={["All", "Breakfast", "Dinner", "Takeout"]}
-                />
-                <DataSelect
-                  label="Price"
-                  name="price"
-                  options={["All", "$", "$$", "$$$"]}
-                />
-                <DataSelect
-                  label="Distance"
-                  name="distance"
-                  options={[
-                    "All",
-                    "0-5 mins",
-                    "5-10 mins",
-                    "10-15 mins",
-                    "15-20 mins",
-                    "20+ mins",
-                  ]}
-                />
-                <Space>
-                  <SubmitButton CTA="Filter Restaurants" />
-                </Space>
-              </Form>
-            </Col>
           </Row>
 
+          <FilterCard filters={filters} setFilters={setFilters} />
           <Row gutter={8}>
             {order.map((item, index) => {
               return (
