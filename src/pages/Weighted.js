@@ -94,9 +94,6 @@ const RandomChooser = () => {
           {error !== "" && (
             <p style={{ margin: 8, color: "#EF4138" }}> {error}</p>
           )}
-          <Button disabled={loading} type="primary" onClick={handleClick}>
-            Next in line!
-          </Button>
 
           <Row>
             <Col xs={24} md={10}>
@@ -111,6 +108,16 @@ const RandomChooser = () => {
                 initialWeights={initialWeights}
                 onWeightChange={onWeightChange}
               />
+              <div className="button-wrapper">
+                <Button
+                  block
+                  disabled={loading}
+                  type="primary"
+                  onClick={handleClick}
+                >
+                  Next in line!
+                </Button>
+              </div>
             </Col>
             <Col xs={24} md={14}>
               <Row align="center">

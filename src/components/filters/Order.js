@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Row, Col, Card, Space } from "antd";
+import { Row, Col, Space } from "antd";
 import { SignalFilled } from "@ant-design/icons";
 import CollapseCard from "./CollapseCard";
 const WeightsChooser = ({ order, loading, handleClick }) => {

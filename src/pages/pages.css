@@ -43,3 +43,7 @@
   line-height: 1;
   margin: 8px 0;
 }
+
+.chooser .button-wrapper {
+  margin: 8px;
+}

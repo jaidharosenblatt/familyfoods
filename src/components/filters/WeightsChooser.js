@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row, Card, Space, InputNumber } from "antd";
+import { Col, Row, Space, InputNumber } from "antd";
 import { SettingFilled, EditFilled } from "@ant-design/icons";
 import CollapseCard from "./CollapseCard";
 

@@ -13,7 +13,12 @@ const CollapseCard = (props) => {
           <div className="card-header">
             <Row>
               <Col span={20}>{props.title}</Col>
-              <Col span={4} align="right" onClick={() => setHidden(!hidden)}>
+              <Col
+                span={4}
+                style={{ cursor: "pointer" }}
+                align="right"
+                onClick={() => setHidden(!hidden)}
+              >
                 <UpOutlined />
               </Col>
             </Row>
@@ -22,7 +27,11 @@ const CollapseCard = (props) => {
       ) : (
         <Card
           extra={
-            <div className="card-header" onClick={() => setHidden(!hidden)}>
+            <div
+              className="card-header"
+              style={{ cursor: "pointer" }}
+              onClick={() => setHidden(!hidden)}
+            >
               <DownOutlined />
             </div>
           }
