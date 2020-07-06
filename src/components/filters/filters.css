@@ -1,3 +1,10 @@
 .filters .ant-card-body {
   margin: 8px;
 }
+
+.card-header {
+  margin: 0px;
+  color: #262626;
+  font-weight: 500;
+  font-size: 16px;
+}

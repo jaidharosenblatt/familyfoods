@@ -1,7 +1,8 @@
 import React from "react";
-import { Card, Space } from "antd";
+import { Space } from "antd";
 import DataSelect from "../form/DataSelect";
 import { FilterFilled } from "@ant-design/icons";
+import CollapseCard from "./CollapseCard";
 
 const FilterCard = ({ filters, setFilters }) => {
   const handleChange = (attribute, value) => {
@@ -11,7 +12,7 @@ const FilterCard = ({ filters, setFilters }) => {
   };
 
   return (
-    <Card
+    <CollapseCard
       title={
         <Space>
           <FilterFilled />
@@ -49,7 +50,7 @@ const FilterCard = ({ filters, setFilters }) => {
           "20+ mins",
         ]}
       />
-    </Card>
+    </CollapseCard>
   );
 };
 
