@@ -6,6 +6,7 @@ import useRestaurants from "../hooks/useRestaurants";
 import "./pages.css";
 
 const RandomChooser = () => {
+  const filters = { attribute: "price", value: "$$" };
   const initialWeights = [60, 20, 10, 10];
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -24,7 +25,7 @@ const RandomChooser = () => {
     calc();
     setLoading(false);
     // eslint-disable-next-line
-  }, [restaurants]);
+  }, [restaurants, weights, order]);
 
   const onWeightChange = (value, index) => {
     setLoading(true);
@@ -59,7 +60,7 @@ const RandomChooser = () => {
   };
 
   function calc() {
-    const res = getWeightedRestaurants(restaurants, order, weights);
+    const res = getWeightedRestaurants(restaurants, order, weights, filters);
     var temp1 = [];
     var temp2 = [];
 
