@@ -6,6 +6,11 @@
 
 Web-app to help my family choose a restaurant to go out to eat to
 
+### Screenshots
+
+![](https://i.imgur.com/EuYpfKF.png)
+![](https://i.imgur.com/AFJ2qKE.png)
+
 ### Features
 
 - Sort restaurants by a weighted score based on my family's specified preferences
@@ -25,11 +30,6 @@ Web-app to help my family choose a restaurant to go out to eat to
 1. Clone and cd into repository
 2. npm install
 3. npm start
-
-### TODO
-
-- Improve mobile navigation
-  - Collapse filters
 
 ### Additional Feature Idea
 
