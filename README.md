@@ -28,12 +28,15 @@ Web-app to help my family choose a restaurant to go out to eat to
 
 ### Getting Started
 
-1. Clone and cd into repository
+#### Client
+
+1. Navigate into client folder
 2. npm install
 3. npm start
 
-### Ideas for Additional Features
+#### Server
 
-- Random restaurant based on min range
-- Save state for last order
-- Add new restaurants
+1. Setup a local Mongo instance
+2. Create .env file with PORT, and MONGO_URL
+3. npm install
+4. npm run dev
