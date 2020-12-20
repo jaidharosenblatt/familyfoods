@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
-    homeAddress: {
+    location: {
       type: locationSchema,
       trim: true,
     },
