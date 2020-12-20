@@ -1,14 +1,22 @@
 const mongoose = require("mongoose");
+const { defaultLocation } = require("../api/distance");
+
 const brcypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
-const Task = require("./task");
 
 const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
       required: true,
+      trim: true,
+    },
+    homeAddress: {
+      type: {
+        lat: { type: Number, required: true },
+        lng: { type: Number, required: true },
+      },
+      default: defaultLocation,
       trim: true,
     },
     password: {
@@ -72,13 +80,6 @@ userSchema.pre("save", async function (next) {
   if (user.isModified("password")) {
     user.password = await brcypt.hash(user.password, 8);
   }
-  next();
-});
-
-// Delete user tasks when user is removed
-userSchema.pre("remove", async function (next) {
-  const user = this;
-  await Task.deleteMany({ owner: user._id });
   next();
 });
 
