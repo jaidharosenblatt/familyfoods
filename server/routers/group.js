@@ -99,4 +99,41 @@ router.get("/groups/:id", async (req, res) => {
   }
 });
 
+/**
+ * Leave a group by id or delete if last member in group
+ * Remove self from the group
+ * @param {ObjectId} id from query params
+ * @returns {Group} matching id if it exists
+ */
+router.delete("/groups/:id/", auth, async (req, res) => {
+  const _id = req.params.id;
+
+  try {
+    const group = await Group.findById(_id);
+    if (!group) {
+      return res.sendStatus(404);
+    }
+
+    if (!group.memberIDs.includes(req.user._id)) {
+      return res.status(400).send({ error: "You are not in this group" });
+    }
+
+    // Remove from authenticated user group's
+    group.memberIDs = group.memberIDs.filter(
+      (groupId) => groupId.toString() !== req.user._id.toString()
+    );
+
+    if (group.memberIDs.length === 0) {
+      await group.delete();
+      return res.send("Group deleted");
+    } else {
+      await group.save();
+      res.send(group);
+    }
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
 module.exports = router;

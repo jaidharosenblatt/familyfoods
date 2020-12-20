@@ -22,7 +22,7 @@ router.post("/users", async (req, res) => {
     await user.save();
     await user.setJWTCookie(req, res);
 
-    res.status(201).send({ user, token });
+    res.status(201).send(user);
   } catch (e) {
     if (e.code === 11000) {
       return res.status(400).send({ error: "Username already exists" });
