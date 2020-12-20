@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 
 const reviewSchema = new mongoose.Schema(
   {
-    ownerID: {
+    owner: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
-    restaurant: { type: mongoose.Schema.Types.ObjectId },
+    restaurant: { type: mongoose.Schema.Types.ObjectId, required: true },
     rating: { type: Number, required: true },
   },
   { timestamps: true }

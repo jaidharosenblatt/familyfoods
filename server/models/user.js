@@ -25,6 +25,14 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    ratingsSum: {
+      type: Number,
+      default: 0,
+    },
+    reviews: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
+      default: [],
+    },
     tokens: [
       {
         token: {
@@ -36,8 +44,14 @@ const userSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
+
+userSchema.virtual("averageReview").get(function () {
+  return this.ratingsSum / this.reviews.length;
+});
 
 // Create a new JWT token and send it back to res as a cookie
 userSchema.methods.setJWTCookie = async function (req, res) {

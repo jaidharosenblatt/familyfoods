@@ -2,10 +2,9 @@ const express = require("express");
 
 const User = require("../models/user");
 const auth = require("../middleware/auth");
+const { fieldsAreValid } = require("../util/validation");
 
 const router = new express.Router();
-
-/** @TODO PATCH, DELETE, logoutAll */
 
 /**
  * Create a new account and set a HTTP only JWT token in client cookies
@@ -84,14 +83,8 @@ router.post("/users/logout", auth, async (req, res) => {
  * @returns {User} after changes
  */
 router.patch("/users/me", auth, async (req, res) => {
-  const updates = Object.keys(req.body);
-  const allowedUpdates = ["username", "location", "password"];
-  const isValidOperation = updates.every((update) =>
-    allowedUpdates.includes(update)
-  );
-
-  if (!isValidOperation) {
-    return res.status(400).send({ error: "invalid updates!" });
+  if (!fieldsAreValid(["username", "location", "password"], req.body)) {
+    return res.status(400).send({ error: "Invalid updates" });
   }
 
   try {
