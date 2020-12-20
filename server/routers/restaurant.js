@@ -1,5 +1,6 @@
 const express = require("express");
 const searchPlace = require("../api/places");
+const { authNoError } = require("../middleware/auth");
 const { findDistance } = require("../api/distance");
 const Restaurant = require("../models/restaurant");
 
@@ -47,8 +48,9 @@ router.post("/restaurants", async (req, res) => {
  * @param {Integer} limit the number of restaurants to load in each request
  * @param {Integer} skip page offset
  * @param {Location} location starting location for distance calc (in JSON)
+ * @param {ObjectId}
  */
-router.get("/restaurants", async (req, res) => {
+router.get("/restaurants", authNoError, async (req, res) => {
   const skip = parseInt(req.query.skip);
   const limit = parseInt(req.query.limit) || 5;
 
@@ -69,8 +71,14 @@ router.get("/restaurants", async (req, res) => {
       .limit(limit)
       .skip(skip * limit);
 
-    const startingLocation =
-      req.query.location && JSON.parse(req.query.location);
+    console.log(req.user);
+
+    // Update user's location if it exists
+    if (req.query.location && req.user) {
+      req.user.location = JSON.parse(req.query.location);
+      await req.user.save();
+    }
+    const startingLocation = req.user ? req.user.location : req.query.location;
 
     const restaurantWithDistance = await Promise.all(
       restaurants.map(async (restaurant) =>
@@ -80,7 +88,7 @@ router.get("/restaurants", async (req, res) => {
     res.send(restaurantWithDistance);
   } catch (error) {
     console.log(error);
-    res.send(500);
+    res.sendStatus(500);
   }
 });
 
