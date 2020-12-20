@@ -1,4 +1,5 @@
 const express = require("express");
+const crypto = require("crypto");
 
 const Group = require("../models/group");
 const auth = require("../middleware/auth");
@@ -9,19 +10,47 @@ const router = new express.Router();
  * POST a new group
  * Add the authenticated user to the memberIDs array
  * @param {String} name required in req.body
+ * @param {String} key entryKey for this group
  * @returns {Group} created group
  */
 router.post("/groups", auth, async (req, res) => {
   try {
     const group = new Group(req.body);
     group.memberIDs = [req.user._id];
+    const key = crypto.randomBytes(3).toString("hex");
+    if (!group.entryKey) {
+      group.entryKey = key;
+    }
     await group.save();
     res.send(group);
   } catch (error) {
     if (error.code === 11000) {
       return res.status(400).send({ error: "Group name already exists" });
     }
-    res.status(400).send(error);
+    res.sendStatus(400);
+  }
+});
+
+/**
+ * Join an existing group from an entryKey
+ * Find group that matches entryKey and add self to memberIDs
+ * @param {String} entryKey Group code
+ * @returns {Group} the group user just joined
+ */
+router.post("/groups/join", auth, async (req, res) => {
+  try {
+    const group = await Group.findOne(req.body);
+    if (!group) {
+      return res.status(404).send({ error: "Invalid access code" });
+    }
+    if (group.memberIDs.includes(req.user._id)) {
+      return res.status(409).send({ error: "You are already in this group" });
+    }
+    group.memberIDs = group.memberIDs.concat(req.user._id);
+    await group.save();
+    res.send(group);
+  } catch (error) {
+    res.sendStatus(500);
   }
 });
 
