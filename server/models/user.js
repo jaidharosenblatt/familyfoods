@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { defaultLocation } = require("../api/distance");
+const locationSchema = require("./locationSchema");
 
 const brcypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -12,11 +12,7 @@ const userSchema = new mongoose.Schema(
       trim: true,
     },
     homeAddress: {
-      type: {
-        lat: { type: Number, required: true },
-        lng: { type: Number, required: true },
-      },
-      default: defaultLocation,
+      type: locationSchema,
       trim: true,
     },
     password: {
