@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 const google = axios.create({
-  baseURL: "https://maps.googleapis.com/maps/api/",
+  baseURL: "https://maps.googleapis.com/maps/api",
   params: {
     key: process.env.GOOGLE_API_SECRET,
   },

@@ -13,7 +13,7 @@ const findDistance = async (origin, destination) => {
   const origins = getQueryFromCoordinate(origin || defaultLocation);
   const destinations = getQueryFromCoordinate(destination);
 
-  const { data } = await google.get("distancematrix/json", {
+  const { data } = await google.get("/distancematrix/json", {
     params: {
       origins,
       destinations,
