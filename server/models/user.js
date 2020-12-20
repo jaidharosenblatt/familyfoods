@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    groups: {
+      type: [mongoose.Schema.Types.ObjectId],
+      default: [],
+    },
     tokens: [
       {
         token: {

@@ -16,16 +16,24 @@ const router = new express.Router();
 router.post("/groups", auth, async (req, res) => {
   try {
     const group = new Group(req.body);
-    group.memberIDs = [req.user._id];
+
     const key = crypto.randomBytes(3).toString("hex");
     if (!group.entryKey) {
       group.entryKey = key;
     }
+
     await group.save();
+
+    // Add this group id to the user
+    req.user.groups = req.user.groups.concat(group._id);
+    await req.user.save();
+
     res.send(group);
   } catch (error) {
     if (error.code === 11000) {
-      return res.status(400).send({ error: "Group name already exists" });
+      return res
+        .status(400)
+        .send({ error: "Group name or entry code already exists" });
     }
     res.sendStatus(400);
   }
@@ -43,11 +51,15 @@ router.post("/groups/join", auth, async (req, res) => {
     if (!group) {
       return res.status(404).send({ error: "Invalid access code" });
     }
-    if (group.memberIDs.includes(req.user._id)) {
+    if (req.user.groups.includes(group._id)) {
       return res.status(409).send({ error: "You are already in this group" });
     }
-    group.memberIDs = group.memberIDs.concat(req.user._id);
     await group.save();
+
+    // Add this group id to the user
+    req.user.groups = req.user.groups.concat(group._id);
+    await req.user.save();
+
     res.send(group);
   } catch (error) {
     res.sendStatus(500);
