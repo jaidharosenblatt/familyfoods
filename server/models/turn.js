@@ -2,13 +2,8 @@ const mongoose = require("mongoose");
 
 const turnSchema = new mongoose.Schema(
   {
-    order: {
-      type: [
-        {
-          userID: { type: mongoose.Schema.Types.ObjectId, required: true },
-          ranking: { type: Number, required: true },
-        },
-      ],
+    offset: {
+      type: Number,
       required: true,
     },
     restaurant: { type: mongoose.Schema.Types.ObjectId },

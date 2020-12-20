@@ -7,11 +7,11 @@ const reviewSchema = new mongoose.Schema(
       required: true,
     },
     restaurant: { type: mongoose.Schema.Types.ObjectId },
-    rating: { type: Number, required },
+    rating: { type: Number, required: true },
   },
   { timestamps: true }
 );
 
-const Review = mongoose.model("turn", reviewSchema);
+const Review = mongoose.model("review", reviewSchema);
 
 module.exports = Review;

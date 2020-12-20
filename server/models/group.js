@@ -18,6 +18,6 @@ const groupSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Group = mongoose.model("turn", groupSchema);
+const Group = mongoose.model("group", groupSchema);
 
 module.exports = Group;
