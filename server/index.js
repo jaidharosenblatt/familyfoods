@@ -1,18 +1,13 @@
 const express = require("express");
 require("./db/mongoose");
-const searchPlace = require("./api/places");
-const { findDistance } = require("./api/distance");
 
-const getDistance = async () => {
-  const { candidates } = await searchPlace("bagel oasis");
-  const { location } = candidates[0].geometry;
-  const dist = await findDistance(null, location);
-  console.log(dist);
-};
-getDistance();
+const restaurantRouter = require("./routers/restaurant");
+
+const port = process.env.PORT;
 
 const app = express();
-const port = process.env.PORT;
+app.use(express.json());
+app.use(restaurantRouter);
 
 app.listen(port, () => {
   console.log("Server is running on port ", port);

@@ -1,5 +1,6 @@
 const express = require("express");
 const searchPlace = require("../api/places");
+const { findDistance } = require("../api/distance");
 const Restaurant = require("../models/restaurant");
 
 const router = new express.Router();
@@ -45,6 +46,7 @@ router.post("/restaurants", async (req, res) => {
  * @param {String} sortBy the sort type in format param:asc or param:desc
  * @param {Integer} limit the number of restaurants to load in each request
  * @param {Integer} skip page offset
+ * @param {Location} location starting location for distance calc (in JSON)
  */
 router.get("/restaurants", async (req, res) => {
   const skip = parseInt(req.query.skip);
@@ -66,11 +68,34 @@ router.get("/restaurants", async (req, res) => {
       .sort(sort)
       .limit(limit)
       .skip(skip * limit);
-    res.send(restaurants);
+
+    const startingLocation =
+      req.query.location && JSON.parse(req.query.location);
+
+    const restaurantWithDistance = await Promise.all(
+      restaurants.map(async (restaurant) =>
+        addDistanceToRestaurant(startingLocation, restaurant)
+      )
+    );
+    res.send(restaurantWithDistance);
   } catch (error) {
     console.log(error);
     res.send(500);
   }
 });
+
+/**
+ * @returns a restaurant with distance and duration from Google Maps API
+ * @param {Location} startingLocation the coordinate to begin with
+ * @param {Restaurant} restaurant to add distance and duration field
+ */
+const addDistanceToRestaurant = async (startingLocation, restaurant) => {
+  const res = await findDistance(startingLocation, restaurant.location);
+  const path = res.rows[0].elements[0];
+  const distance = path.distance.text;
+  const duration = path.duration.text;
+
+  return { ...restaurant._doc, distance, duration };
+};
 
 module.exports = router;
