@@ -6,12 +6,13 @@ const auth = require("../middleware/auth");
 
 const router = new express.Router();
 
+/** @TODO PATCH, DELETE, logoutAll */
+
 /**
- * Create a new account
+ * Create a new account and set a HTTP only JWT token in client cookies
  * @param {String} username unique name for account
  * @param {String} password
  * @param {Location} location user's current lat and long
- * @returns {JWT} generated JWT token
  * @returns {User} user object
  */
 router.post("/users", async (req, res) => {
@@ -31,7 +32,7 @@ router.post("/users", async (req, res) => {
 });
 
 /**
- * Login a user
+ * Login a user and set a HTTP only JWT token in client cookies
  * @param {String} username unique name for account
  * @param {String} password
  * @returns {JWT} generated JWT token
@@ -72,6 +73,51 @@ router.post("/users/logout", auth, async (req, res) => {
     res.send();
   } catch (error) {
     req.sendStatus(500);
+  }
+});
+
+/**
+ * PATCH update profile
+ * Only allows the following updates
+ * @param {String} username unique name for account
+ * @param {String} password
+ * @param {Location} location user's current lat and long
+ * @returns {User} after changes
+ */
+router.patch("/users/me", auth, async (req, res) => {
+  const updates = Object.keys(req.body);
+  const allowedUpdates = ["username", "location", "password"];
+  const isValidOperation = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
+
+  if (!isValidOperation) {
+    return res.status(400).send({ error: "invalid updates!" });
+  }
+
+  try {
+    updates.forEach((update) => (req.user[update] = req.body[update]));
+    await req.user.save();
+
+    res.send(req.user);
+  } catch (e) {
+    if (e.code === 11000) {
+      return res.status(400).send({ error: "Username already exists" });
+    }
+    res.sendStatus(400);
+  }
+});
+
+/**
+ * DELETE the authenticated user's account
+ * @returns {User} deleted profile
+ */
+router.delete("/users/me", auth, async (req, res) => {
+  try {
+    await req.user.remove();
+    res.send(req.user);
+  } catch (error) {
+    res.sendStatus(500);
   }
 });
 
