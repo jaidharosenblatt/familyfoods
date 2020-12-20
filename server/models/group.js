@@ -7,6 +7,10 @@ const groupSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    memberIDs: {
+      type: [mongoose.Schema.Types.ObjectId],
+      default: [],
+    },
     entryKey: {
       type: String,
       unique: true,

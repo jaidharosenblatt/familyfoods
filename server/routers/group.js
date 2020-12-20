@@ -22,14 +22,13 @@ router.post("/groups", auth, async (req, res) => {
       group.entryKey = key;
     }
 
+    // add this user to the group's memberIDs
+    group.memberIDs = group.memberIDs.concat(req.user._id);
     await group.save();
-
-    // Add this group id to the user
-    req.user.groups = req.user.groups.concat(group._id);
-    await req.user.save();
 
     res.send(group);
   } catch (error) {
+    console.log(error);
     if (error.code === 11000) {
       return res
         .status(400)
@@ -51,14 +50,12 @@ router.post("/groups/join", auth, async (req, res) => {
     if (!group) {
       return res.status(404).send({ error: "Invalid access code" });
     }
-    if (req.user.groups.includes(group._id)) {
-      return res.status(409).send({ error: "You are already in this group" });
+    if (group.memberIDs.includes(req.user._id)) {
+      return res.status(400).send({ error: "You are already in this group" });
     }
+    // add this user to the group's memberIDs
+    group.memberIDs = group.memberIDs.concat(req.user._id);
     await group.save();
-
-    // Add this group id to the user
-    req.user.groups = req.user.groups.concat(group._id);
-    await req.user.save();
 
     res.send(group);
   } catch (error) {
@@ -73,8 +70,10 @@ router.post("/groups/join", auth, async (req, res) => {
 router.get("/groups", async (req, res) => {
   try {
     const groups = await Group.find();
+
     res.send(groups);
   } catch (error) {
+    console.log(error);
     res.sendStatus(500);
   }
 });
@@ -86,13 +85,17 @@ router.get("/groups", async (req, res) => {
  */
 router.get("/groups/:id", async (req, res) => {
   const _id = req.params.id;
-
   try {
     const group = await Group.findById(_id);
     if (!group) {
-      res.sendStatus(404);
+      return res.sendStatus(404);
     }
-    res.send(group);
+
+    if (!group.memberIDs.includes(req.user._id)) {
+      return res.status(400).send({ error: "You are not in this group" });
+    }
+
+    res.send({ ...group, members });
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
