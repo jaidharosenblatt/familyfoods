@@ -23,6 +23,15 @@ const groupSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+groupSchema.methods.toJSON = function () {
+  const group = this;
+  const groupObject = group.toObject();
+
+  delete groupObject.entryKey;
+
+  return groupObject;
+};
+
 const Group = mongoose.model("group", groupSchema);
 
 module.exports = Group;

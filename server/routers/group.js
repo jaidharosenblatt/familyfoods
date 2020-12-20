@@ -54,4 +54,37 @@ router.post("/groups/join", auth, async (req, res) => {
   }
 });
 
+/**
+ * GET all groups from the database
+ * @returns {Array}
+ */
+router.get("/groups", async (req, res) => {
+  try {
+    const groups = await Group.find();
+    res.send(groups);
+  } catch (error) {
+    res.sendStatus(500);
+  }
+});
+
+/**
+ * GET a group by id from the database
+ * @param {ObjectId} id from query params
+ * @returns {Group} matching id if it exists
+ */
+router.get("/groups/:id", async (req, res) => {
+  const _id = req.params.id;
+
+  try {
+    const group = await Group.findById(_id);
+    if (!group) {
+      res.sendStatus(404);
+    }
+    res.send(group);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
 module.exports = router;
