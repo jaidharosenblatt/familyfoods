@@ -1,7 +1,7 @@
 const express = require("express");
 
 const User = require("../models/user");
-const auth = require("../middleware/auth");
+const { auth } = require("../middleware/auth");
 const { fieldsAreValid } = require("../util/validation");
 
 const router = new express.Router();
@@ -65,12 +65,12 @@ router.get("/users/me", auth, async (req, res) => {
 router.post("/users/logout", auth, async (req, res) => {
   try {
     req.user.tokens = req.user.tokens.filter(
-      (token) => token.token !== req.token
+      (token) => token.token.toString() !== req.token.toString()
     );
     await req.user.save();
     res.send();
   } catch (error) {
-    req.sendStatus(500);
+    res.sendStatus(500);
   }
 });
 

@@ -2,7 +2,7 @@ const express = require("express");
 const crypto = require("crypto");
 
 const Group = require("../models/group");
-const auth = require("../middleware/auth");
+const { auth } = require("../middleware/auth");
 
 const router = new express.Router();
 

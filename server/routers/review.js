@@ -1,7 +1,7 @@
 const express = require("express");
 
 const Review = require("../models/review");
-const auth = require("../middleware/auth");
+const { auth } = require("../middleware/auth");
 const { fieldsAreValid } = require("../util/validation");
 
 const router = new express.Router();
