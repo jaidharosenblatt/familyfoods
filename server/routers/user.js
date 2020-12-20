@@ -2,6 +2,7 @@ const express = require("express");
 
 const Restaurant = require("../models/restaurant");
 const User = require("../models/user");
+const auth = require("../middleware/auth");
 
 const router = new express.Router();
 
@@ -18,7 +19,8 @@ router.post("/users", async (req, res) => {
 
   try {
     await user.save();
-    const token = await user.generateAuthToken();
+    await user.setJWTCookie(req, res);
+
     res.status(201).send({ user, token });
   } catch (e) {
     if (e.code === 11000) {
@@ -41,10 +43,35 @@ router.post("/users/login", async (req, res) => {
       req.body.username,
       req.body.password
     );
-    const token = await user.generateAuthToken();
-    res.send({ user, token });
+    await user.setJWTCookie(req, res);
+
+    res.send(user);
   } catch (e) {
+    console.log(e);
     res.sendStatus(400);
+  }
+});
+
+/**
+ * Get profile of logged in user
+ * @returns {User} user object
+ */
+router.get("/users/me", auth, async (req, res) => {
+  res.send(req.user);
+});
+
+/**
+ * Logout the current user (just one token)
+ */
+router.post("/users/logout", auth, async (req, res) => {
+  try {
+    req.user.tokens = req.user.tokens.filter(
+      (token) => token.token !== req.token
+    );
+    await req.user.save();
+    res.send();
+  } catch (error) {
+    req.sendStatus(500);
   }
 });
 

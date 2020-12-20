@@ -35,16 +35,17 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-userSchema.methods.generateAuthToken = async function () {
+// Create a new JWT token and send it back to res as a cookie
+userSchema.methods.setJWTCookie = async function (req, res) {
   const user = this;
-  const token = jwt.sign(
-    { _id: user._id.toString() },
-    process.env.TOKEN_SECRET
-  );
+  const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
 
   user.tokens = user.tokens.concat({ token });
   await user.save();
-  return token;
+
+  res.cookie("JWT", token, {
+    httpOnly: true,
+  });
 };
 
 userSchema.methods.toJSON = function () {
@@ -62,7 +63,7 @@ userSchema.statics.findByCredentials = async (username, password) => {
   if (!user) {
     throw new Error("Unable to log in");
   }
-
+  // Compare hashed password
   const isMatch = await brcypt.compare(password, user.password);
   if (!isMatch) {
     throw new Error("Unable to log in");
