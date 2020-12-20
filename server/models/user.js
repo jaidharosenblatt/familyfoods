@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema(
       type: locationSchema,
       trim: true,
     },
+    groups: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Group" }],
+      default: [],
+    },
     password: {
       type: String,
       required: true,
@@ -69,14 +73,6 @@ userSchema.statics.findByCredentials = async (username, password) => {
     throw new Error("Unable to log in");
   }
 
-  return user;
-};
-
-userSchema.statics.findByID = async (_id) => {
-  const user = await User.findOne({ _id });
-  if (!user) {
-    throw new Error("No user matches this id");
-  }
   return user;
 };
 

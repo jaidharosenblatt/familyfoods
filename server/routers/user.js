@@ -1,6 +1,5 @@
 const express = require("express");
 
-const Restaurant = require("../models/restaurant");
 const User = require("../models/user");
 const auth = require("../middleware/auth");
 

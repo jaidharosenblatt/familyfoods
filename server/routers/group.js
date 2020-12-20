@@ -8,7 +8,7 @@ const router = new express.Router();
 
 /**
  * POST a new group
- * Add the authenticated user to the memberIDs array
+ * Add the authenticated user to the members array
  * @param {String} name required in req.body
  * @param {String} key entryKey for this group
  * @returns {Group} created group
@@ -22,9 +22,13 @@ router.post("/groups", auth, async (req, res) => {
       group.entryKey = key;
     }
 
-    // add this user to the group's memberIDs
-    group.memberIDs = group.memberIDs.concat(req.user._id);
+    // add this user to the group's members
+    group.members = group.members.concat(req.user._id);
     await group.save();
+
+    // add this group id to user's groups
+    req.user.groups = req.user.groups.concat(group._id);
+    await req.user.save();
 
     res.send(group);
   } catch (error) {
@@ -40,7 +44,7 @@ router.post("/groups", auth, async (req, res) => {
 
 /**
  * Join an existing group from an entryKey
- * Find group that matches entryKey and add self to memberIDs
+ * Find group that matches entryKey and add self to members
  * @param {String} entryKey Group code
  * @returns {Group} the group user just joined
  */
@@ -50,12 +54,16 @@ router.post("/groups/join", auth, async (req, res) => {
     if (!group) {
       return res.status(404).send({ error: "Invalid access code" });
     }
-    if (group.memberIDs.includes(req.user._id)) {
+    if (group.members.includes(req.user._id)) {
       return res.status(400).send({ error: "You are already in this group" });
     }
-    // add this user to the group's memberIDs
-    group.memberIDs = group.memberIDs.concat(req.user._id);
+    // add this user to the group's members
+    group.members = group.members.concat(req.user._id);
     await group.save();
+
+    // add this group id to user's groups
+    req.user.groups = req.user.groups.concat(group._id);
+    await req.user.save();
 
     res.send(group);
   } catch (error) {
@@ -69,7 +77,10 @@ router.post("/groups/join", auth, async (req, res) => {
  */
 router.get("/groups", async (req, res) => {
   try {
-    const groups = await Group.find();
+    const groups = await Group.find().populate(
+      "members",
+      "-tokens -password -groups"
+    );
 
     res.send(groups);
   } catch (error) {
@@ -83,19 +94,23 @@ router.get("/groups", async (req, res) => {
  * @param {ObjectId} id from query params
  * @returns {Group} matching id if it exists
  */
-router.get("/groups/:id", async (req, res) => {
-  const _id = req.params.id;
+router.get("/groups/:id", auth, async (req, res) => {
   try {
-    const group = await Group.findById(_id);
+    const group = await Group.findById(req.params.id).populate(
+      "members",
+      "-tokens -password -groups"
+    );
     if (!group) {
       return res.sendStatus(404);
     }
 
-    if (!group.memberIDs.includes(req.user._id)) {
+    const userInGroup = group.members.some(
+      (member) => member._id.toString() === req.user._id.toString()
+    );
+    if (!userInGroup) {
       return res.status(400).send({ error: "You are not in this group" });
     }
-
-    res.send({ ...group, members });
+    res.send(group);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -117,16 +132,22 @@ router.delete("/groups/:id/", auth, async (req, res) => {
       return res.sendStatus(404);
     }
 
-    if (!group.memberIDs.includes(req.user._id)) {
+    if (!group.members.includes(req.user._id)) {
       return res.status(400).send({ error: "You are not in this group" });
     }
 
     // Remove from authenticated user group's
-    group.memberIDs = group.memberIDs.filter(
+    group.members = group.members.filter(
       (groupId) => groupId.toString() !== req.user._id.toString()
     );
 
-    if (group.memberIDs.length === 0) {
+    // add this group id to user's groups
+    req.user.groups = req.user.groups.filter(
+      (groupId) => groupId.toString() !== group._id.toString()
+    );
+    await req.user.save();
+
+    if (group.members.length === 0) {
       await group.delete();
       return res.send("Group deleted");
     } else {

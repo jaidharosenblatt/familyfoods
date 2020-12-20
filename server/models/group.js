@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const User = require("./user");
 
 const groupSchema = new mongoose.Schema(
   {
@@ -7,8 +8,8 @@ const groupSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    memberIDs: {
-      type: [mongoose.Schema.Types.ObjectId],
+    members: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
       default: [],
     },
     entryKey: {
@@ -21,7 +22,7 @@ const groupSchema = new mongoose.Schema(
       },
     },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
 groupSchema.methods.toJSON = function () {
@@ -33,6 +34,6 @@ groupSchema.methods.toJSON = function () {
   return groupObject;
 };
 
-const Group = mongoose.model("group", groupSchema);
+const Group = mongoose.model("Group", groupSchema);
 
 module.exports = Group;
