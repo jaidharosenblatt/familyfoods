@@ -1,63 +1,38 @@
 import React from "react";
-import { Card, Row, Col, Space } from "antd";
-import {
-  StarFilled,
-  StarOutlined,
-  CarFilled,
-  EnvironmentFilled,
-} from "@ant-design/icons";
+import { Card, Space } from "antd";
+import { StarFilled, CarFilled, EnvironmentFilled } from "@ant-design/icons";
 
-const attributeIconMap = {
-  distance: <CarFilled />,
-  type: <EnvironmentFilled />,
-};
+/**
+ * Render a Restaurant into a card
+ * Iterates through icons map to determine properties to display
+ * @param {Restaurant} restaurant
+ * @returns {JSX}
+ */
+const RestaurantCard = ({ restaurant }) => {
+  // Map restaurant properties to an icon
+  const icons = {
+    duration: <CarFilled />,
+    distance: <EnvironmentFilled />,
+    rating: <StarFilled style={{ color: "#FFD203" }} />,
+  };
 
-const StarName = ({ score, name, width, overall }) => {
+  const fields = Object.keys(restaurant);
   return (
-    <Col xs={24} md={width} style={{ color: overall ? "#FFD203" : "#bfbfbf" }}>
-      <Space size={2}>
-        {overall ? <StarFilled /> : <StarOutlined />}
-        <p>{score}</p>
-        {name && <p>{name}</p>}
-      </Space>
-    </Col>
-  );
-};
-
-const RestaurantCard = ({ loading, restaurant }) => {
-  return (
-    <Card loading={loading}>
+    <Card>
       <div className="card-header">
-        <Row>
-          <Col span={12}>
-            <h1>{restaurant.name}</h1>
-            {restaurant.rating && (
-              <StarName
-                color="#FFD203"
-                width={6}
-                score={restaurant["score"]}
-                overall
-              />
-            )}
-          </Col>
-        </Row>
+        <h1>{restaurant.name}</h1>
       </div>
       <Space>
-        {restaurant.price && (
-          <p style={{ color: "#7AC289" }}>{restaurant.price}</p>
-        )}
-        {restaurant.distance && (
-          <Space>
-            {attributeIconMap["distance"]}
-            <p>{restaurant.distance} </p>
-          </Space>
-        )}
-        {restaurant.type && (
-          <Space>
-            {attributeIconMap["type"]}
-            <p>{restaurant.type.join(", ")} </p>
-          </Space>
-        )}
+        {fields.map((field, i) => {
+          if (field in icons) {
+            return (
+              <Space size={2} key={i}>
+                {icons[field]}
+                <p>{restaurant[field]} </p>
+              </Space>
+            );
+          }
+        })}
       </Space>
     </Card>
   );
