@@ -1,11 +1,17 @@
 import actionTypes from "./actionTypes";
 
-const reducer = (state = {}, action) => {
+const reducer = (state, action) => {
   switch (action.type) {
     case actionTypes.SET_USER:
-      return { ...state, user: action.payload };
+      return { ...state, loading: false, user: action.payload };
     case actionTypes.CLEAR_USER:
-      return { ...state, user: undefined };
+      return { ...state, loading: false, user: undefined };
+    case actionTypes.START_LOADING:
+      return { ...state, loading: true };
+    case actionTypes.STOP_LOADING:
+      return { ...state, loading: false };
+    case actionTypes.SET_ERROR:
+      return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }

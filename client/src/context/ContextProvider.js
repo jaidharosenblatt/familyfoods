@@ -1,8 +1,9 @@
-import { Context } from "./Context";
+import React from "react";
+import Context from "./Context";
 import reducer from "./reducer";
 
 const ContextProvider = (props) => {
-  const [state, dispatch] = React.useReducer(reducer);
+  const [state, dispatch] = React.useReducer(reducer, {});
 
   return (
     <Context.Provider value={{ state, dispatch }}>
