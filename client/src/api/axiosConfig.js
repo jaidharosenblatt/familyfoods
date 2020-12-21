@@ -7,8 +7,10 @@ const client = axios.create({
 /* RESPONSE INTERCEPTORS */
 const errorHandler = (error) => {
   console.log(error);
-
-  return Promise.reject({ ...error });
+  if (error?.response?.data?.error) {
+    return Promise.reject(error.response.data.error);
+  }
+  return Promise.reject(error);
 };
 
 const successHandler = (response) => {

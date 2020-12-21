@@ -14,8 +14,8 @@ const App = () => {
         <NavBar />
         <div className="navbar-container">
           <Switch>
-            {/* <Route path="/" exact component={RandomChooser} />
-            <Route path="/add" exact component={AddRestaurant} /> */}
+            {/* <Route path="/" exact component={RandomChooser} /> */}
+            <Route path="/add" exact component={AddRestaurant} />
             <Route path="/all" exact component={Restaurants} />
           </Switch>
         </div>

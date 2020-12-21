@@ -15,7 +15,7 @@ const router = new express.Router();
  * to create our own Restaurant in database
  * @param {String} name the search to make in Google API
  */
-router.post("/restaurants", async (req, res) => {
+router.post("/restaurants", authNoError, async (req, res) => {
   if (!req.body.name) {
     return res.status(400).send({
       error: "Please specify the name of the restaurant you want to add",
@@ -31,9 +31,14 @@ router.post("/restaurants", async (req, res) => {
     const withLocation = { ...candidates[0], location };
 
     const restaurant = new Restaurant(withLocation);
+    const startingLocation = req.user ? req.user.location : req.query.location;
+    const distance = await addDistanceToRestaurant(
+      startingLocation,
+      restaurant.location
+    );
 
     await restaurant.save();
-    res.send(restaurant);
+    res.send({ ...restaurant._doc, ...distance });
   } catch (error) {
     // Mongo Key error (triggered by unique place_id)
     if (error.code === 11000) {

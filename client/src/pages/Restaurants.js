@@ -48,9 +48,11 @@ const Restaurants = () => {
           </p>
         }
       >
-        {restaurants.map((restaurant, i) => {
-          return <RestaurantCard key={i} restaurant={restaurant} />;
-        })}
+        <Space direction="vertical" style={{ width: "100%" }}>
+          {restaurants.map((restaurant, i) => {
+            return <RestaurantCard key={i} restaurant={restaurant} />;
+          })}
+        </Space>
       </InfiniteScroll>
     </Space>
   );
