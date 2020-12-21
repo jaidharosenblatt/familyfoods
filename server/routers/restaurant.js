@@ -5,6 +5,7 @@ const { addDistanceToRestaurant } = require("../api/distance");
 const { getGroupRatings } = require("../util/weighting-algorithms");
 const Restaurant = require("../models/restaurant");
 const Group = require("../models/group");
+const { ServerError, catchServerError } = require("../util/errors");
 
 const router = new express.Router();
 
@@ -96,7 +97,7 @@ router.get("/restaurants", authNoError, async (req, res) => {
           );
 
           if (!group) {
-            throw new Error({ code: 404, message: "No group found" });
+            throw new ServerError("No group found", 404);
           }
           ratings = await getGroupRatings(group, restaurant);
         }
@@ -105,11 +106,7 @@ router.get("/restaurants", authNoError, async (req, res) => {
     );
     res.send(restaurants);
   } catch (error) {
-    if (error.status === 404) {
-      return res.send(error);
-    }
-    console.log(error);
-    res.send(error);
+    catchServerError(error, res);
   }
 });
 

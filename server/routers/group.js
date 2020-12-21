@@ -4,6 +4,7 @@ const crypto = require("crypto");
 const Group = require("../models/group");
 const { auth } = require("../middleware/auth");
 const { fieldsAreValid } = require("../util/validation");
+const { catchServerError, ServerError } = require("../util/errors");
 
 const router = new express.Router();
 
@@ -100,8 +101,7 @@ router.get("/groups/:id", auth, async (req, res) => {
     const group = await getGroupById(req, res, true);
     res.send(group);
   } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
+    catchServerError(error, res);
   }
 });
 
@@ -124,7 +124,7 @@ router.patch("/groups/:id", auth, async (req, res) => {
     await group.save();
     res.send(group);
   } catch (error) {
-    res.status(400).send(error);
+    catchServerError(error, res);
   }
 });
 
@@ -157,8 +157,7 @@ router.delete("/groups/:id/", auth, async (req, res) => {
       res.send(group);
     }
   } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
+    catchServerError(error, res);
   }
 });
 
@@ -175,14 +174,14 @@ const getGroupById = async (req, res, includeMembers) => {
       )
     : await Group.findById(req.params.id);
   if (!group) {
-    throw new Error("No group found");
+    throw new ServerError("No group found", 404);
   }
 
   const userInGroup = group.members.some(
     (member) => member._id.toString() === req.user._id.toString()
   );
   if (!userInGroup) {
-    throw new Error("User not in group");
+    throw new ServerError("User not in group", 403);
   }
   return group;
 };

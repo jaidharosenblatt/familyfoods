@@ -3,6 +3,7 @@ const express = require("express");
 const Review = require("../models/review");
 const { auth } = require("../middleware/auth");
 const { fieldsAreValid } = require("../util/validation");
+const { ServerError, catchServerError } = require("../util/errors");
 
 const router = new express.Router();
 
@@ -36,7 +37,7 @@ router.post("/reviews", auth, async (req, res) => {
 
     const review = new Review(req.body);
     if (!review) {
-      throw new Error();
+      throw new ServerError("No review found", 404);
     }
     await review.save();
 
@@ -47,7 +48,7 @@ router.post("/reviews", auth, async (req, res) => {
 
     res.send(review);
   } catch (error) {
-    res.sendStatus(400);
+    catchServerError(error, res);
   }
 });
 
