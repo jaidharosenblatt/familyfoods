@@ -1,25 +1,23 @@
 const Review = require("../models/review");
 const Group = require("../models/group");
 
-const getWeights = async (groupId, restaurants) => {
-  const group = await Group.findById(groupId).populate(
-    "members",
-    "-tokens -password -groups"
-  );
-
-  if (!group) {
-    throw new Error("No group found");
-  }
-
+/**
+ * Get the weighted rating information for a restaurant and a group
+ * @param {Group} group from req.query
+ * @param {Restaurant} restaurant
+ * For each restaurant return the following
+ * @returns {Restaurant} initial properties
+ * @returns {Array} array of ratings for this group shifted according to the current turn
+ * @returns {Float} its weighted rating
+ */
+const getGroupRatings = async (group, restaurant) => {
   const members = group.members.toObject();
-  const withRatings = await Promise.all(
-    restaurants.map(async (restaurant) => {
-      const ratings = await getRestaurantRatings(group, members, restaurant);
-      console.log(ratings);
-      return { restaurant, ratings };
-    })
-  );
-  return withRatings;
+
+  const ratings = await getRestaurantRatings(group, members, restaurant);
+  const shiftedRatings = shiftRatings(ratings, group.turns);
+  const weightedAverage = getWeightedAverage(shiftedRatings);
+
+  return { ratings: shiftedRatings, weightedAverage };
 };
 
 /**
@@ -50,39 +48,39 @@ const getRestaurantRatings = async (group, members, restaurant) => {
 /**
  * Get the weighted average - each item is weighted exponentially less
  * the previous using a constant from environment variables
- * @param {Array} arr
- * @returns {Float} weighted average of this arr
+ * @param {Array} ratings
+ * @returns {Float} weighted average of this ratings array
  */
-const getWeightedAverage = (arr) => {
+const getWeightedAverage = (ratings) => {
   let weight = 1;
   let sum = 0;
   let weighted_sum = 0;
   const weightConstant = parseFloat(process.env.WEIGHT_CONST);
-  for (let i = arr.length - 1; i >= 0; i--) {
+  for (let i = ratings.length - 1; i >= 0; i--) {
     weight *= weightConstant;
     sum += weight;
-    weighted_sum += arr[i] * weight;
+    weighted_sum += ratings[i].rating * weight;
   }
   return weighted_sum / sum;
 };
 
 /**
- * Shift the inputted array based off the number of turns taken
- * @param {Array} arr to shift
- * @param {Integer} turn number of iterations this arr has been through
+ * Shift the inputted ratings array based off the number of turns taken
+ * @param {Array} ratings to shift
+ * @param {Integer} turns number of iterations done by current group
  * @returns {Array} shifted array
  */
-const shiftArray = (arr, turn) => {
-  const n = arr.length;
-  if (!arr || n === 0) {
+const shiftRatings = (ratings, turns) => {
+  const n = ratings.length;
+  if (!ratings || n === 0) {
     return [];
   }
-  const shift = turn % n;
+  const shift = turns % n;
   const shifted = new Array(n);
   for (let i = 0; i < n; i++) {
-    shifted[(i + shift) % n] = arr[i];
+    shifted[(i + shift) % n] = ratings[i];
   }
   return shifted;
 };
 
-module.exports = { getWeights };
+module.exports = { getGroupRatings };

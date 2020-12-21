@@ -1,9 +1,10 @@
 const express = require("express");
 const searchPlace = require("../api/places");
 const { authNoError } = require("../middleware/auth");
-const { findDistance } = require("../api/distance");
-const { getWeights } = require("../util/weighting-algorithms");
+const { addDistanceToRestaurant } = require("../api/distance");
+const { getGroupRatings } = require("../util/weighting-algorithms");
 const Restaurant = require("../models/restaurant");
+const Group = require("../models/group");
 
 const router = new express.Router();
 
@@ -66,14 +67,10 @@ router.get("/restaurants", authNoError, async (req, res) => {
   }
 
   try {
-    const restaurants = await Restaurant.find()
+    let restaurants = await Restaurant.find()
       .sort(sort)
       .limit(limit)
       .skip(skip * limit);
-
-    if (req.query.group && restaurants.length !== 0) {
-      getWeights(req.query.group, restaurants);
-    }
 
     // Update user's location if it exists
     if (req.query.location && req.user) {
@@ -81,30 +78,39 @@ router.get("/restaurants", authNoError, async (req, res) => {
       await req.user.save();
     }
     const startingLocation = req.user ? req.user.location : req.query.location;
-    const restaurantWithDistance = await Promise.all(
-      restaurants.map(async (restaurant) =>
-        addDistanceToRestaurant(startingLocation, restaurant)
-      )
+
+    // Add distance and ratings properties to each restaurants
+    restaurants = await Promise.all(
+      restaurants.map(async (restaurant) => {
+        const distance = await addDistanceToRestaurant(
+          startingLocation,
+          restaurant.location
+        );
+
+        // If group in query then get weighted ratings
+        let ratings = {};
+        if (req.query.group) {
+          const group = await Group.findById(req.query.group).populate(
+            "members",
+            "-tokens -password -groups"
+          );
+
+          if (!group) {
+            throw new Error({ code: 404, message: "No group found" });
+          }
+          ratings = await getGroupRatings(group, restaurant);
+        }
+        return { ...restaurant._doc, ...distance, ...ratings };
+      })
     );
-    res.send(restaurantWithDistance);
+    res.send(restaurants);
   } catch (error) {
+    if (error.status === 404) {
+      return res.send(error);
+    }
     console.log(error);
-    res.sendStatus(500);
+    res.send(error);
   }
 });
-
-/**
- * @returns a restaurant with distance and duration from Google Maps API
- * @param {Location} startingLocation the coordinate to begin with
- * @param {Restaurant} restaurant to add distance and duration field
- */
-const addDistanceToRestaurant = async (startingLocation, restaurant) => {
-  const res = await findDistance(startingLocation, restaurant.location);
-  const path = res.rows[0].elements[0];
-  const distance = path.distance.text;
-  const duration = path.duration.text;
-
-  return { ...restaurant._doc, distance, duration };
-};
 
 module.exports = router;

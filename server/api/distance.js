@@ -23,4 +23,18 @@ const findDistance = async (origin, destination) => {
   return data;
 };
 
-module.exports = { defaultLocation, findDistance };
+/**
+ * @returns a restaurant with distance and duration from Google Maps API
+ * @param {Location} startingLocation the coordinate to begin with
+ * @param {Restaurant} restaurant containing location
+ */
+const addDistanceToRestaurant = async (startingLocation, location) => {
+  const res = await findDistance(startingLocation, location);
+  const path = res.rows[0].elements[0];
+  const distance = path.distance.text;
+  const duration = path.duration.text;
+
+  return { distance, duration };
+};
+
+module.exports = { defaultLocation, findDistance, addDistanceToRestaurant };
