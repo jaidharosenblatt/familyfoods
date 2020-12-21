@@ -9,7 +9,12 @@ const User = require("../models/user");
  */
 const auth = async (req, res, next) => {
   try {
-    const { user, token } = await getAuthFromCookies(req.cookies);
+    const token = req.cookies.JWT;
+
+    if (!token) {
+      throw new Error();
+    }
+    const user = await getAuthFromCookies(token);
     if (!user) {
       throw new Error();
     }
@@ -17,6 +22,7 @@ const auth = async (req, res, next) => {
     req.token = token;
     next();
   } catch (error) {
+    console.log(error);
     res.status(401).send({ error: "Please authenticate" });
   }
 };
@@ -29,30 +35,34 @@ const auth = async (req, res, next) => {
  */
 const authNoError = async (req, res, next) => {
   try {
-    const { user, token } = await getAuthFromCookies(req.cookies);
+    const token = req.cookies.JWT;
 
-    req.user = user;
-    req.token = token;
+    if (token) {
+      const user = await getAuthFromCookies(req.cookies);
+
+      req.user = user;
+      req.token = token;
+    }
+
     next();
   } catch (error) {
+    console.log(error);
     res.sendStatus(500);
   }
 };
 
 /**
  * Gets JWT token and user from cookie
- * @param {Object} cookies from req object
+ * @param {Object} token from req.cookies object
  * @returns {User}
- * @returns {JWT}
  */
-const getAuthFromCookies = async (cookies) => {
-  const token = cookies.JWT;
+const getAuthFromCookies = async (token) => {
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   const user = await User.findOne({
     _id: decoded._id,
     "tokens.token": token,
   });
-  return { user, token };
+  return user;
 };
 
 module.exports = { auth, authNoError };
