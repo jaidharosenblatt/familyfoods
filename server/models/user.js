@@ -50,6 +50,9 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.virtual("averageReview").get(function () {
+  if (this.reviews.length === 0) {
+    return 2.5;
+  }
   return this.ratingsSum / this.reviews.length;
 });
 

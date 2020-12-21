@@ -2,9 +2,8 @@ const express = require("express");
 const searchPlace = require("../api/places");
 const { authNoError } = require("../middleware/auth");
 const { findDistance } = require("../api/distance");
+const { getWeights } = require("../util/weighting-algorithms");
 const Restaurant = require("../models/restaurant");
-const Review = require("../models/review");
-const Group = require("../models/group");
 
 const router = new express.Router();
 
@@ -56,18 +55,6 @@ router.get("/restaurants", authNoError, async (req, res) => {
   const skip = parseInt(req.query.skip);
   const limit = parseInt(req.query.limit) || 5;
 
-  if (req.query.group) {
-    const group = await Group.findById(req.query.group);
-    if (!group) {
-      return res.sendStatus(404);
-    }
-    // Find reviews made by this group
-    const reviews = await Review.find({
-      groups: req.query.group,
-    });
-    console.log(reviews);
-  }
-
   const sort = {};
   if (req.query.sortBy) {
     const allowedSorts = ["name", "rating", "createdAt", "updatedAt"];
@@ -84,13 +71,16 @@ router.get("/restaurants", authNoError, async (req, res) => {
       .limit(limit)
       .skip(skip * limit);
 
+    if (req.query.group && restaurants.length !== 0) {
+      getWeights(req.query.group, restaurants);
+    }
+
     // Update user's location if it exists
     if (req.query.location && req.user) {
       req.user.location = JSON.parse(req.query.location);
       await req.user.save();
     }
     const startingLocation = req.user ? req.user.location : req.query.location;
-
     const restaurantWithDistance = await Promise.all(
       restaurants.map(async (restaurant) =>
         addDistanceToRestaurant(startingLocation, restaurant)

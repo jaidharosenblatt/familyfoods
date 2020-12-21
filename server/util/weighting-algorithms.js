@@ -1,3 +1,52 @@
+const Review = require("../models/review");
+const Group = require("../models/group");
+
+const getWeights = async (groupId, restaurants) => {
+  const group = await Group.findById(groupId).populate(
+    "members",
+    "-tokens -password -groups"
+  );
+
+  if (!group) {
+    throw new Error("No group found");
+  }
+
+  const members = group.members.toObject();
+  const withRatings = await Promise.all(
+    restaurants.map(async (restaurant) => {
+      const ratings = await getRestaurantRatings(group, members, restaurant);
+      console.log(ratings);
+      return { restaurant, ratings };
+    })
+  );
+  return withRatings;
+};
+
+/**
+ * Create an array for a given restaurant that holds the all of the users
+ * in the current group's ratings
+ * @param {Restaurant} restaurant
+ * @param {Group} group
+ * @param {Array} members
+ * @returns {Array} [{ name: String, rating: Integer }]
+ */
+const getRestaurantRatings = async (group, members, restaurant) => {
+  const userReviewMap = await Promise.all(
+    members.map(async (member) => {
+      const review = await Review.findOne({
+        groups: group,
+        restaurant: restaurant._id,
+        owner: member._id,
+      });
+      const name = member.username;
+      const rating = review ? review.rating : member.averageReview;
+
+      return { name, rating };
+    })
+  );
+  return userReviewMap;
+};
+
 /**
  * Get the weighted average - each item is weighted exponentially less
  * the previous using a constant from environment variables
@@ -36,4 +85,4 @@ const shiftArray = (arr, turn) => {
   return shifted;
 };
 
-module.exports = { getWeightedAverage, shiftArray };
+module.exports = { getWeights };
