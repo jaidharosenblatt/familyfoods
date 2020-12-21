@@ -4,6 +4,7 @@ const { authNoError } = require("../middleware/auth");
 const { findDistance } = require("../api/distance");
 const Restaurant = require("../models/restaurant");
 const Review = require("../models/review");
+const Group = require("../models/group");
 
 const router = new express.Router();
 
@@ -56,6 +57,10 @@ router.get("/restaurants", authNoError, async (req, res) => {
   const limit = parseInt(req.query.limit) || 5;
 
   if (req.query.group) {
+    const group = await Group.findById(req.query.group);
+    if (!group) {
+      return res.sendStatus(404);
+    }
     // Find reviews made by this group
     const reviews = await Review.find({
       groups: req.query.group,

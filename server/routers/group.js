@@ -97,9 +97,10 @@ router.get("/groups", async (req, res) => {
  */
 router.get("/groups/:id", auth, async (req, res) => {
   try {
-    const group = await getGroupById(req, res);
+    const group = await getGroupById(req, res, true);
     res.send(group);
   } catch (error) {
+    console.log(error);
     res.status(400).send(error);
   }
 });
@@ -123,8 +124,7 @@ router.patch("/groups/:id", auth, async (req, res) => {
     await group.save();
     res.send(group);
   } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
+    res.status(400).send(error);
   }
 });
 
@@ -135,17 +135,8 @@ router.patch("/groups/:id", auth, async (req, res) => {
  * @returns {Group} matching id if it exists
  */
 router.delete("/groups/:id/", auth, async (req, res) => {
-  const _id = req.params.id;
-
   try {
-    const group = await Group.findById(_id);
-    if (!group) {
-      return res.sendStatus(404);
-    }
-
-    if (!group.members.includes(req.user._id)) {
-      return res.status(400).send({ error: "You are not in this group" });
-    }
+    const group = await getGroupById(req, res);
 
     // Remove from authenticated user group's
     group.members = group.members.filter(
@@ -167,7 +158,7 @@ router.delete("/groups/:id/", auth, async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.sendStatus(500);
+    res.status(400).send(error);
   }
 });
 
@@ -176,28 +167,24 @@ router.delete("/groups/:id/", auth, async (req, res) => {
  * @param {ObjectId} id from query params
  * @returns {Group} updated group
  */
-const getGroupById = async (req, res) => {
-  try {
-    const group = await Group.findById(req.params.id).populate(
-      "members",
-      "-tokens -password -groups"
-    );
-    if (!group) {
-      return res.sendStatus(404);
-    }
-
-    const userInGroup = group.members.some(
-      (member) => member._id.toString() === req.user._id.toString()
-    );
-    if (!userInGroup) {
-      return res.sendStatus(400).send("You are not in this group");
-    }
-    return group;
-  } catch (error) {
-    console.log(error);
-
-    res.sendStatus(500);
+const getGroupById = async (req, res, includeMembers) => {
+  const group = includeMembers
+    ? await Group.findById(req.params.id).populate(
+        "members",
+        "-tokens -password -groups"
+      )
+    : await Group.findById(req.params.id);
+  if (!group) {
+    throw new Error("No group found");
   }
+
+  const userInGroup = group.members.some(
+    (member) => member._id.toString() === req.user._id.toString()
+  );
+  if (!userInGroup) {
+    throw new Error("User not in group");
+  }
+  return group;
 };
 
 module.exports = router;
