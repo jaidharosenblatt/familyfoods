@@ -52,6 +52,7 @@ router.post("/restaurants", async (req, res) => {
  * @param {Integer} skip page offset
  * @param {Location} location starting location for distance calc (in JSON)
  * @param {ObjectId} group the group to find reviews for
+ * @param {Boolean} count include the total number of restaurants
  */
 router.get("/restaurants", authNoError, async (req, res) => {
   const skip = parseInt(req.query.skip);
@@ -104,6 +105,11 @@ router.get("/restaurants", authNoError, async (req, res) => {
         return { ...restaurant._doc, ...distance, ...ratings };
       })
     );
+
+    if (req.query.count) {
+      const count = await Restaurant.count();
+      return res.send({ count, restaurants });
+    }
     res.send(restaurants);
   } catch (error) {
     catchServerError(error, res);

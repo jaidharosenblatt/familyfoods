@@ -7,18 +7,23 @@ import API from "../api/API";
 
 const Restaurants = () => {
   const [restaurants, setRestaurants] = useState([]);
+  const [restaurantsCount, setRestaurantsCount] = useState(0);
   const [skip, setSkip] = useState(1);
+
+  const limit = 5;
+  const doMoreRestaurantsExist = skip * limit <= restaurantsCount;
 
   useEffect(() => {
     async function setInitialRestaurants() {
-      const res = await API.getRestaurants(5, 0);
-      setRestaurants(res);
+      const res = await API.getInitialRestaurants(5);
+      setRestaurants(res.restaurants);
+      setRestaurantsCount(res.count);
     }
     setInitialRestaurants();
   }, []);
 
   async function fetchData() {
-    const fetch = await API.getRestaurants(3, skip);
+    const fetch = await API.getMoreRestaurants(limit, skip);
     const newRestaurants = restaurants.concat(fetch);
 
     setSkip(skip + 1);
@@ -35,7 +40,7 @@ const Restaurants = () => {
       <InfiniteScroll
         dataLength={restaurants.length} //This is important field to render the next data
         next={fetchData}
-        hasMore={true}
+        hasMore={doMoreRestaurantsExist}
         loader={<h4>Loading...</h4>}
         endMessage={
           <p style={{ textAlign: "center" }}>
