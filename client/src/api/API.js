@@ -6,6 +6,7 @@ import client from "./axiosConfig";
  */
 export async function getRestaurants() {
   let { data } = await client.get("/restaurants");
+  console.log(data);
   return { ...data };
 }
 

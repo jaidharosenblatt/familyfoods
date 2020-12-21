@@ -1,8 +1,7 @@
 import axios from "axios";
-const token = "keyMQdDvOvNG9iTZa";
 const client = axios.create({
-  baseURL: "https://api.airtable.com/v0/appLbsVUknlYy9WE5/",
-  headers: { Authorization: `Bearer ${token}` },
+  baseURL: "http://localhost:5000/",
+  headers: { "Access-Control-Allow-Origin": "*" },
 });
 
 export default client;
