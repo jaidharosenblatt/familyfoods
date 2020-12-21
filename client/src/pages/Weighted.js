@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Col, Row, Button } from "antd";
 import RestaurantCard from "../components/restaurantcard/RestaurantCard";
-import useRestaurants from "../functions/useRestaurants";
+import useRestaurants from "../hooks/useRestaurants";
 import "./pages.css";
 import FilterCard from "../components/filters/FilterCard";
 import Header from "../components/header/Header";
