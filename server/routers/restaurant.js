@@ -3,6 +3,7 @@ const searchPlace = require("../api/places");
 const { authNoError } = require("../middleware/auth");
 const { findDistance } = require("../api/distance");
 const Restaurant = require("../models/restaurant");
+const Review = require("../models/review");
 
 const router = new express.Router();
 
@@ -48,16 +49,23 @@ router.post("/restaurants", async (req, res) => {
  * @param {Integer} limit the number of restaurants to load in each request
  * @param {Integer} skip page offset
  * @param {Location} location starting location for distance calc (in JSON)
- * @param {ObjectId}
+ * @param {ObjectId} group the group to find reviews for
  */
 router.get("/restaurants", authNoError, async (req, res) => {
   const skip = parseInt(req.query.skip);
   const limit = parseInt(req.query.limit) || 5;
 
-  const allowedSorts = ["name", "rating", "createdAt", "updatedAt"];
+  if (req.query.group) {
+    // Find reviews made by this group
+    const reviews = await Review.find({
+      groups: req.query.group,
+    });
+    console.log(reviews);
+  }
 
   const sort = {};
   if (req.query.sortBy) {
+    const allowedSorts = ["name", "rating", "createdAt", "updatedAt"];
     const [param, order] = req.query.sortBy.split(":");
     if (!allowedSorts.includes(param)) {
       return res.status(400).send("Invalid sort param");
@@ -70,8 +78,6 @@ router.get("/restaurants", authNoError, async (req, res) => {
       .sort(sort)
       .limit(limit)
       .skip(skip * limit);
-
-    console.log(req.user);
 
     // Update user's location if it exists
     if (req.query.location && req.user) {

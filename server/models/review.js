@@ -7,6 +7,10 @@ const reviewSchema = new mongoose.Schema(
       required: true,
     },
     restaurant: { type: mongoose.Schema.Types.ObjectId, required: true },
+    groups: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Group" }],
+      required: true,
+    },
     rating: { type: Number, required: true },
   },
   { timestamps: true }

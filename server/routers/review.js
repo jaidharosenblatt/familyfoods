@@ -19,6 +19,7 @@ router.post("/reviews", auth, async (req, res) => {
 
   try {
     req.body.owner = req.user._id;
+    req.body.groups = req.user.groups;
 
     // Delete the previous rating of this restaurant
     const toDelete = await Review.findOneAndDelete({
