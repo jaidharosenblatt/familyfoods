@@ -33,6 +33,9 @@ const NavBar = () => {
             <Menu.Item key="add">
               <Link to="/add">Add Restaurant</Link>
             </Menu.Item>
+            <Menu.Item key="sigin">
+              <Link to="/signin">Sign In</Link>
+            </Menu.Item>
           </Menu>
         </Row>
       </Col>

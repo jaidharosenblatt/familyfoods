@@ -23,6 +23,16 @@ export const startLoading = () => {
 };
 
 /**
+ * Stop loading for Context
+ * @returns {Object} to dispatch to context
+ */
+export const stopLoading = () => {
+  return {
+    type: actionTypes.STOP_LOADING,
+  };
+};
+
+/**
  * Set error into Context
  * @param {String} errorMessage
  * @returns {Object} to dispatch to context
