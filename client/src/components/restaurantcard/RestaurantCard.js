@@ -1,6 +1,5 @@
 import React from "react";
 import { Card, Row, Col, Space } from "antd";
-import Tags from "../tags/Tags";
 import {
   StarFilled,
   StarOutlined,

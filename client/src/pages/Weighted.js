@@ -14,7 +14,6 @@ const RandomChooser = () => {
   });
 
   const [restaurants] = useRestaurants();
-  console.log(restaurants);
 
   return (
     <div className="chooser-container">
