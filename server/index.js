@@ -7,7 +7,6 @@ require("./db/mongoose");
 const restaurantRouter = require("./routers/restaurant");
 const userRouter = require("./routers/user");
 const groupRouter = require("./routers/group");
-const turnRouter = require("./routers/turn");
 const reviewRouter = require("./routers/review");
 
 const port = process.env.PORT;
@@ -22,7 +21,7 @@ app.use(
     credentials: true,
   })
 );
-app.use(restaurantRouter, userRouter, groupRouter, turnRouter, reviewRouter);
+app.use(restaurantRouter, userRouter, groupRouter, reviewRouter);
 
 app.listen(port, () => {
   console.log("Server is running on port ", port);

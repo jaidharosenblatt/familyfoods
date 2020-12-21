@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const User = require("./user");
 
 const groupSchema = new mongoose.Schema(
   {
@@ -11,6 +10,10 @@ const groupSchema = new mongoose.Schema(
     members: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
       default: [],
+    },
+    turns: {
+      type: Number,
+      default: 0,
     },
     entryKey: {
       type: String,

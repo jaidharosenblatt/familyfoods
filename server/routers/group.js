@@ -3,6 +3,7 @@ const crypto = require("crypto");
 
 const Group = require("../models/group");
 const { auth } = require("../middleware/auth");
+const { fieldsAreValid } = require("../util/validation");
 
 const router = new express.Router();
 
@@ -96,20 +97,30 @@ router.get("/groups", async (req, res) => {
  */
 router.get("/groups/:id", auth, async (req, res) => {
   try {
-    const group = await Group.findById(req.params.id).populate(
-      "members",
-      "-tokens -password -groups"
-    );
-    if (!group) {
-      return res.sendStatus(404);
-    }
+    const group = await getGroupById(req, res);
+    res.send(group);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
 
-    const userInGroup = group.members.some(
-      (member) => member._id.toString() === req.user._id.toString()
-    );
-    if (!userInGroup) {
-      return res.status(400).send({ error: "You are not in this group" });
-    }
+/**
+ * Update a group by id
+ * @param {ObjectId} id from query params
+ * @param {Integer} turns taken by this group
+ * @param {String} name of group
+ * @returns {Group} updated group
+ */
+router.patch("/groups/:id", auth, async (req, res) => {
+  if (!fieldsAreValid(["turns", "name"], req.body)) {
+    return res.status(400).send("Invalid update params");
+  }
+  try {
+    const group = await getGroupById(req, res);
+    const updates = Object.keys(req.body);
+
+    updates.forEach((update) => (group[update] = req.body[update]));
+    await group.save();
     res.send(group);
   } catch (error) {
     console.log(error);
@@ -159,5 +170,34 @@ router.delete("/groups/:id/", auth, async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+/**
+ * Helper function for GET/PATCH group by id
+ * @param {ObjectId} id from query params
+ * @returns {Group} updated group
+ */
+const getGroupById = async (req, res) => {
+  try {
+    const group = await Group.findById(req.params.id).populate(
+      "members",
+      "-tokens -password -groups"
+    );
+    if (!group) {
+      return res.sendStatus(404);
+    }
+
+    const userInGroup = group.members.some(
+      (member) => member._id.toString() === req.user._id.toString()
+    );
+    if (!userInGroup) {
+      return res.sendStatus(400).send("You are not in this group");
+    }
+    return group;
+  } catch (error) {
+    console.log(error);
+
+    res.sendStatus(500);
+  }
+};
 
 module.exports = router;
