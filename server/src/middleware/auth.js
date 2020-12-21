@@ -38,7 +38,7 @@ const authNoError = async (req, res, next) => {
     const token = req.cookies.JWT;
 
     if (token) {
-      const user = await getAuthFromCookies(req.cookies);
+      const user = await getAuthFromCookies(token);
 
       req.user = user;
       req.token = token;

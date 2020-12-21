@@ -10,8 +10,7 @@ const useRestaurants = () => {
   useEffect(() => {
     async function getRestaurants() {
       const res = await API.getRestaurants();
-      const data = res.records.map((element) => element.fields);
-      setRestaurants(data);
+      setRestaurants(res);
     }
     getRestaurants();
   }, []);

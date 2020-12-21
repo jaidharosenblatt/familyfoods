@@ -26,14 +26,13 @@ const StarName = ({ score, name, width, overall }) => {
 };
 
 const RestaurantCard = ({ loading, restaurant }) => {
-  const people = ["Kaden", "Jaidha", "CJ", "Gid"];
   return (
     <Card loading={loading}>
       <div className="card-header">
         <Row>
           <Col span={12}>
             <h1>{restaurant.name}</h1>
-            {restaurant.score && (
+            {restaurant.rating && (
               <StarName
                 color="#FFD203"
                 width={6}
@@ -41,9 +40,6 @@ const RestaurantCard = ({ loading, restaurant }) => {
                 overall
               />
             )}
-          </Col>
-          <Col span={12} align="right">
-            <Tags tags={restaurant.tags} />
           </Col>
         </Row>
       </div>
@@ -64,18 +60,6 @@ const RestaurantCard = ({ loading, restaurant }) => {
           </Space>
         )}
       </Space>
-      <Row gutter={4}>
-        {people.map((person) => {
-          return (
-            <StarName
-              key={person}
-              width={24 / people.length}
-              score={restaurant[person]}
-              name={person}
-            />
-          );
-        })}
-      </Row>
     </Card>
   );
 };
