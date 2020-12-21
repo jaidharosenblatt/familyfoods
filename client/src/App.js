@@ -6,6 +6,7 @@ import AddRestaurant from "./pages/AddRestaurant";
 import Restaurants from "./pages/Restaurants";
 import NavBar from "./components/navbar/NavBar";
 import MobileFooter from "./components/navbar/MobileFooter";
+import SignIn from "./pages/SignIn";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
             {/* <Route path="/" exact component={RandomChooser} /> */}
             <Route path="/add" exact component={AddRestaurant} />
             <Route path="/all" exact component={Restaurants} />
+            <Route path="/signin" exact component={SignIn} />
           </Switch>
         </div>
         <MobileFooter />

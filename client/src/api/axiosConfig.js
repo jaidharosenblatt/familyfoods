@@ -10,7 +10,7 @@ const errorHandler = (error) => {
   if (error?.response?.data?.error) {
     return Promise.reject(error.response.data.error);
   }
-  return Promise.reject(error);
+  return Promise.reject({ ...error });
 };
 
 const successHandler = (response) => {

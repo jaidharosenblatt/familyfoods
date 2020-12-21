@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
       unique: true,
+      lowercase: true,
     },
     location: {
       type: locationSchema,
@@ -86,6 +87,7 @@ userSchema.statics.findByCredentials = async (username, password) => {
   }
   // Compare hashed password
   const isMatch = await brcypt.compare(password, user.password);
+
   if (!isMatch) {
     throw new Error("Unable to log in");
   }
