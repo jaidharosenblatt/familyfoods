@@ -1,0 +1,23 @@
+.header {
+  position: fixed;
+  top: 0px;
+  height: 200px;
+  z-index: 2;
+  width: 100%;
+}
+
+.header .blur {
+  filter: blur(10px);
+  width: 100vw;
+  position: fixed;
+  top: 0px;
+  height: 200px;
+  z-index: 2;
+
+  background-color: white;
+}
+
+.header .ant-col {
+  margin-top: 68px;
+  z-index: 3;
+}

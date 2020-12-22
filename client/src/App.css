@@ -4,7 +4,7 @@
   font-family: "DM Sans";
   height: 68px;
   background-color: white;
-  z-index: 2;
+  z-index: 99;
   overflow: hidden;
   position: fixed; /* Set the navbar to fixed position */
   top: 0; /* Position the navbar at the top of the page */
@@ -15,7 +15,7 @@
   font-family: "DM Sans";
   height: 50px;
   background-color: white;
-  z-index: 2;
+  z-index: 99;
   overflow: hidden;
   position: fixed; /* Set the navbar to fixed position */
   bottom: 0; /* Position the navbar at the top of the page */
