@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Space, Spin } from "antd";
+import { Space } from "antd";
 import RestaurantCard from "./RestaurantCard";
+import LoadingWrapper from "../loading/LoadingWrapper";
 import Loading from "../loading/Loading";
 
-import Header from "../header/Header";
 import InfiniteScroll from "react-infinite-scroll-component";
 import API from "../../api/API";
 import Context from "../../context/Context";
@@ -38,12 +38,12 @@ const Restaurants = () => {
   }
 
   return (
-    <Loading>
+    <LoadingWrapper>
       <InfiniteScroll
         dataLength={restaurants.length} //This is important field to render the next data
         next={fetchData}
         hasMore={doMoreRestaurantsExist}
-        loader={<Spin />}
+        loader={<Loading />}
       >
         <Space direction="vertical" style={{ width: "100%" }}>
           {restaurants.map((restaurant, i) => {
@@ -51,7 +51,7 @@ const Restaurants = () => {
           })}
         </Space>
       </InfiniteScroll>
-    </Loading>
+    </LoadingWrapper>
   );
 };
 

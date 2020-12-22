@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import "./loading.css";
+import Context from "../../context/Context";
 
 /**
  * Wrap elements with loading screen and
@@ -8,11 +9,18 @@ import "./loading.css";
  * @param {Object} children content to display on load
  * @param {Boolean} loading state on whether page is loading
  */
-const Loading = () => {
+const Loading = (props) => {
+  const { state } = useContext(Context);
   return (
-    <div className="loading">
-      <LoadingOutlined />
-    </div>
+    <>
+      {state.loading ? (
+        <div className="page-loading">
+          <LoadingOutlined />
+        </div>
+      ) : (
+        props.children
+      )}
+    </>
   );
 };
 
