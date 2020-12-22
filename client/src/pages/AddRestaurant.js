@@ -15,10 +15,8 @@ const AddRestaurant = () => {
     if (!values.search) {
       return setError("Please input a name");
     }
-    console.log(values);
     try {
       const res = await API.createRestaurant(values.search);
-      console.log(res);
       setRestaurant(res);
       setError(undefined);
     } catch (e) {

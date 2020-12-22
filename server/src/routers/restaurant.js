@@ -24,6 +24,9 @@ router.post("/restaurants", authNoError, async (req, res) => {
 
   try {
     const { candidates } = await searchPlace(req.body.name);
+    if (!candidates || candidates.length === 0) {
+      return res.status(404).send({ error: "No restaurant found" });
+    }
 
     // move location to top level of each restaurant
     const { location } = candidates[0].geometry;
