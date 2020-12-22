@@ -27,15 +27,14 @@ const Restaurants = () => {
       dispatch(stopLoading());
     }
     setInitialRestaurants();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function fetchData() {
-    dispatch(startLoading());
     const fetch = await API.getMoreRestaurants(limit, skip);
     const newRestaurants = restaurants.concat(fetch);
     setSkip(skip + 1);
     setRestaurants(newRestaurants);
-    dispatch(stopLoading());
   }
 
   return (

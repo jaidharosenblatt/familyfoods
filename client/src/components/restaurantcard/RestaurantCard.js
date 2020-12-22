@@ -32,6 +32,7 @@ const RestaurantCard = ({ restaurant }) => {
               </Space>
             );
           }
+          return null;
         })}
       </Space>
     </Card>
