@@ -6,9 +6,10 @@ import { StarFilled, CarFilled, EnvironmentFilled } from "@ant-design/icons";
  * Render a Restaurant into a card
  * Iterates through icons map to determine properties to display
  * @param {Restaurant} restaurant
+ * @param {Boolean} hideCard render restaurant without the card
  * @returns {JSX}
  */
-const RestaurantCard = ({ restaurant }) => {
+const RestaurantCard = ({ restaurant, hideCard }) => {
   // Map restaurant properties to an icon
   const icons = {
     duration: <CarFilled />,
@@ -17,10 +18,10 @@ const RestaurantCard = ({ restaurant }) => {
   };
 
   const fields = Object.keys(restaurant);
-  return (
-    <Card>
+  const cardContent = (
+    <>
       <div className="card-header">
-        <h1>{restaurant.name}</h1>
+        <h2>{restaurant.name}</h2>
       </div>
       <Space>
         {fields.map((field, i) => {
@@ -35,8 +36,14 @@ const RestaurantCard = ({ restaurant }) => {
           return null;
         })}
       </Space>
-    </Card>
+    </>
   );
+
+  if (hideCard) {
+    return cardContent;
+  }
+
+  return <Card>{cardContent}</Card>;
 };
 
 export default RestaurantCard;

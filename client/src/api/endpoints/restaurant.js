@@ -33,6 +33,5 @@ export async function getMoreRestaurants(limit, skip) {
  */
 export async function createRestaurant(name) {
   let { data } = await client.post("/restaurants", { name });
-  console.log(data);
   return data;
 }
