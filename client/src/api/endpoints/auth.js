@@ -21,3 +21,12 @@ export async function signup(user) {
   let { data } = await client.post("/users", { ...user });
   return data;
 }
+
+/**
+ * Load user from cookie
+ * @returns {User} signed in user
+ */
+export async function loadUser(user) {
+  let { data } = await client.get("/users/me", { ...user });
+  return data;
+}

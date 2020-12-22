@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Col, Row, Button } from "antd";
-import RestaurantCard from "../components/restaurantcard/RestaurantCard";
-import useRestaurants from "../hooks/useRestaurants";
 import "./pages.css";
 import FilterCard from "../components/filters/FilterCard";
+import Restaurants from "../components/restaurants/Restaurants";
 import Header from "../components/header/Header";
 
 const RandomChooser = () => {
@@ -12,8 +11,6 @@ const RandomChooser = () => {
     price: "All",
     distance: "All",
   });
-
-  const [restaurants] = useRestaurants();
 
   return (
     <div className="chooser-container">
@@ -35,12 +32,7 @@ const RandomChooser = () => {
               </div>
             </Col>
             <Col xs={24} md={14}>
-              <Row align="center">
-                {restaurants.length === 0 && <p> No restaurants found</p>}
-              </Row>
-              {restaurants.map((restaurant, i) => (
-                <RestaurantCard key={i} restaurant={restaurant} />
-              ))}
+              <Restaurants />
             </Col>
           </Row>
         </Col>

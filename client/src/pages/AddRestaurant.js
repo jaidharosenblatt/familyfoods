@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Space } from "antd";
 import API from "../api/API";
-import RestaurantCard from "../components/restaurantcard/RestaurantCard";
+import RestaurantCard from "../components/restaurants/RestaurantCard";
 
 /**
  * Form for adding a restaurant to the DB

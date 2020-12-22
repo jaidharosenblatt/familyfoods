@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Space, Spin } from "antd";
-import RestaurantCard from "../components/restaurantcard/RestaurantCard";
-import Loading from "../components/loading/Loading";
+import RestaurantCard from "./RestaurantCard";
+import Loading from "../loading/Loading";
 
-import Header from "../components/header/Header";
+import Header from "../header/Header";
 import InfiniteScroll from "react-infinite-scroll-component";
-import API from "../api/API";
-import Context from "../context/Context";
-import { startLoading, stopLoading } from "../context/actionCreators";
+import API from "../../api/API";
+import Context from "../../context/Context";
+import { startLoading, stopLoading } from "../../context/actionCreators";
 
 const Restaurants = () => {
   const { dispatch } = useContext(Context);
@@ -38,26 +38,20 @@ const Restaurants = () => {
   }
 
   return (
-    <Space direction="vertical" style={{ width: "100%" }}>
-      <Header
-        h1="All Restaurants"
-        p="Show all the restaurants in the database"
-      />
-      <Loading>
-        <InfiniteScroll
-          dataLength={restaurants.length} //This is important field to render the next data
-          next={fetchData}
-          hasMore={doMoreRestaurantsExist}
-          loader={<Spin />}
-        >
-          <Space direction="vertical" style={{ width: "100%" }}>
-            {restaurants.map((restaurant, i) => {
-              return <RestaurantCard key={i} restaurant={restaurant} />;
-            })}
-          </Space>
-        </InfiniteScroll>
-      </Loading>
-    </Space>
+    <Loading>
+      <InfiniteScroll
+        dataLength={restaurants.length} //This is important field to render the next data
+        next={fetchData}
+        hasMore={doMoreRestaurantsExist}
+        loader={<Spin />}
+      >
+        <Space direction="vertical" style={{ width: "100%" }}>
+          {restaurants.map((restaurant, i) => {
+            return <RestaurantCard key={i} restaurant={restaurant} />;
+          })}
+        </Space>
+      </InfiniteScroll>
+    </Loading>
   );
 };
 

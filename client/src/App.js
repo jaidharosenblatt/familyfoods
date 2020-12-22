@@ -1,31 +1,42 @@
-import React from "react";
+import React, { useEffect, useReducer } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import RandomChooser from "./pages/Weighted";
+import reducer from "./context/reducer";
+import Context from "./context/Context";
+
+import Home from "./pages/Home";
 import AddRestaurant from "./pages/AddRestaurant";
-import Restaurants from "./pages/Restaurants";
 import NavBar from "./components/navbar/NavBar";
 import MobileFooter from "./components/navbar/MobileFooter";
 import SignIn from "./pages/SignIn";
-import ContextProvider from "./context/ContextProvider";
+import API from "./api/API";
 
 const App = () => {
+  const [state, dispatch] = useReducer(reducer, {});
+
+  useEffect(() => {
+    async function loadUser() {
+      const user = await API.loadUser();
+      dispatch(user);
+    }
+
+    loadUser();
+  }, []);
   return (
     <div className="App">
-      <ContextProvider>
+      <Context.Provider value={{ state, dispatch }}>
         <BrowserRouter>
           <NavBar />
           <div className="navbar-container">
             <Switch>
-              {/* <Route path="/" exact component={RandomChooser} /> */}
+              <Route path="/" exact component={Home} />
               <Route path="/add" exact component={AddRestaurant} />
-              <Route path="/all" exact component={Restaurants} />
               <Route path="/signin" exact component={SignIn} />
             </Switch>
           </div>
           <MobileFooter />
         </BrowserRouter>
-      </ContextProvider>
+      </Context.Provider>
     </div>
   );
 };
