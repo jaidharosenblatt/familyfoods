@@ -1,31 +1,63 @@
-.logo {
-  width: 32px;
-  margin-left: 20px;
+.navbar {
+  font-family: "DM Sans";
+  height: 50px;
+  z-index: 99;
+  background-color: white;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100vw;
 }
 
-.navbar p {
-  margin-right: 20px;
+.navbar a {
+  color: #595959;
   line-height: 1;
 }
 
-.navbar .mobile-wrapper {
-  padding: 10px;
-  color: white;
+.navbar .desktop {
+  display: flex;
+  position: fixed;
+  margin-top: 24px;
 }
 
-.logo-mobile {
-  font-size: 20px;
-}
-.navbar h1 {
-  font-size: 20px;
-  color: white;
-  font-weight: bold;
+.navbar .left {
+  position: fixed;
+  margin-left: 24px;
+  left: 0;
 }
 
-.navbar-footer a {
-  color: #595959;
+.navbar .right {
+  position: fixed;
+  margin-right: 24px;
+  right: 0;
 }
 
-.navbar-footer a :hover {
-  color: #1890ff;
+.navbar .mobile {
+  display: none;
+}
+
+@media only screen and (max-width: 500px) {
+  .navbar .desktop {
+    display: none;
+  }
+  .navbar .mobile {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+  }
+
+  .navbar h1 {
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+  }
+
+  .navbar .mobile .logo {
+    color: white;
+    font-size: 20px;
+  }
+  .navbar {
+    height: 50px;
+    background-color: #1890ff;
+  }
 }

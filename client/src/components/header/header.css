@@ -3,7 +3,8 @@
   top: 0px;
   height: 200px;
   z-index: 2;
-  width: 100%;
+  margin: auto;
+  width: calc(100% - 48px);
 }
 
 .header .blur {
@@ -11,7 +12,7 @@
   width: 100vw;
   position: fixed;
   top: 0px;
-  height: 200px;
+  height: 180px;
   z-index: 2;
 
   background-color: white;
@@ -20,4 +21,10 @@
 .header .ant-col {
   margin-top: 68px;
   z-index: 3;
+}
+
+@media only screen and (max-width: 500px) {
+  .header {
+    width: calc(100% - 68px);
+  }
 }

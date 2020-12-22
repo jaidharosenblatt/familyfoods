@@ -8,9 +8,11 @@ import {
   DatabaseFilled,
 } from "@ant-design/icons";
 
+import "./footer.css";
+
 const MobileFooter = () => {
   return (
-    <div className="navbar-footer">
+    <div className="footer">
       <Row align="middle" gutter={8}>
         <Col span={8} align="center">
           <Link to="/all">

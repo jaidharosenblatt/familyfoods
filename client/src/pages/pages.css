@@ -1,3 +1,9 @@
 .home-body {
-  margin-top: 170px;
+  margin-top: 100px;
+}
+
+@media only screen and (max-width: 500px) {
+  .home-body {
+    margin-top: 50px;
+  }
 }

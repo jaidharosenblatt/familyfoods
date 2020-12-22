@@ -1,33 +1,11 @@
 @import "~antd/dist/antd.css";
 
-.navbar {
-  font-family: "DM Sans";
-  height: 68px;
-  background-color: white;
-  z-index: 99;
-  overflow: hidden;
-  position: fixed; /* Set the navbar to fixed position */
-  top: 0; /* Position the navbar at the top of the page */
-  width: 100vw; /* Full width */
-}
-
-.navbar-footer {
-  font-family: "DM Sans";
-  height: 50px;
-  background-color: white;
-  z-index: 99;
-  overflow: hidden;
-  position: fixed; /* Set the navbar to fixed position */
-  bottom: 0; /* Position the navbar at the top of the page */
-  width: 100vw; /* Full width */
-}
-
 p {
   margin: 0px;
 }
 
 .navbar-container {
-  margin: 68px 20px;
+  padding: 68px 24px;
 }
 
 h1 {
@@ -53,16 +31,7 @@ h1 {
 }
 
 @media only screen and (max-width: 500px) {
-  .navbar {
-    height: 50px;
-    background-color: #1890ff;
-  }
-
   .navbar-container {
     margin: 60px 10px;
-  }
-
-  .navbar-footer {
-    display: grid;
   }
 }
