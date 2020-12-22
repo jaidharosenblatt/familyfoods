@@ -1,0 +1,27 @@
+.page-card {
+  padding: 24px;
+  height: calc(100vh - 136px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-card .ant-form {
+  width: 100vw;
+  max-width: 450px;
+}
+
+@media only screen and (max-width: 550px) {
+  .page-card .ant-card {
+    background: none;
+    border: none;
+    box-shadow: none;
+  }
+
+  .page-card .ant-card-body {
+    padding: 0px;
+  }
+  .page-card {
+    padding: 0px;
+  }
+}

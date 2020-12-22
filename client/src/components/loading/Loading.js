@@ -3,10 +3,8 @@ import { LoadingOutlined } from "@ant-design/icons";
 import "./loading.css";
 
 /**
- * Wrap elements with loading screen and
- * set has loading
- * @param {Object} children content to display on load
- * @param {Boolean} loading state on whether page is loading
+ * Centered loading indicator
+ * @returns {JSX}
  */
 const Loading = () => {
   return (

@@ -15,13 +15,13 @@ const Restaurants = () => {
   const [restaurantsCount, setRestaurantsCount] = useState(0);
   const [skip, setSkip] = useState(1);
 
-  const limit = 5;
+  const limit = 7;
   const doMoreRestaurantsExist = skip * limit <= restaurantsCount;
 
   useEffect(() => {
     async function setInitialRestaurants() {
       dispatch(startLoading());
-      const res = await API.getInitialRestaurants(5);
+      const res = await API.getInitialRestaurants(limit);
       setRestaurants(res.restaurants);
       setRestaurantsCount(res.count);
       dispatch(stopLoading());
