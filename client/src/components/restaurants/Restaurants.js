@@ -40,7 +40,7 @@ const Restaurants = () => {
   return (
     <LoadingWrapper>
       <InfiniteScroll
-        dataLength={restaurants.length} //This is important field to render the next data
+        dataLength={restaurants.length}
         next={fetchData}
         hasMore={doMoreRestaurantsExist}
         loader={<Loading />}

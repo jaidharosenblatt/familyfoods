@@ -7,6 +7,7 @@ import Home from "./Home";
 import AddRestaurant from "./AddRestaurant";
 import Context from "../context/Context";
 import { clearError } from "../context/actionCreators";
+import Groups from "./Groups";
 
 const Routes = () => {
   const location = useLocation();
@@ -28,6 +29,7 @@ const Routes = () => {
       ) : (
         <>
           <Route path="/profile" exact component={EditProfile} />
+          <Route path="/groups" exact component={Groups} />
           <Route
             path={["/signin", "/signup"]}
             exact
