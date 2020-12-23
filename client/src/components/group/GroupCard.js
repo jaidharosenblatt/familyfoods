@@ -11,7 +11,7 @@ const GroupCard = ({ group, userIsOwner }) => {
       <LeftRightRow
         left={
           <Space direction="vertical">
-            <h1>{group.name}</h1>
+            <h2>{group.name}</h2>
             <p> Active {stringToTimeAgo(group.updatedAt)}</p>
             <Space>
               {group.members.map((user, i) => {

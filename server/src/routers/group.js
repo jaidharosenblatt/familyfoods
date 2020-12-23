@@ -149,7 +149,10 @@ router.patch("/groups/:id", auth, async (req, res) => {
  */
 router.delete("/groups/:id/", auth, async (req, res) => {
   try {
-    const group = await getGroupById(req, res);
+    const group = await Group.findById(req.params.id);
+    if (!group) {
+      return res.status(404).send({ error: "No group with that id" });
+    }
 
     // Remove from authenticated user group's
     group.members = group.members.filter(
@@ -170,6 +173,7 @@ router.delete("/groups/:id/", auth, async (req, res) => {
       res.send(group);
     }
   } catch (error) {
+    console.log(error);
     catchServerError(error, res);
   }
 });

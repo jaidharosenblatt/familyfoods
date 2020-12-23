@@ -1,14 +1,16 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Space } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Space, Col } from "antd";
+import { FieldTimeOutlined } from "@ant-design/icons";
+
 import API from "../api/API";
 import GroupCard from "../components/group/GroupCard";
 import CreateGroup from "../components/group/CreateGroup";
-import Context from "../context/Context";
+import LeftRightRow from "../components/left-right-row/LeftRightRow";
 
 const Groups = () => {
-  const { state } = useContext(Context);
   const [otherGroups, setOtherGroups] = useState([]);
   const [myGroups, setMyGroups] = useState([]);
+  const [joinGroups, setJoinGroups] = useState(false);
 
   useEffect(() => {
     async function fetchGroups() {
@@ -20,18 +22,35 @@ const Groups = () => {
     fetchGroups();
   }, []);
 
+  const groups = joinGroups ? otherGroups : myGroups;
   return (
     <Space direction="vertical" style={{ width: "100%" }}>
-      <h1>Rating Groups</h1>
-      <p>Join or create a group to use personalized ratings </p>
-      {state.user && <CreateGroup />}
-      {myGroups.map((group, i) => (
-        <GroupCard key={i} group={group} userIsOwner />
+      <LeftRightRow
+        left={
+          <Space direction="vertical" size={0}>
+            <h1>My Groups</h1>
+            <p>Join or create a group to use personalized ratings </p>{" "}
+          </Space>
+        }
+        right={
+          <Space>
+            <CreateGroup />
+            <Button onClick={() => setJoinGroups(!joinGroups)} type="primary">
+              {joinGroups ? "View My Groups" : "Join a Group"}
+            </Button>
+          </Space>
+        }
+      />
+
+      {groups.map((group, i) => (
+        <GroupCard key={i} group={group} userIsOwner={!joinGroups} />
       ))}
-      <h2>All groups</h2>
-      {otherGroups.map((group, i) => (
-        <GroupCard key={i} group={group} />
-      ))}
+      {groups.length === 0 && (
+        <Col span={24} align="middle">
+          <FieldTimeOutlined style={{ fontSize: 32, color: "#262626" }} />
+          <p>No groups yet</p>
+        </Col>
+      )}
     </Space>
   );
 };
