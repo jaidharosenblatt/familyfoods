@@ -2,10 +2,11 @@ import client from "../axiosConfig";
 
 /**
  * Get all groups
+ * @param {Boolean} newOnly only show groups not already in
  * @returns {Array} of group objects
  */
-export async function getGroups() {
-  let { data } = await client.get("/groups");
+export async function getGroups(newOnly = false) {
+  let { data } = await client.get("/groups", { params: { newOnly } });
   return data;
 }
 

@@ -6,6 +6,14 @@ const reducer = (state, action) => {
       return { ...state, loading: false, user: action.payload, error: false };
     case actionTypes.CLEAR_USER:
       return { ...state, loading: false, user: undefined, error: false };
+    case actionTypes.ADD_GROUP:
+      if (!state.user) {
+        return state;
+      }
+      const groups = [action.payload, ...state.user.groups];
+      const user = { ...state.user, groups };
+      return { ...state, loading: false, user, error: false };
+
     case actionTypes.START_LOADING:
       return { ...state, loading: true };
     case actionTypes.STOP_LOADING:

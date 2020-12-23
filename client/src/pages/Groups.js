@@ -7,12 +7,15 @@ import Context from "../context/Context";
 
 const Groups = () => {
   const { state } = useContext(Context);
-  const [groups, setGroups] = useState([]);
+  const [otherGroups, setOtherGroups] = useState([]);
+  const [myGroups, setMyGroups] = useState([]);
 
   useEffect(() => {
     async function fetchGroups() {
-      const res = await API.getGroups();
-      setGroups(res);
+      const res = await API.getGroups(true);
+      setMyGroups(res.myGroups);
+      setOtherGroups(res.otherGroups);
+      console.log(res.myGroups);
     }
     fetchGroups();
   }, []);
@@ -22,7 +25,11 @@ const Groups = () => {
       <h1>Rating Groups</h1>
       <p>Join or create a group to use personalized ratings </p>
       {state.user && <CreateGroup />}
-      {groups.map((group, i) => (
+      {myGroups.map((group, i) => (
+        <GroupCard key={i} group={group} />
+      ))}
+      <h2>All groups</h2>
+      {otherGroups.map((group, i) => (
         <GroupCard key={i} group={group} />
       ))}
     </Space>

@@ -1,11 +1,12 @@
 const express = require("express");
 
 const Group = require("../models/group");
-const { auth } = require("../middleware/auth");
+const { auth, authNoError } = require("../middleware/auth");
 const { fieldsAreValid } = require("../util/validation");
 const { catchServerError, ServerError } = require("../util/errors");
 
 const router = new express.Router();
+const userFieldsToOmit = "-tokens -password -groups";
 
 /**
  * POST a new group
@@ -22,8 +23,8 @@ router.post("/groups", auth, async (req, res) => {
       group.public = false;
     }
 
-    // add this user to the group's members
-    group.members = group.members.concat(req.user._id);
+    // add this user's id to the group's members
+    group.members = group.members.concat(req.user);
     await group.save();
 
     // add this group id to user's groups
@@ -49,7 +50,10 @@ router.post("/groups", auth, async (req, res) => {
  */
 router.post("/groups/join", auth, async (req, res) => {
   try {
-    const group = await Group.findOne({ _id: req.body.id });
+    const group = await Group.findOne({ _id: req.body.id }).populate(
+      "members",
+      userFieldsToOmit
+    );
 
     if (!group) {
       return res.status(404).send({ error: "No group found" });
@@ -62,7 +66,7 @@ router.post("/groups/join", auth, async (req, res) => {
       return res.status(400).send({ error: "You are already in this group" });
     }
     // add this user to the group's members
-    group.members = group.members.concat(req.user._id);
+    group.members = group.members.concat(req.user);
     await group.save();
 
     // add this group id to user's groups
@@ -77,14 +81,25 @@ router.post("/groups/join", auth, async (req, res) => {
 
 /**
  * GET all groups from the database
- * @returns {Array}
+ * If authenticated user, split groups by which user is in
+ * @returns {Array} groups
  */
-router.get("/groups", async (req, res) => {
+router.get("/groups", authNoError, async (req, res) => {
   try {
-    const groups = await Group.find().populate(
-      "members",
-      "-tokens -password -groups"
-    );
+    if (req.user) {
+      const myGroups = await Group.find({ members: req.user._id })
+        .populate("members", userFieldsToOmit)
+        .sort({ updatedAt: 1 });
+      const otherGroups = await Group.find({ members: { $ne: req.user._id } })
+        .populate("members", userFieldsToOmit)
+        .sort({ updatedAt: 1 });
+
+      return res.send({ myGroups, otherGroups });
+    }
+
+    const groups = await Group.find()
+      .populate("members", userFieldsToOmit)
+      .sort({ updatedAt: 1 });
 
     res.send(groups);
   } catch (error) {
@@ -170,10 +185,7 @@ router.delete("/groups/:id/", auth, async (req, res) => {
  */
 const getGroupById = async (req, res, includeMembers) => {
   const group = includeMembers
-    ? await Group.findById(req.params.id).populate(
-        "members",
-        "-tokens -password -groups"
-      )
+    ? await Group.findById(req.params.id).populate("members", userFieldsToOmit)
     : await Group.findById(req.params.id);
   if (!group) {
     throw new ServerError("No group found", 404);

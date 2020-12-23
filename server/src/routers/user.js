@@ -1,6 +1,7 @@
 const express = require("express");
 
 const User = require("../models/user");
+
 const { auth } = require("../middleware/auth");
 const { fieldsAreValid } = require("../util/validation");
 const getAvatar = require("../api/avatar");

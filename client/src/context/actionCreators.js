@@ -65,3 +65,15 @@ export const clearError = () => {
     payload: undefined,
   };
 };
+
+/**
+ * Add a group to user's group's
+ * @param {Group} group next group to add
+ * @returns {Object} to dispatch to context
+ */
+export const addGroup = (group) => {
+  return {
+    type: actionTypes.ADD_GROUP,
+    payload: group,
+  };
+};

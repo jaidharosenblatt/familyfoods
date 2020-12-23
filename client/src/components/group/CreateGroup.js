@@ -4,6 +4,7 @@ import ModalWithButton from "../modal/ModalWithButton";
 import API from "../../api/API";
 import Context from "../../context/Context";
 import {
+  addGroup,
   setError,
   startLoading,
   stopLoading,
@@ -18,6 +19,7 @@ const CreateGroup = () => {
     dispatch(startLoading);
     const res = await API.createGroup(values.name, values.password);
     console.log(res);
+    dispatch(addGroup(res));
     setGroup(res);
     dispatch(stopLoading());
   };

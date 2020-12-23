@@ -3,8 +3,6 @@ import { Button, Card, Space } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
 
 const GroupCard = ({ group }) => {
-  console.log(group);
-
   return (
     <Card>
       <Space direction="vertical">
