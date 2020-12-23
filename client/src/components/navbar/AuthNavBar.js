@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Button, Space } from "antd";
 import { Link } from "react-router-dom";
-import { UserOutlined } from "@ant-design/icons";
 import Context from "../../context/Context";
+import Avatar from "antd/lib/avatar/avatar";
 
 const AuthNavBar = () => {
   const { state } = useContext(Context);
@@ -15,8 +15,8 @@ const AuthNavBar = () => {
     return (
       <Link to="/profile">
         <Space>
-          <UserOutlined />
           <p>{state.user.username}</p>
+          <Avatar src={state.user.avatar} />
         </Space>
       </Link>
     );

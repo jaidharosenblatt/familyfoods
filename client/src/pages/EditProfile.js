@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Space } from "antd";
 import API from "../api/API";
 import Context from "../context/Context";
 import {
@@ -11,6 +11,7 @@ import {
 import CenteredCard from "../components/centered-card/CenteredCard";
 import LeftRightRow from "../components/left-right-row/LeftRightRow";
 import { Link } from "react-router-dom";
+import Avatar from "antd/lib/avatar/avatar";
 
 const EditProfile = () => {
   const { state, dispatch } = useContext(Context);
@@ -35,7 +36,12 @@ const EditProfile = () => {
   return (
     <CenteredCard>
       <LeftRightRow
-        left={<h1>Your Profile</h1>}
+        left={
+          <Space>
+            <Avatar size="large" src={state.user.avatar} />
+            <h2> Your Profile</h2>
+          </Space>
+        }
         right={
           <Link to="/">
             <Button

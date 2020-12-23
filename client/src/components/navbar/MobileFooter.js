@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { Col, Row } from "antd";
 import "./navbar.css";
 import {
-  PlusCircleFilled,
-  SmileFilled,
-  HomeFilled,
+  PlusCircleOutlined,
+  UserOutlined,
+  HomeOutlined,
   UnlockFilled,
   TeamOutlined,
 } from "@ant-design/icons";
@@ -21,19 +21,19 @@ const MobileFooter = () => {
       <Row align="middle" gutter={8}>
         <Col span={6} align="center">
           <Link to={state.user ? "/profile" : "/signup"}>
-            {state.user ? <SmileFilled /> : <UnlockFilled />}
+            {state.user ? <UserOutlined /> : <UnlockFilled />}
             <p>{state.user ? state.user.username : "Sign Up"}</p>
           </Link>
         </Col>
         <Col span={6} align="center">
           <Link to="/">
-            <HomeFilled />
+            <HomeOutlined />
             <p>Restaurants</p>
           </Link>
         </Col>
         <Col span={6} align="center">
           <Link to="/add">
-            <PlusCircleFilled />
+            <PlusCircleOutlined />
             <p> Add</p>
           </Link>
         </Col>

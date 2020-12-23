@@ -115,7 +115,7 @@ router.get("/restaurants", authNoError, async (req, res) => {
     );
 
     if (req.query.count) {
-      const count = await Restaurant.count();
+      const count = await Restaurant.estimatedDocumentCount();
       return res.send({ count, restaurants });
     }
     res.send(restaurants);
