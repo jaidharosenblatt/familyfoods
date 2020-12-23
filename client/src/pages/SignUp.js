@@ -4,25 +4,28 @@ import API from "../api/API";
 import Context from "../context/Context";
 import { setError, setUser, startLoading } from "../context/actionCreators";
 import CenteredCard from "../components/centered-card/CenteredCard";
-const SignIn = () => {
+import PasswordWithConfirm from "../components/form/PasswordWithConfirm";
+
+const SignUp = () => {
   const { state, dispatch } = useContext(Context);
 
   const onFinish = async (values) => {
+    if (!values.username) {
+      return dispatch(setError("Please input your username"));
+    }
+    delete values.confirm;
     try {
       dispatch(startLoading());
-      const user = await API.login(values);
+      const user = await API.signup(values);
       dispatch(setUser(user));
     } catch (error) {
-      dispatch(
-        setError("Could not find an account for this username and password")
-      );
+      dispatch(setError(error));
     }
   };
   return (
     <CenteredCard>
-      <h1>Welcome Back</h1>
+      <h1>Welcome to Family Foods</h1>
       <Form
-        requiredMark={false}
         layout="vertical"
         onFinish={onFinish}
         onFinishFailed={() => dispatch(setError("Please input your password"))}
@@ -30,20 +33,12 @@ const SignIn = () => {
         <Form.Item
           name="username"
           label="Username"
-          rules={[{ required: true, message: "Please input your username" }]}
+          help={state.error}
+          validateStatus={state.error ? "error" : "validating"}
         >
           <Input />
         </Form.Item>
-        <Form.Item
-          name="password"
-          label="Password"
-          help={state.error}
-          validateStatus={state.error ? "error" : "validating"}
-          rules={[{ required: true }]}
-        >
-          <Input.Password />
-        </Form.Item>
-
+        <PasswordWithConfirm />
         <Form.Item>
           <Button
             loading={state.loading}
@@ -51,7 +46,7 @@ const SignIn = () => {
             block
             htmlType="submit"
           >
-            Sign In
+            Sign Up
           </Button>
         </Form.Item>
       </Form>
@@ -59,4 +54,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

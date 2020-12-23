@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
  * Get location of the current user
  * @returns {Location} matching backend model
  */
-const useLocation = () => {
+const useGeolocation = () => {
   const [location, setLocation] = useState({});
 
   useEffect(() => {
@@ -19,4 +19,4 @@ const useLocation = () => {
   return [location];
 };
 
-export default useLocation;
+export default useGeolocation;

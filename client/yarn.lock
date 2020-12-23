@@ -2033,7 +2033,14 @@
   dependencies:
     "color-convert" "^2.0.1"
 
-"antd@^4.4.0":
+"antd-password-input-strength@^1.1.1":
+  "integrity" "sha512-+GlDcjxBaKkReE/O9T+Ff/kgJPJ5YjtcX5ZXnNXf2d2PJQxm8Fjkesmse/nB+WY0z9OQjpy3uNrKvVsZuY4VLg=="
+  "resolved" "https://registry.npmjs.org/antd-password-input-strength/-/antd-password-input-strength-1.1.1.tgz"
+  "version" "1.1.1"
+  dependencies:
+    "zxcvbn" "^4.4.2"
+
+"antd@^4.4.0", "antd@>=3.20.3":
   "integrity" "sha512-kieGi1Isb/ddnn9E/AJVFCUgSZIqDv6HtFg7r5WWI0s6zf+nfCOtpes0oX8TdHO6mE/dL39pJG52aHNe8MwkJg=="
   "resolved" "https://registry.npmjs.org/antd/-/antd-4.9.4.tgz"
   "version" "4.9.4"
@@ -9407,7 +9414,7 @@
   optionalDependencies:
     "fsevents" "2.1.2"
 
-"react@^16.13.1", "react@>=16.0.0":
+"react@^16.13.1", "react@>=16", "react@>=16.0.0":
   "integrity" "sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g=="
   "resolved" "https://registry.npmjs.org/react/-/react-16.14.0.tgz"
   "version" "16.14.0"
@@ -11806,3 +11813,8 @@
     "which-module" "^2.0.0"
     "y18n" "^4.0.0"
     "yargs-parser" "^13.1.2"
+
+"zxcvbn@^4.4.2":
+  "integrity" "sha1-KOwXzwl0PtyrBW3dixsGJizHPDA="
+  "resolved" "https://registry.npmjs.org/zxcvbn/-/zxcvbn-4.4.2.tgz"
+  "version" "4.4.2"

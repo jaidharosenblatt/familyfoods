@@ -10,7 +10,8 @@ import NavBar from "./components/navbar/NavBar";
 import MobileFooter from "./components/navbar/MobileFooter";
 import SignIn from "./pages/SignIn";
 import API from "./api/API";
-import { setUser } from "./context/actionCreators";
+import { setUser, startLoading, stopLoading } from "./context/actionCreators";
+import SignUp from "./pages/SignUp";
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, {});
@@ -20,8 +21,9 @@ const App = () => {
       const user = await API.loadUser();
       dispatch(setUser(user));
     }
-
+    dispatch(startLoading());
     loadUser();
+    dispatch(stopLoading());
   }, []);
   return (
     <div className="App">
@@ -33,7 +35,10 @@ const App = () => {
               <Route path="/" exact component={Home} />
               <Route path="/add" exact component={AddRestaurant} />
               {!state.user ? (
-                <Route path="/signin" exact component={SignIn} />
+                <>
+                  <Route path="/signin" exact component={SignIn} />
+                  <Route path="/signup" exact component={SignUp} />
+                </>
               ) : (
                 <Route
                   path={["/signin", "/signup"]}
