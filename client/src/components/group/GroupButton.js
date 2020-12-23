@@ -3,6 +3,7 @@ import { Button, Space } from "antd";
 import API from "../../api/API";
 import Context from "../../context/Context";
 import CreateEditGroup from "./CreateEditGroup";
+import JoinGroupPassword from "./JoinGroupPassword";
 
 const GroupButton = ({ group, userInGroup }) => {
   const { state } = useContext(Context);
@@ -27,16 +28,18 @@ const GroupButton = ({ group, userInGroup }) => {
 
   if (userInGroup) {
     return (
-      <Button onClick={deleteGroup} size="large" type="danger">
+      <Button onClick={deleteGroup} type="danger">
         {group.members.length > 1 ? "Leave Group" : "Delete Group"}
       </Button>
     );
   }
 
-  return (
-    <Button onClick={joinGroup} size="large" type="primary">
-      {group.public ? "Join Group" : "Enter Password"}
+  return group.public ? (
+    <Button onClick={joinGroup} type="primary">
+      Join Group
     </Button>
+  ) : (
+    <JoinGroupPassword group={group} />
   );
 };
 

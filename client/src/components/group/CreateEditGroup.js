@@ -42,7 +42,7 @@ const CreateEditGroup = ({ group }) => {
         initialValues={group}
         layout="vertical"
         onFinish={onFinish}
-        onFinishFailed={() => dispatch(setError("Please input your password"))}
+        onFinishFailed={() => dispatch(setError("Please input a password"))}
       >
         <Form.Item
           name="name"
