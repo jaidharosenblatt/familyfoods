@@ -4,7 +4,7 @@ import { FieldTimeOutlined } from "@ant-design/icons";
 
 import API from "../api/API";
 import GroupCard from "../components/group/GroupCard";
-import CreateGroup from "../components/group/CreateGroup";
+import CreateGroup from "../components/group/CreateEditGroup";
 import LeftRightRow from "../components/left-right-row/LeftRightRow";
 
 const Groups = () => {
@@ -30,7 +30,7 @@ const Groups = () => {
       <LeftRightRow
         left={
           <Space direction="vertical" size={0}>
-            <h1>My Groups</h1>
+            <h1>{!joinGroups && "My"} Groups</h1>
             <p>Join or create a group to use personalized ratings </p>{" "}
           </Space>
         }
@@ -45,7 +45,7 @@ const Groups = () => {
       />
 
       {groups.map((group, i) => (
-        <GroupCard key={i} group={group} userIsOwner={!joinGroups} />
+        <GroupCard key={i} group={group} userInGroup={!joinGroups} />
       ))}
       {groups.length === 0 && (
         <Col span={24} align="middle">

@@ -10,15 +10,18 @@ import {
   stopLoading,
 } from "../../context/actionCreators";
 
-const CreateGroup = () => {
+const CreateEditGroup = ({ group }) => {
   const { state, dispatch } = useContext(Context);
-  const [locked, setLocked] = useState(false);
+  const [locked, setLocked] = useState(group ? !group.public : false);
   const [visible, setVisible] = useState(false);
 
-  const onFinish = async (values) => {
+  const onFinish = async (form) => {
     try {
+      const values = { ...form, public: !locked };
       dispatch(startLoading);
-      const res = await API.createGroup(values.name, values.password);
+      const res = group
+        ? await API.editGroup(group._id, values)
+        : await API.createGroup(values);
       dispatch(addGroup(res));
       dispatch(stopLoading());
       setVisible(false);
@@ -31,11 +34,12 @@ const CreateGroup = () => {
     <ModalWithButton
       parentVisible={visible}
       setParentVisible={setVisible}
-      buttonText="Create a Group"
+      buttonText={group ? "Edit" : "Create a Group"}
     >
-      <h1>Create a Group</h1>
+      <h1>{group ? "Edit" : "Create"} a Group</h1>
       <Form
         requiredMark={false}
+        initialValues={group}
         layout="vertical"
         onFinish={onFinish}
         onFinishFailed={() => dispatch(setError("Please input your password"))}
@@ -51,7 +55,10 @@ const CreateGroup = () => {
         <Form.Item>
           <Space>
             Require password
-            <Switch onChange={() => setLocked(!locked)} />
+            <Switch
+              defaultChecked={locked}
+              onChange={() => setLocked(!locked)}
+            />
           </Space>
         </Form.Item>
 
@@ -74,11 +81,11 @@ const CreateGroup = () => {
             block
             htmlType="submit"
           >
-            Create Group
+            {group ? "Edit Group" : "Create Group"}
           </Button>
         </Form.Item>
       </Form>
     </ModalWithButton>
   );
 };
-export default CreateGroup;
+export default CreateEditGroup;

@@ -12,12 +12,11 @@ export async function getGroups(newOnly = false) {
 
 /**
  * Create a new group
- * @param {String} name from client form
- * @param {String} password optional
+ * @param {Object} values new group from form
  * @returns {Group} new group from db
  */
-export async function createGroup(name, password) {
-  let { data } = await client.post("/groups", { name, password });
+export async function createGroup(values) {
+  let { data } = await client.post("/groups", values);
   return data;
 }
 
@@ -39,5 +38,16 @@ export async function joinGroup(id, password) {
  */
 export async function deleteGroup(id) {
   let { data } = await client.delete(`/groups/${id}`);
+  return data;
+}
+
+/**
+ * Edit a group
+ * @param {ObjectId} id of a group
+ * @param {Object} values new group from form
+ * @returns {Group} the group from db
+ */
+export async function editGroup(id, values) {
+  let { data } = await client.patch(`/groups/${id}`, values);
   return data;
 }

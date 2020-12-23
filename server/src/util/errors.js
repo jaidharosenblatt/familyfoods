@@ -29,7 +29,7 @@ const catchServerError = (error, res) => {
     return res.status(error.status).send(error.message);
   }
   console.log(error);
-  res.sendStatus(500);
+  res.status(500).send({ error: "Something went wrong" });
 };
 
 module.exports = { ServerError, catchServerError };

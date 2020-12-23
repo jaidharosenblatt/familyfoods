@@ -10,7 +10,6 @@ import { Modal, Button } from "antd";
  */
 const ModalWithButton = (props) => {
   const [visible, setVisible] = useState(false);
-  console.log(props);
 
   return (
     <>

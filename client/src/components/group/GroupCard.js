@@ -5,7 +5,7 @@ import GroupButton from "./GroupButton";
 import LeftRightRow from "../left-right-row/LeftRightRow";
 import { stringToTimeAgo } from "../../util/date";
 
-const GroupCard = ({ group, userIsOwner }) => {
+const GroupCard = ({ group, userInGroup }) => {
   return (
     <Card>
       <LeftRightRow
@@ -24,7 +24,7 @@ const GroupCard = ({ group, userIsOwner }) => {
             </Space>
           </Space>
         }
-        right={<GroupButton group={group} userIsOwner={userIsOwner} />}
+        right={<GroupButton group={group} userInGroup={userInGroup} />}
       />
     </Card>
   );
