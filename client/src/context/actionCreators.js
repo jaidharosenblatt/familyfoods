@@ -54,3 +54,14 @@ export const setError = (errorMessage) => {
     payload: errorMessage,
   };
 };
+
+/**
+ * Clear error in Context
+ * @returns {Object} to dispatch to context
+ */
+export const clearError = () => {
+  return {
+    type: actionTypes.SET_ERROR,
+    payload: undefined,
+  };
+};
