@@ -7,6 +7,10 @@ const groupSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    public: {
+      type: String,
+      default: true,
+    },
     members: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
       default: [],
@@ -15,14 +19,8 @@ const groupSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    entryKey: {
+    password: {
       type: String,
-      unique: true,
-      validate(value) {
-        if (value.length < 4) {
-          throw new Error("entryKey must be at least 4 characters");
-        }
-      },
     },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
@@ -32,7 +30,7 @@ groupSchema.methods.toJSON = function () {
   const group = this;
   const groupObject = group.toObject();
 
-  delete groupObject.entryKey;
+  delete groupObject.password;
 
   return groupObject;
 };

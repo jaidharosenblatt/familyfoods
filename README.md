@@ -52,8 +52,7 @@ Web-app to help my family choose a restaurant to go out to eat to
 
 - Integrate query params into restaurants (done)
 - Add new restaurant (done)
-- Add additional attributes to restaurants
-- Auth routes
+- Auth routes (done)
   - Signup (done)
   - Signin (done)
   - Edit profile (done)
@@ -62,6 +61,7 @@ Web-app to help my family choose a restaurant to go out to eat to
   - Join
   - Edit
 - Take turn
+- Add additional attributes to restaurants
 - Update location
 
 #### Extra

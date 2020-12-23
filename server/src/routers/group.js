@@ -1,5 +1,4 @@
 const express = require("express");
-const crypto = require("crypto");
 
 const Group = require("../models/group");
 const { auth } = require("../middleware/auth");
@@ -12,16 +11,15 @@ const router = new express.Router();
  * POST a new group
  * Add the authenticated user to the members array
  * @param {String} name required in req.body
- * @param {String} key entryKey for this group
+ * @param {String} password password to join this group
  * @returns {Group} created group
  */
 router.post("/groups", auth, async (req, res) => {
   try {
     const group = new Group(req.body);
 
-    const key = crypto.randomBytes(3).toString("hex");
-    if (!group.entryKey) {
-      group.entryKey = key;
+    if (req.body.password) {
+      group.public = false;
     }
 
     // add this user to the group's members
@@ -36,26 +34,30 @@ router.post("/groups", auth, async (req, res) => {
   } catch (error) {
     console.log(error);
     if (error.code === 11000) {
-      return res
-        .status(400)
-        .send({ error: "Group name or entry code already exists" });
+      return res.status(400).send({ error: "Group name already exists" });
     }
     res.sendStatus(400);
   }
 });
 
 /**
- * Join an existing group from an entryKey
+ * Join an existing group from an password or id if group is open
  * Find group that matches entryKey and add self to members
- * @param {String} entryKey Group code
+ * @param {String} id the id for the open group to join
+ * @param {String} password Group code
  * @returns {Group} the group user just joined
  */
 router.post("/groups/join", auth, async (req, res) => {
   try {
-    const group = await Group.findOne(req.body);
+    const group = await Group.findOne({ _id: req.body.id });
+
     if (!group) {
-      return res.status(404).send({ error: "Invalid access code" });
+      return res.status(404).send({ error: "No group found" });
     }
+    if (!group.public && group.password !== req.body.password) {
+      return res.status(403).send({ error: "Invalid password" });
+    }
+
     if (group.members.includes(req.user._id)) {
       return res.status(400).send({ error: "You are already in this group" });
     }
