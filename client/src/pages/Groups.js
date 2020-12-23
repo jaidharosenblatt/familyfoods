@@ -26,7 +26,7 @@ const Groups = () => {
       <p>Join or create a group to use personalized ratings </p>
       {state.user && <CreateGroup />}
       {myGroups.map((group, i) => (
-        <GroupCard key={i} group={group} />
+        <GroupCard key={i} group={group} userIsOwner />
       ))}
       <h2>All groups</h2>
       {otherGroups.map((group, i) => (

@@ -1,27 +1,31 @@
 import React from "react";
-import { Button, Card, Space } from "antd";
+import { Card, Space } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
+import GroupButton from "./GroupButton";
+import LeftRightRow from "../left-right-row/LeftRightRow";
+import { stringToTimeAgo } from "../../util/date";
 
-const GroupCard = ({ group }) => {
+const GroupCard = ({ group, userIsOwner }) => {
   return (
     <Card>
-      <Space direction="vertical">
-        <h1>{group.name}</h1>
-        <Space>
-          {group.members.map((user, i) => {
-            return (
-              <p key={i}>
-                <Avatar src={user.avatar} /> {user.username}
-              </p>
-            );
-          })}
-        </Space>
-        {group.public ? (
-          <Button type="primary">Join</Button>
-        ) : (
-          <Button type="primary">Enter Password</Button>
-        )}
-      </Space>
+      <LeftRightRow
+        left={
+          <Space direction="vertical">
+            <h1>{group.name}</h1>
+            <p> Active {stringToTimeAgo(group.updatedAt)}</p>
+            <Space>
+              {group.members.map((user, i) => {
+                return (
+                  <p key={i}>
+                    <Avatar src={user.avatar} /> {user.username}
+                  </p>
+                );
+              })}
+            </Space>
+          </Space>
+        }
+        right={<GroupButton group={group} userIsOwner={userIsOwner} />}
+      />
     </Card>
   );
 };

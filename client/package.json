@@ -9,6 +9,7 @@
     "antd": "^4.4.0",
     "antd-password-input-strength": "^1.1.1",
     "axios": "^0.19.2",
+    "javascript-time-ago": "^2.3.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-infinite-scroll-component": "^5.1.0",

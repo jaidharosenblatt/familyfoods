@@ -89,10 +89,10 @@ router.get("/groups", auth, async (req, res) => {
     if (req.user) {
       const myGroups = await Group.find({ members: req.user._id })
         .populate("members", userFieldsToOmit)
-        .sort({ updatedAt: 1 });
+        .sort({ updatedAt: -1 });
       const otherGroups = await Group.find({ members: { $ne: req.user._id } })
         .populate("members", userFieldsToOmit)
-        .sort({ updatedAt: 1 });
+        .sort({ updatedAt: -1 });
 
       return res.send({ myGroups, otherGroups });
     }
