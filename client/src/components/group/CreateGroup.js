@@ -13,16 +13,26 @@ import {
 const CreateGroup = () => {
   const { state, dispatch } = useContext(Context);
   const [locked, setLocked] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const onFinish = async (values) => {
-    dispatch(startLoading);
-    const res = await API.createGroup(values.name, values.password);
-    dispatch(addGroup(res));
-    dispatch(stopLoading());
+    try {
+      dispatch(startLoading);
+      const res = await API.createGroup(values.name, values.password);
+      dispatch(addGroup(res));
+      dispatch(stopLoading());
+      setVisible(false);
+    } catch (error) {
+      dispatch(setError(error));
+    }
   };
 
   return (
-    <ModalWithButton buttonText="Create a Group">
+    <ModalWithButton
+      parentVisible={visible}
+      setParentVisible={setVisible}
+      buttonText="Create a Group"
+    >
       <h1>Create a Group</h1>
       <Form
         requiredMark={false}
@@ -64,7 +74,7 @@ const CreateGroup = () => {
             block
             htmlType="submit"
           >
-            Sign In
+            Create Group
           </Button>
         </Form.Item>
       </Form>

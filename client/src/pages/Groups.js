@@ -17,7 +17,9 @@ const Groups = () => {
       const res = await API.getGroups(true);
       setMyGroups(res.myGroups);
       setOtherGroups(res.otherGroups);
-      console.log(res.myGroups);
+      if (res.myGroups.length === 0) {
+        setJoinGroups(true);
+      }
     }
     fetchGroups();
   }, []);

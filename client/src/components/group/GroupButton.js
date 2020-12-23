@@ -12,29 +12,16 @@ const GroupButton = ({ group, userIsOwner }) => {
   };
 
   if (userIsOwner) {
-    if (group.members.length > 1) {
-      return (
-        <Button onClick={deleteGroup} size="large" type="danger">
-          Leave
-        </Button>
-      );
-    }
     return (
-      <Button onClick={deleteGroup} size="large" danger type="primary">
-        Delete
+      <Button onClick={deleteGroup} size="large" type="danger">
+        {group.members.length > 1 ? "Leave Group" : "Delete Group"}
       </Button>
     );
   }
-  if (group.public) {
-    return (
-      <Button onClick={joinGroup} size="large" type="primary">
-        Join
-      </Button>
-    );
-  }
+
   return (
     <Button onClick={joinGroup} size="large" type="primary">
-      Enter Password
+      {group.public ? "Join Group" : "Enter Password"}
     </Button>
   );
 };
