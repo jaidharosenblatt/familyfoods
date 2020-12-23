@@ -3,6 +3,7 @@ const express = require("express");
 const User = require("../models/user");
 const { auth } = require("../middleware/auth");
 const { fieldsAreValid } = require("../util/validation");
+const getAvatar = require("../api/avatar");
 
 const router = new express.Router();
 
@@ -14,7 +15,8 @@ const router = new express.Router();
  * @returns {User} user object
  */
 router.post("/users", async (req, res) => {
-  const user = new User(req.body);
+  const avatar = await getAvatar(req.body.username);
+  const user = new User({ ...req.body, avatar });
 
   try {
     await user.save();

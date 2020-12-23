@@ -31,6 +31,7 @@ const getAvatar = async (name) => {
     folder: "familyfoods",
     public_id: "avatar_" + name,
   });
+
   return url;
 };
 

@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema(
       type: locationSchema,
       trim: true,
     },
+    avatar: {
+      type: String,
+      required: true,
+    },
     groups: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Group" }],
       default: [],
