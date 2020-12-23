@@ -24,6 +24,17 @@ export async function signup(user) {
 
 /**
  * Signup a new user
+ * @param {Object} edits containing changes made
+ * @returns {Cookie} http cookie set in browser with auth
+ * @returns {User} signed in user
+ */
+export async function editProfile(edits) {
+  let { data } = await client.patch("/users/me", { ...edits });
+  return data;
+}
+
+/**
+ * Signup a new user
  * @returns {User} signed in user
  */
 export async function logout() {

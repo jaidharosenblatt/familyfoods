@@ -12,6 +12,7 @@ import SignIn from "./pages/SignIn";
 import API from "./api/API";
 import { setUser, startLoading, stopLoading } from "./context/actionCreators";
 import SignUp from "./pages/SignUp";
+import EditProfile from "./pages/EditProfile";
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, {});
@@ -40,13 +41,16 @@ const App = () => {
                   <Route path="/signup" exact component={SignUp} />
                 </>
               ) : (
-                <Route
-                  path={["/signin", "/signup"]}
-                  exact
-                  component={() => {
-                    return <Redirect to={"/"} />;
-                  }}
-                />
+                <>
+                  <Route path="/profile" exact component={EditProfile} />
+                  <Route
+                    path={["/signin", "/signup"]}
+                    exact
+                    component={() => {
+                      return <Redirect to={"/"} />;
+                    }}
+                  />
+                </>
               )}
             </Switch>
           </div>

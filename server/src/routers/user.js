@@ -88,6 +88,7 @@ router.patch("/users/me", auth, async (req, res) => {
   }
 
   try {
+    const updates = Object.keys(req.body);
     updates.forEach((update) => (req.user[update] = req.body[update]));
     await req.user.save();
 
@@ -96,7 +97,7 @@ router.patch("/users/me", auth, async (req, res) => {
     if (e.code === 11000) {
       return res.status(400).send({ error: "Username already exists" });
     }
-    res.sendStatus(400);
+    res.sendStatus(400).send({ error: "Invalid username" });
   }
 });
 
