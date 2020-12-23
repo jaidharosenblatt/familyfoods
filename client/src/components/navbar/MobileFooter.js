@@ -1,29 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row } from "antd";
 import "./navbar.css";
 import {
   PlusCircleFilled,
-  SignalFilled,
-  DatabaseFilled,
+  SmileFilled,
+  HomeFilled,
+  UnlockFilled,
 } from "@ant-design/icons";
 
 import "./footer.css";
+import Context from "../../context/Context";
 
 const MobileFooter = () => {
+  const { state } = useContext(Context);
+
   return (
     <div className="footer">
       <Row align="middle" gutter={8}>
         <Col span={8} align="center">
-          <Link to="/all">
-            <DatabaseFilled />
-            <p>All</p>
+          <Link to={state.user ? "/profile" : "/signup"}>
+            {state.user ? <SmileFilled /> : <UnlockFilled />}
+            <p>{state.user ? state.user.username : "Sign Up"}</p>
           </Link>
         </Col>
         <Col span={8} align="center">
           <Link to="/">
-            <SignalFilled />
-            <p>Weighted</p>
+            <HomeFilled />
+            <p>Restaurants</p>
           </Link>
         </Col>
         <Col span={8} align="center">

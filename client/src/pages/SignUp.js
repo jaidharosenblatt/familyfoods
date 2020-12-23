@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 import { Form, Input, Button } from "antd";
+import { Link } from "react-router-dom";
+
 import API from "../api/API";
 import Context from "../context/Context";
 import { setError, setUser, startLoading } from "../context/actionCreators";
@@ -49,6 +51,9 @@ const SignUp = () => {
             Sign Up
           </Button>
         </Form.Item>
+        <p>
+          Already have an account? <Link to="/signin">Sign in here.</Link>
+        </p>
       </Form>
     </CenteredCard>
   );

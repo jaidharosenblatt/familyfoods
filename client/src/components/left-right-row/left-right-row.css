@@ -1,0 +1,19 @@
+.left-right-row-container .right {
+  margin-top: 8px;
+}
+
+.left-right-row-container {
+  display: flex;
+  vertical-align: middle;
+  align-items: center;
+}
+
+.left-right-row-container .left {
+  margin-right: 8px;
+}
+
+.left-right-row-container .right {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+}

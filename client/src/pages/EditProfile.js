@@ -2,11 +2,23 @@ import React, { useContext } from "react";
 import { Form, Input, Button } from "antd";
 import API from "../api/API";
 import Context from "../context/Context";
-import { setError, setUser, startLoading } from "../context/actionCreators";
+import {
+  setError,
+  setUser,
+  startLoading,
+  logout,
+} from "../context/actionCreators";
 import CenteredCard from "../components/centered-card/CenteredCard";
+import LeftRightRow from "../components/left-right-row/LeftRightRow";
+import { Link } from "react-router-dom";
 
 const EditProfile = () => {
   const { state, dispatch } = useContext(Context);
+
+  const handleLogout = async () => {
+    await API.logout();
+    dispatch(logout());
+  };
 
   const onFinish = async (values) => {
     if (!values.username) {
@@ -22,9 +34,25 @@ const EditProfile = () => {
   };
   return (
     <CenteredCard>
-      <h1>{state.user.username}, edit your profile</h1>
+      <LeftRightRow
+        left={<h1>Your Profile</h1>}
+        right={
+          <Link to="/">
+            <Button
+              onClick={handleLogout}
+              danger
+              loading={state.loading}
+              block
+              htmlType="submit"
+            >
+              Logout
+            </Button>
+          </Link>
+        }
+      />
       <Form
         layout="vertical"
+        initialValues={state.user}
         onFinish={onFinish}
         onFinishFailed={() => dispatch(setError("Please input your password"))}
       >

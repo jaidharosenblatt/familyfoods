@@ -22,9 +22,9 @@ Web-app to help my family choose a restaurant to go out to eat to
 
 ### Tech Stack
 
-- Uses React
-- Ant.design component library
-- Uses Airtable since this only needed a one table database
+- React, Ant.design
+- Node, Express
+- MongoDB
 
 ### Getting Started
 
@@ -37,6 +37,34 @@ Web-app to help my family choose a restaurant to go out to eat to
 #### Server
 
 1. Setup a local Mongo instance
-2. Create .env file with PORT, and MONGO_URL
+2. Create .env file with
+   - PORT (int)
+   - MONGO_URL (string)
+   - JWT_SECRET (string)
+   - GOOGLE_API_SECRET (string)
+   - DEFAULT_LAT (float)
+   - DEFAULT_LNG (float)
+   - WEIGHT_CONST (float)
 3. npm install
 4. npm run dev
+
+#### TODO
+
+- Integrate query params into restaurants (done)
+- Add new restaurant (done)
+- Add additional attributes to restaurants
+- Auth routes
+  - Signup (done)
+  - Signin (done)
+  - Edit profile (done)
+- Group
+  - Add
+  - Join
+  - Edit
+- Take turn
+- Update location
+
+#### Extra
+
+- Photo upload
+- Restaurant photo

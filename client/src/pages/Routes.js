@@ -10,10 +10,10 @@ import { clearError } from "../context/actionCreators";
 
 const Routes = () => {
   const location = useLocation();
-
   const { state, dispatch } = useContext(Context);
   useEffect(() => {
     dispatch(clearError());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
   return (

@@ -2,15 +2,10 @@ import React, { useContext } from "react";
 import { Button, Space } from "antd";
 import { Link } from "react-router-dom";
 import Context from "../../context/Context";
-import API from "../../api/API";
-import { logout } from "../../context/actionCreators";
 
 const AuthNavBar = () => {
-  const { state, dispatch } = useContext(Context);
-  const handleLogout = async () => {
-    await API.logout();
-    dispatch(logout());
-  };
+  const { state } = useContext(Context);
+
   if (state.loading) {
     return <p>Loading...</p>;
   }
@@ -20,9 +15,6 @@ const AuthNavBar = () => {
       <Space>
         <Link to="/profile">
           <p>{state.user.username}</p>
-        </Link>
-        <Link onClick={handleLogout} to="/">
-          <p>Logout</p>
         </Link>
       </Space>
     );

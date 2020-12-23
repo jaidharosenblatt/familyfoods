@@ -25,6 +25,6 @@
 
 @media only screen and (max-width: 500px) {
   .header {
-    width: calc(100% - 68px);
+    width: calc(100% - 20px);
   }
 }
