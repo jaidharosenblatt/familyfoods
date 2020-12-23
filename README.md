@@ -57,9 +57,10 @@ Web-app to help my family choose a restaurant to go out to eat to
   - Signin (done)
   - Edit profile (done)
 - Group
-  - Add
-  - Join
-  - Edit
+  - Add (done)
+  - Join (done)
+  - Edit (done)
+  - Context
 - Take turn
 - Add additional attributes to restaurants
 - Update location

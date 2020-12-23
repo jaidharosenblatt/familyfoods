@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Form, Input, Button, Space } from "antd";
 import API from "../api/API";
 import RestaurantCard from "../components/restaurants/RestaurantCard";
 import CenteredCard from "../components/centered-card/CenteredCard";
+import Context from "../context/Context";
+import { clearError, startLoading, setError } from "../context/actionCreators";
 
 /**
  * Form for adding a restaurant to the DB
@@ -10,18 +12,20 @@ import CenteredCard from "../components/centered-card/CenteredCard";
  */
 const AddRestaurant = () => {
   const [restaurant, setRestaurant] = useState();
-  const [error, setError] = useState();
+  const { state, dispatch } = useContext(Context);
 
   const onFinish = async (values) => {
     if (!values.search) {
-      return setError("Please input a name");
+      return dispatch(setError("Please input a name"));
     }
+
     try {
+      dispatch(startLoading());
       const res = await API.createRestaurant(values.search);
       setRestaurant(res);
-      setError(undefined);
+      dispatch(clearError());
     } catch (e) {
-      setError(e);
+      dispatch(setError(e));
     }
   };
 
@@ -40,15 +44,20 @@ const AddRestaurant = () => {
           <h1>Add a new restaurant</h1>
           <Form layout="vertical" onFinish={onFinish} requiredMark={false}>
             <Form.Item
-              validateStatus={error ? "error" : "validating"}
-              help={error}
+              validateStatus={state.error ? "error" : "validating"}
+              help={state.error}
               name="search"
               label="Name of restaurant"
             >
               <Input />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" block htmlType="submit">
+              <Button
+                loading={state.loading}
+                type="primary"
+                block
+                htmlType="submit"
+              >
                 Add restaurant
               </Button>
             </Form.Item>
