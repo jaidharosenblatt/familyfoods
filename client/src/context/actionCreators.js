@@ -13,6 +13,17 @@ export const setUser = (user) => {
 };
 
 /**
+ * Set a user into context
+ * @returns {Object} to dispatch to context
+ */
+export const logout = () => {
+  return {
+    type: actionTypes.SET_USER,
+    payload: undefined,
+  };
+};
+
+/**
  * Start loading for Context
  * @returns {Object} to dispatch to context
  */

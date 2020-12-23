@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Menu, Row, Col, Space } from "antd";
-import "./navbar.css";
+import { Space } from "antd";
 import { HomeFilled, PlusCircleFilled } from "@ant-design/icons";
+import AuthNavBar from "./AuthNavBar";
+
+import "./navbar.css";
 
 const NavBar = () => {
   return (
@@ -32,7 +34,7 @@ const NavBar = () => {
         </div>
 
         <div className="right">
-          <Link to="/signin">Sign In</Link>
+          <AuthNavBar />
         </div>
       </div>
     </div>

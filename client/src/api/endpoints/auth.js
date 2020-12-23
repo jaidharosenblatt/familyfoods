@@ -23,6 +23,15 @@ export async function signup(user) {
 }
 
 /**
+ * Signup a new user
+ * @returns {User} signed in user
+ */
+export async function logout() {
+  let { data } = await client.post("/users/logout");
+  return data;
+}
+
+/**
  * Load user from cookie
  * @returns {User} signed in user
  */

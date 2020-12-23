@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import reducer from "./context/reducer";
 import Context from "./context/Context";
@@ -10,6 +10,7 @@ import NavBar from "./components/navbar/NavBar";
 import MobileFooter from "./components/navbar/MobileFooter";
 import SignIn from "./pages/SignIn";
 import API from "./api/API";
+import { setUser } from "./context/actionCreators";
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, {});
@@ -17,7 +18,7 @@ const App = () => {
   useEffect(() => {
     async function loadUser() {
       const user = await API.loadUser();
-      dispatch(user);
+      dispatch(setUser(user));
     }
 
     loadUser();
@@ -31,7 +32,17 @@ const App = () => {
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/add" exact component={AddRestaurant} />
-              <Route path="/signin" exact component={SignIn} />
+              {!state.user ? (
+                <Route path="/signin" exact component={SignIn} />
+              ) : (
+                <Route
+                  path={["/signin", "/signup"]}
+                  exact
+                  component={() => {
+                    return <Redirect to={"/"} />;
+                  }}
+                />
+              )}
             </Switch>
           </div>
           <MobileFooter />
