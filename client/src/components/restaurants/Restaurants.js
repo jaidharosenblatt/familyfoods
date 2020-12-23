@@ -15,7 +15,7 @@ const Restaurants = () => {
   const [restaurantsCount, setRestaurantsCount] = useState(0);
   const [skip, setSkip] = useState(1);
 
-  const limit = 7;
+  const limit = 10;
   const doMoreRestaurantsExist = skip * limit <= restaurantsCount;
 
   useEffect(() => {

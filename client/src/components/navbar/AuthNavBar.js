@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Button, Space } from "antd";
 import { Link } from "react-router-dom";
+import { UserOutlined } from "@ant-design/icons";
 import Context from "../../context/Context";
 
 const AuthNavBar = () => {
@@ -12,11 +13,12 @@ const AuthNavBar = () => {
 
   if (state.user) {
     return (
-      <Space>
-        <Link to="/profile">
+      <Link to="/profile">
+        <Space>
+          <UserOutlined />
           <p>{state.user.username}</p>
-        </Link>
-      </Space>
+        </Space>
+      </Link>
     );
   }
   return (

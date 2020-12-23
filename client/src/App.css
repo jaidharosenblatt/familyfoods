@@ -23,7 +23,10 @@ h2 {
   font-size: 16px;
   font-family: "DM Sans";
 }
-
+.ant-card {
+  line-height: 1;
+  box-shadow: 1px 4px 12px rgba(0, 0, 0, 0.02);
+}
 .ant-card-head {
   padding: 0 16px;
 }

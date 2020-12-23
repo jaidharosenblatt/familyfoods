@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Space } from "antd";
-import { HomeFilled, PlusCircleFilled } from "@ant-design/icons";
+import {
+  HomeFilled,
+  PlusCircleOutlined,
+  TeamOutlined,
+} from "@ant-design/icons";
 import AuthNavBar from "./AuthNavBar";
 
 import "./navbar.css";
@@ -24,9 +28,15 @@ const NavBar = () => {
                 <p>Family Foods</p>
               </Space>
             </Link>
+            <Link to="/groups">
+              <Space align="center" size={4}>
+                <TeamOutlined />
+                <p>Groups</p>
+              </Space>
+            </Link>
             <Link to="/add">
               <Space align="center" size={4}>
-                <PlusCircleFilled />
+                <PlusCircleOutlined />
                 <p>Add a Restaurant</p>
               </Space>
             </Link>

@@ -1,3 +1,5 @@
+import client from "../axiosConfig";
+
 /**
  * Get all groups
  * @returns {Array} of group objects

@@ -7,6 +7,7 @@ import {
   SmileFilled,
   HomeFilled,
   UnlockFilled,
+  TeamOutlined,
 } from "@ant-design/icons";
 
 import "./footer.css";
@@ -18,22 +19,28 @@ const MobileFooter = () => {
   return (
     <div className="footer">
       <Row align="middle" gutter={8}>
-        <Col span={8} align="center">
+        <Col span={6} align="center">
           <Link to={state.user ? "/profile" : "/signup"}>
             {state.user ? <SmileFilled /> : <UnlockFilled />}
             <p>{state.user ? state.user.username : "Sign Up"}</p>
           </Link>
         </Col>
-        <Col span={8} align="center">
+        <Col span={6} align="center">
           <Link to="/">
             <HomeFilled />
             <p>Restaurants</p>
           </Link>
         </Col>
-        <Col span={8} align="center">
+        <Col span={6} align="center">
           <Link to="/add">
             <PlusCircleFilled />
             <p> Add</p>
+          </Link>
+        </Col>
+        <Col span={6} align="center">
+          <Link to="/groups">
+            <TeamOutlined />
+            <p> Groups</p>
           </Link>
         </Col>
       </Row>
