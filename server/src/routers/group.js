@@ -84,7 +84,7 @@ router.post("/groups/join", auth, async (req, res) => {
  * If authenticated user, split groups by which user is in
  * @returns {Array} groups
  */
-router.get("/groups", authNoError, async (req, res) => {
+router.get("/groups", auth, async (req, res) => {
   try {
     if (req.user) {
       const myGroups = await Group.find({ members: req.user._id })
@@ -96,10 +96,6 @@ router.get("/groups", authNoError, async (req, res) => {
 
       return res.send({ myGroups, otherGroups });
     }
-
-    const groups = await Group.find()
-      .populate("members", userFieldsToOmit)
-      .sort({ updatedAt: 1 });
 
     res.send(groups);
   } catch (error) {
