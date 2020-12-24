@@ -1,53 +1,30 @@
-import React, { useContext } from "react";
-import { Col, Card, Select, Space } from "antd";
-import { TeamOutlined } from "@ant-design/icons";
+import React from "react";
+import { Col, Card, Row, Space } from "antd";
 
-import LeftRightRow from "../left-right-row/LeftRightRow";
-import Context from "../../context/Context";
-import { setGroup } from "../../context/actionCreators";
+import SortDropDown from "./SortDropDown";
+import GroupDropDown from "./GroupDropDown";
 import "./header.css";
 
 const SignedInHeader = () => {
-  const { state, dispatch } = useContext(Context);
+  // Since ant select uses anticon svg, we can't style with CSS
+  const iconStyle = { color: "#BFBFBF", fontSize: 20 };
 
-  const handleGroupSelect = (key, atr) => {
-    if (!key) {
-      return dispatch(setGroup(undefined));
-    }
-    dispatch(setGroup({ _id: key, name: atr?.name }));
-  };
   return (
     <div className="header">
-      <Col span={24}>
-        <Card>
-          <LeftRightRow
-            left={
-              <>
-                <h1>Restaurants</h1>
-                <p>Find where you should eat</p>
-              </>
-            }
-            right={
-              <Space>
-                <TeamOutlined style={{ color: "#BFBFBF", fontSize: 20 }} />
-                <Select
-                  onChange={handleGroupSelect}
-                  value={state.group?._id}
-                  allowClear={true}
-                  placeholder="Select a group"
-                  style={{ width: "100%", minWidth: 200 }}
-                >
-                  {state.user.groups.map((group, i) => (
-                    <Select.Option key={group._id} name={group.name}>
-                      {group.name}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Space>
-            }
-          />
-        </Card>
-      </Col>
+      <Card>
+        <Row>
+          <Col xs={24} lg={12}>
+            <h1>Restaurants</h1>
+            <p>Find where you should eat</p>
+          </Col>
+          <Col xs={24} lg={12} align="right">
+            <Space align="left">
+              <SortDropDown iconStyle={iconStyle} />
+              <GroupDropDown iconStyle={iconStyle} />
+            </Space>
+          </Col>
+        </Row>
+      </Card>
       <div className="blur" />
     </div>
   );

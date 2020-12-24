@@ -72,12 +72,11 @@ router.get("/restaurants", authNoError, async (req, res) => {
     const allowedSorts = [
       "name",
       "rating",
-      "createdAt",
       "updatedAt",
       "distance",
       "duration",
-      "groupRatings",
       "weightedRating",
+      "myRating",
     ];
     const [param, order] = req.query.sortBy.split(":");
     if (!allowedSorts.includes(param)) {

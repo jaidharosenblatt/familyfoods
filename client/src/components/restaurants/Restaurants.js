@@ -16,7 +16,7 @@ const Restaurants = () => {
   const [skip, setSkip] = useState(1);
 
   const limit = 10;
-  const params = { limit, group: state.group?._id };
+  const params = { limit, group: state.group?._id, sortBy: state.sort };
   const doMoreRestaurantsExist = skip * limit <= restaurantsCount;
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const Restaurants = () => {
     }
     setInitialRestaurants();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.group?._id]);
+  }, [state.group, state.sort]);
 
   async function fetchData() {
     const fetch = await API.getRestaurants({ ...params, skip });

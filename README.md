@@ -61,11 +61,14 @@ Web-app to help my family choose a restaurant to go out to eat to
   - Join (done)
   - Edit (done)
   - Context (delay)
+- Rate (done)
+- View past ratings (done)
 - Take turn
-- Rate
-- View past ratings
 - Add additional attributes to restaurants
+- Filter
 - Update location
+- Fix mobile
+- Deploy
 
 #### Extra
 
