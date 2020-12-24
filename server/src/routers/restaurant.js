@@ -6,6 +6,7 @@ const { getGroupRatings } = require("../util/weighting-algorithms");
 const Restaurant = require("../models/restaurant");
 const Group = require("../models/group");
 const { ServerError, catchServerError } = require("../util/errors");
+const Review = require("../models/review");
 
 const router = new express.Router();
 
@@ -105,6 +106,14 @@ router.get("/restaurants", authNoError, async (req, res) => {
         );
         restaurant.distance = distance;
         restaurant.duration = duration;
+
+        const myReview = await Review.findOne({
+          restaurant: restaurant._id,
+          owner: req.user._id,
+        });
+        if (myReview) {
+          restaurant.myRating = myReview.rating;
+        }
 
         // If group in query then get weighted ratings
         if (req.query.group) {

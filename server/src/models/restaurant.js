@@ -28,6 +28,9 @@ const restaurantSchema = new mongoose.Schema(
     rating: {
       type: Number,
     },
+    myRating: {
+      type: Number,
+    },
     groupRatings: {
       type: [{ name: { type: String }, rating: { type: Number } }],
     },
