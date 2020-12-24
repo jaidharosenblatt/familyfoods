@@ -27,7 +27,6 @@ const Restaurants = () => {
 
   useEffect(() => {
     async function setInitialRestaurants() {
-      console.log(params);
       const res = await API.getRestaurants({ ...params, count: true });
       dispatch(setRestaurants(res.restaurants));
       setRestaurantsCount(res.count);

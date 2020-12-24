@@ -13,13 +13,17 @@ export default function FilterDropDown({ iconStyle }) {
   const { state, dispatch } = useContext(Context);
 
   let filterOptions = [
-    { field: "myRating", name: "I've Rated" },
-    { field: "hasBreakfast", name: "Breakfast?" },
+    { field: "breakfast", name: "Breakfast" },
+    { field: "dinner", name: "Dinner" },
+    { field: "takeout", name: "Takeout" },
+    { field: "outdoorSeating", name: "Outdoor Seating" },
   ];
 
-  if (state.user?.name) {
+  // Add user ratings filters to front if user
+  if (state.user) {
     filterOptions = [
-      { field: "weightedRating", name: `${state.group.name}'s Rating` },
+      { field: "rating", name: "Have Rated" },
+      { field: "noRating", name: "Haven't Rated" },
     ].concat(filterOptions);
   }
 

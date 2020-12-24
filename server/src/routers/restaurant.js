@@ -126,7 +126,7 @@ router.get("/restaurants", authNoError, async (req, res) => {
         restaurant.duration = duration;
 
         // check if user has rated the restaurant otherwise set to 0
-        restaurant.myRating = 0;
+        restaurant.myRating = null;
 
         if (req.user) {
           const myReview = await Review.findOne({
@@ -198,15 +198,23 @@ const getSort = (sortBy) => {
 };
 
 const getFilter = (filterBy) => {
-  const filters = {};
+  let filters = {};
   if (filterBy) {
     const keys = filterBy.split(",");
-    const allowedFilters = { hasBreakfast: true, myRating: { $gt: 0 } };
+    const allowedFilters = {
+      rating: { myRating: { $gt: 0 } },
+      noRating: { myRating: null },
+      breakfast: { hasBreakfast: true },
+      dinner: { hasDinner: true },
+      takeout: { hasTakeout: true },
+      outdoorSeating: { hasOutdoorSeating: true },
+    };
     keys.forEach((key) => {
       if (!(key in allowedFilters)) {
         throw new ServerError("Invalid key param", key);
       }
-      filters[key] = allowedFilters[key];
+      const filter = allowedFilters[key];
+      filters = { ...filters, ...filter };
     });
   }
   return filters;

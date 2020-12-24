@@ -64,8 +64,10 @@ Web-app to help my family choose a restaurant to go out to eat to
 - Rate (done)
 - View past ratings (done)
 - Take turn
-- Add additional attributes to restaurants
-- Filter
+- Add additional attributes to restaurants (done)
+- Filter (done)
+- Filter by not rated (done)
+- Update additional attr
 - Update location
 - Fix mobile
 - Deploy
