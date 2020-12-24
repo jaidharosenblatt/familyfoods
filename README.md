@@ -62,6 +62,8 @@ Web-app to help my family choose a restaurant to go out to eat to
   - Edit (done)
   - Context (delay)
 - Take turn
+- Rate
+- View past ratings
 - Add additional attributes to restaurants
 - Update location
 

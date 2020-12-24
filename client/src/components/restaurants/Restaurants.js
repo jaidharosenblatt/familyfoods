@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Space, Col } from "antd";
 import RestaurantCard from "./RestaurantCard";
 import LoadingWrapper from "../loading/LoadingWrapper";
@@ -34,6 +34,14 @@ const Restaurants = () => {
     setRestaurants(newRestaurants);
   }
 
+  const makeReview = async (restaurant, rating) => {
+    await API.createReview(restaurant, rating);
+    const updatedRestaurants = restaurants.map((r) => {
+      return r._id === restaurant ? { ...r, myRating: rating } : r;
+    });
+    setRestaurants(updatedRestaurants);
+  };
+
   return (
     <LoadingWrapper>
       <InfiniteScroll
@@ -45,7 +53,13 @@ const Restaurants = () => {
         {loading && <Loading />}
         <Space direction="vertical" style={{ width: "100%" }}>
           {restaurants.map((restaurant, i) => {
-            return <RestaurantCard key={i} restaurant={restaurant} />;
+            return (
+              <RestaurantCard
+                key={i}
+                restaurant={restaurant}
+                makeReview={makeReview}
+              />
+            );
           })}
         </Space>
       </InfiniteScroll>
