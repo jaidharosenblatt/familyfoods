@@ -11,7 +11,7 @@
   max-width: 450px;
 }
 
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 768px) {
   .page-card .ant-card {
     background: none;
     border: none;

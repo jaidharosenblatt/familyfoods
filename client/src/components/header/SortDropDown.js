@@ -52,7 +52,7 @@ export default function SortDropDown({ iconStyle }) {
     }
   };
   return (
-    <Space>
+    <Space className="dropdown">
       {sortDirection === "desc" ? (
         <SortDescendingOutlined
           onClick={handleSortDirection}

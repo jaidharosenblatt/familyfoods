@@ -7,6 +7,7 @@
   width: calc(100% - 48px);
 }
 
+/* Create a div below the header card to create fade */
 .header .blur {
   filter: blur(10px);
   width: 100vw;
@@ -23,13 +24,21 @@
   min-width: 200px;
 }
 
+/* Move card below navbar */
 .header .ant-card {
   margin-top: 80px;
   z-index: 5;
 }
 
-@media only screen and (max-width: 500px) {
+.header .dropdown {
+  margin-left: 12px;
+}
+
+@media only screen and (max-width: 768px) {
   .header {
     width: calc(100% - 20px);
+  }
+  .header .dropdown {
+    margin-top: 8px;
   }
 }

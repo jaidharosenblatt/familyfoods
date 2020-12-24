@@ -12,16 +12,16 @@ const SignedInHeader = () => {
   return (
     <div className="header">
       <Card>
-        <Row>
-          <Col xs={24} lg={12}>
+        <Row gutter={24}>
+          <Col xs={24} md={6}>
             <h1>Restaurants</h1>
             <p>Find where you should eat</p>
           </Col>
-          <Col xs={24} lg={12} align="right">
-            <Space align="left">
+          <Col xs={24} md={18}>
+            <Row>
               <SortDropDown iconStyle={iconStyle} />
               <GroupDropDown iconStyle={iconStyle} />
-            </Space>
+            </Row>
           </Col>
         </Row>
       </Card>

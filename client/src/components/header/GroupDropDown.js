@@ -24,7 +24,7 @@ export default function GroupDropDown({ iconStyle }) {
   };
 
   return (
-    <Space>
+    <Space className="dropdown">
       <TeamOutlined style={iconStyle} />
       <Select
         onChange={handleGroupSelect}
