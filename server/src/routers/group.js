@@ -123,13 +123,12 @@ router.get("/groups/:id", auth, async (req, res) => {
 /**
  * Update a group by id
  * @param {ObjectId} id from query params
- * @param {Integer} turns taken by this group
  * @param {String} password for entry
  * @param {String} name of group
  * @returns {Group} updated group
  */
 router.patch("/groups/:id", auth, async (req, res) => {
-  if (!fieldsAreValid(["turns", "password", "name", "public"], req.body)) {
+  if (!fieldsAreValid(["password", "name", "public"], req.body)) {
     return res.status(400).send("Invalid update params");
   }
   try {
@@ -138,6 +137,23 @@ router.patch("/groups/:id", auth, async (req, res) => {
 
     updates.forEach((update) => (group[update] = req.body[update]));
 
+    await group.save();
+
+    res.send(group);
+  } catch (error) {
+    catchServerError(error, res);
+  }
+});
+
+/**
+ * Increment this group's turn count
+ * @param {ObjectId} id from query params
+ * @returns {Group} updated group
+ */
+router.post("/groups/:id/turn", auth, async (req, res) => {
+  try {
+    const group = await getGroupById(req, res);
+    group.turns++;
     await group.save();
 
     res.send(group);
