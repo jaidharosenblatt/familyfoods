@@ -23,8 +23,8 @@ router.post("/users", async (req, res) => {
   try {
     await user.save();
     await user.setJWTCookie(req, res);
-
-    res.status(201).send(user);
+    const userWithGroups = await getUserWithGroups(user);
+    res.status(201).send(userWithGroups);
   } catch (e) {
     if (e.code === 11000) {
       return res.status(400).send({ error: "Username already exists" });
@@ -47,8 +47,9 @@ router.post("/users/login", async (req, res) => {
       req.body.password
     );
     await user.setJWTCookie(req, res);
+    const userWithGroups = await getUserWithGroups(user);
 
-    res.send(user);
+    res.send(userWithGroups);
   } catch (e) {
     console.log(e);
     res.sendStatus(400);
@@ -61,14 +62,9 @@ router.post("/users/login", async (req, res) => {
  */
 router.get("/users/me", auth, async (req, res) => {
   try {
-    const groups = await Promise.all(
-      req.user.groups.map(async (id) => {
-        const group = await Group.findById(id);
-        return { _id: group._id, name: group.name };
-      })
-    );
+    const userWithGroups = await getUserWithGroups(req.user);
 
-    res.send({ ...req.user._doc, groups });
+    res.send(userWithGroups);
   } catch (error) {
     res.status(500).send({ error: "Unable to load user" });
   }
@@ -128,5 +124,20 @@ router.delete("/users/me", auth, async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+/**
+ * Add Group name to user groups
+ * @param {User} user
+ * @returns {User} with group
+ */
+const getUserWithGroups = async (user) => {
+  const groups = await Promise.all(
+    user.groups.map(async (id) => {
+      const group = await Group.findById(id);
+      return { _id: group._id, name: group.name };
+    })
+  );
+  return { ...user._doc, groups };
+};
 
 module.exports = router;
