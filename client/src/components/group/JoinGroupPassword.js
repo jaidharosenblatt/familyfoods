@@ -4,12 +4,15 @@ import ModalWithButton from "../modal/ModalWithButton";
 import API from "../../api/API";
 import Context from "../../context/Context";
 import {
-  addGroup,
   setError,
   startLoading,
   stopLoading,
 } from "../../context/actionCreators";
 
+/**
+ * Render a button and modal to enter in a password for a private group
+ * @param {Group} group
+ */
 const JoinGroupPassword = ({ group }) => {
   const { state, dispatch } = useContext(Context);
   const [visible, setVisible] = useState(false);

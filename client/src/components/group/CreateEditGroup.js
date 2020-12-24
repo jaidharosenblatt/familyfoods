@@ -9,6 +9,11 @@ import {
   stopLoading,
 } from "../../context/actionCreators";
 
+/**
+ * Edit or create a group
+ * Switches to edit if group is passed in
+ * @param {Group} group
+ */
 const CreateEditGroup = ({ group }) => {
   const { state, dispatch } = useContext(Context);
   const [locked, setLocked] = useState(group ? !group.public : false);

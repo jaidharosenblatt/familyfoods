@@ -7,6 +7,7 @@ import { Modal, Button } from "antd";
  * @param {Boolean} parentVisible pass visibility from parent
  * @param {Function} setParentVisible pass visibility callback from parent
  * @param {Array} children to render in modal
+ * @param {Boolean} danger whether or not to make button red
  */
 const ModalWithButton = (props) => {
   const [visible, setVisible] = useState(false);
@@ -14,6 +15,7 @@ const ModalWithButton = (props) => {
   return (
     <>
       <Button
+        danger={props.danger}
         block
         onClick={() => props.setParentVisible(true) || setVisible(true)}
       >

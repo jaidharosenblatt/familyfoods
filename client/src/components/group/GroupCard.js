@@ -5,6 +5,11 @@ import GroupButton from "./GroupButton";
 import LeftRightRow from "../left-right-row/LeftRightRow";
 import { stringToTimeAgo } from "../../util/date";
 
+/**
+ * Render out a group's card
+ * @param {Group} group to render
+ * @param {Boolean} userInGroup
+ */
 const GroupCard = ({ group, userInGroup }) => {
   return (
     <Card>
