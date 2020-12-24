@@ -7,6 +7,7 @@ const Restaurant = require("../models/restaurant");
 const Group = require("../models/group");
 const { ServerError, catchServerError } = require("../util/errors");
 const Review = require("../models/review");
+const { fieldsAreValid } = require("../util/validation");
 
 const router = new express.Router();
 
@@ -15,6 +16,7 @@ const router = new express.Router();
  * getting the first restaurant from the results, and using it
  * to create our own Restaurant in database
  * @param {String} name the search to make in Google API
+ * @returns {Restaurant} the created restaurant
  */
 router.post("/restaurants", authNoError, async (req, res) => {
   if (!req.body.name) {
@@ -54,6 +56,37 @@ router.post("/restaurants", authNoError, async (req, res) => {
 });
 
 /**
+ * Update a restaurant by its id
+ * @param {ObjectId} id in req.params
+ * @param {Object} body updates to make
+ * @returns {Restaurant} updated
+ */
+router.patch("/restaurants/:id", async (req, res) => {
+  const allowedUpdates = [
+    "hasBreakfast",
+    "hasDinner",
+    "hasTakeout",
+    "hasOutdoorSeating",
+  ];
+  if (!fieldsAreValid(allowedUpdates, req.body)) {
+    return res.status(400).send({ error: "Invalid update params" });
+  }
+  try {
+    const restaurant = await Restaurant.findById(req.params.id);
+    if (!restaurant) {
+      res.status(404).send({ error: "Unable to find this user" });
+    }
+    const updates = Object.keys(req.body);
+    updates.forEach((update) => (restaurant[update] = req.body[update]));
+    await restaurant.save();
+    res.send(restaurant);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({ error: "Unable make updates" });
+  }
+});
+
+/**
  * GET all restaurants from the database.
  * Uses pagination to limit number of restaurants returned
  * @param {String} sortBy the sort type in format param:asc or param:desc
@@ -63,6 +96,7 @@ router.post("/restaurants", authNoError, async (req, res) => {
  * @param {Location} location starting location for distance calc (in JSON)
  * @param {ObjectId} group the group to find reviews for
  * @param {Boolean} count include the total number of restaurants
+ * @returns {Array} of restaurants
  */
 router.get("/restaurants", authNoError, async (req, res) => {
   const skip = parseInt(req.query.skip);

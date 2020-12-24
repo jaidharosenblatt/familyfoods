@@ -25,6 +25,18 @@ const restaurantSchema = new mongoose.Schema(
     price_level: {
       type: Number,
     },
+    hasBreakfast: {
+      type: Boolean,
+    },
+    hasDinner: {
+      type: Boolean,
+    },
+    hasTakeout: {
+      type: Boolean,
+    },
+    hasOutdoorSeating: {
+      type: Boolean,
+    },
     rating: {
       type: Number,
     },
