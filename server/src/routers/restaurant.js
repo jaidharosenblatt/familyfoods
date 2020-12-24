@@ -68,7 +68,16 @@ router.get("/restaurants", authNoError, async (req, res) => {
 
   const sort = {};
   if (req.query.sortBy) {
-    const allowedSorts = ["name", "rating", "createdAt", "updatedAt"];
+    const allowedSorts = [
+      "name",
+      "rating",
+      "createdAt",
+      "updatedAt",
+      "distance",
+      "duration",
+      "groupRatings",
+      "weightedRating",
+    ];
     const [param, order] = req.query.sortBy.split(":");
     if (!allowedSorts.includes(param)) {
       return res.status(400).send("Invalid sort param");
@@ -77,10 +86,7 @@ router.get("/restaurants", authNoError, async (req, res) => {
   }
 
   try {
-    let restaurants = await Restaurant.find()
-      .sort(sort)
-      .limit(limit)
-      .skip(skip * limit);
+    let restaurants = await Restaurant.find();
 
     // Update user's location if it exists
     if (req.query.location && req.user) {
@@ -89,27 +95,40 @@ router.get("/restaurants", authNoError, async (req, res) => {
     }
     const startingLocation = req.user ? req.user.location : req.query.location;
 
-    // Add distance and ratings properties to each restaurants
-    restaurants = await Promise.all(
+    // Update each restaurant to add distance and ratings properties
+    // @TODO figure out how to avoid slow query then update
+    await Promise.all(
       restaurants.map(async (restaurant) => {
-        const distance = await addDistanceToRestaurant(
+        const { distance, duration } = await addDistanceToRestaurant(
           startingLocation,
           restaurant.location
         );
+        restaurant.distance = distance;
+        restaurant.duration = duration;
 
         // If group in query then get weighted ratings
-        let ratings = {};
         if (req.query.group) {
           const group = await Group.findById(req.query.group);
 
           if (!group) {
             throw new ServerError("No group found", 404);
           }
-          ratings = await getGroupRatings(group, restaurant);
+          const { groupRatings, weightedRating } = await getGroupRatings(
+            group,
+            restaurant
+          );
+          restaurant.groupRatings = groupRatings;
+          restaurant.weightedRating = weightedRating;
         }
-        return { ...restaurant._doc, ...distance, ...ratings };
+
+        restaurant.save();
       })
     );
+
+    restaurants = await Restaurant.find()
+      .sort(sort)
+      .limit(limit)
+      .skip(skip * limit);
 
     if (req.query.count) {
       const count = await Restaurant.estimatedDocumentCount();

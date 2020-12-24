@@ -14,10 +14,10 @@ const getGroupRatings = async (group, restaurant) => {
   const members = group.members.toObject();
 
   const ratings = await getRestaurantRatings(group, members, restaurant);
-  const shiftedRatings = shiftRatings(ratings, group.turns);
-  const weightedAverage = getWeightedAverage(shiftedRatings);
+  const groupRatings = shiftRatings(ratings, group.turns);
+  const weightedRating = getWeightedAverage(shiftedRatings);
 
-  return { ratings: shiftedRatings, weightedAverage };
+  return { groupRatings, weightedRating };
 };
 
 /**

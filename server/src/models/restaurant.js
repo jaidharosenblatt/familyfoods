@@ -14,10 +14,25 @@ const restaurantSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
+    distance: {
+      type: String,
+    },
+
+    duration: {
+      type: String,
+    },
+
     price_level: {
       type: Number,
     },
     rating: {
+      type: Number,
+    },
+    groupRatings: {
+      type: [{ name: { type: String }, rating: { type: Number } }],
+    },
+
+    weightedRating: {
       type: Number,
     },
   },
