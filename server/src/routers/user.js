@@ -1,6 +1,7 @@
 const express = require("express");
 
 const User = require("../models/user");
+const Group = require("../models/group");
 
 const { auth } = require("../middleware/auth");
 const { fieldsAreValid } = require("../util/validation");
@@ -59,7 +60,18 @@ router.post("/users/login", async (req, res) => {
  * @returns {User} user object
  */
 router.get("/users/me", auth, async (req, res) => {
-  res.send(req.user);
+  try {
+    const groups = await Promise.all(
+      req.user.groups.map(async (id) => {
+        const group = await Group.findById(id);
+        return { _id: group._id, name: group.name };
+      })
+    );
+
+    res.send({ ...req.user._doc, groups });
+  } catch (error) {
+    res.status(500).send({ error: "Unable to load user" });
+  }
 });
 
 /**

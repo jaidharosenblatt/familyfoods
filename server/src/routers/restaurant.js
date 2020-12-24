@@ -100,10 +100,7 @@ router.get("/restaurants", authNoError, async (req, res) => {
         // If group in query then get weighted ratings
         let ratings = {};
         if (req.query.group) {
-          const group = await Group.findById(req.query.group).populate(
-            "members",
-            "-tokens -password -groups"
-          );
+          const group = await Group.findById(req.query.group);
 
           if (!group) {
             throw new ServerError("No group found", 404);

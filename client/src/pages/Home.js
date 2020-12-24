@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./pages.css";
 import Restaurants from "../components/restaurants/Restaurants";
 import Header from "../components/header/Header";
+import Context from "../context/Context";
+import SignedInHeader from "../components/header/SignedInHeader";
 
 const Home = () => {
+  const { state } = useContext(Context);
   return (
     <div>
-      <Header
-        h1="Weighted Restaurants"
-        p="The only way that everyone (kinda) gets what they want "
-      />
+      {state.user ? <SignedInHeader /> : <Header />}
 
       <div className="home-body">
         <Restaurants />

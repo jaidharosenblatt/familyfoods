@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Button, Col, Space, Row } from "antd";
+import { Button, Col, Row } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 
 import ModalWithButton from "../modal/ModalWithButton";

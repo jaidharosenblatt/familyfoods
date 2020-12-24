@@ -60,7 +60,7 @@ Web-app to help my family choose a restaurant to go out to eat to
   - Add (done)
   - Join (done)
   - Edit (done)
-  - Context
+  - Context (delay)
 - Take turn
 - Add additional attributes to restaurants
 - Update location
