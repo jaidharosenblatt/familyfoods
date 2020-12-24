@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Form, Input, Button, Space } from "antd";
 import API from "../api/API";
-import RestaurantCard from "../components/restaurants/RestaurantCard";
+import RestaurantCardDetails from "../components/restaurants/RestaurantCardDetails";
 import CenteredCard from "../components/centered-card/CenteredCard";
 import Context from "../context/Context";
 import { clearError, startLoading, setError } from "../context/actionCreators";
@@ -34,7 +34,8 @@ const AddRestaurant = () => {
       {restaurant ? (
         <Space direction="vertical" style={{ width: "100vh", maxWidth: 450 }}>
           <h1>New restaurant! </h1>
-          <RestaurantCard hideCard restaurant={restaurant} />
+
+          <RestaurantCardDetails restaurant={restaurant} />
           <Button type="primary" block onClick={() => setRestaurant(undefined)}>
             Add another restaurant
           </Button>
