@@ -16,12 +16,12 @@ const Restaurants = () => {
   const [skip, setSkip] = useState(1);
 
   const limit = 10;
-  const filters = state.filters.join(",");
+  const filterBy = state.filters.join(",");
   const params = {
     limit,
     group: state.group?._id,
     sortBy: state.sort,
-    filters,
+    filterBy,
   };
   const doMoreRestaurantsExist = skip * limit <= restaurantsCount;
 

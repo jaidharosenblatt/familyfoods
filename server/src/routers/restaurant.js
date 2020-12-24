@@ -59,6 +59,7 @@ router.post("/restaurants", authNoError, async (req, res) => {
  * @param {String} sortBy the sort type in format param:asc or param:desc
  * @param {Integer} limit the number of restaurants to load in each request
  * @param {Integer} skip page offset
+ * @param {String} filterBy the filters comma separated ex "filter1,filter2"
  * @param {Location} location starting location for distance calc (in JSON)
  * @param {ObjectId} group the group to find reviews for
  * @param {Boolean} count include the total number of restaurants
@@ -66,24 +67,8 @@ router.post("/restaurants", authNoError, async (req, res) => {
 router.get("/restaurants", authNoError, async (req, res) => {
   const skip = parseInt(req.query.skip);
   const limit = parseInt(req.query.limit) || 5;
-
-  const sort = {};
-  if (req.query.sortBy) {
-    const allowedSorts = [
-      "name",
-      "rating",
-      "updatedAt",
-      "distance",
-      "duration",
-      "weightedRating",
-      "myRating",
-    ];
-    const [param, order] = req.query.sortBy.split(":");
-    if (!allowedSorts.includes(param)) {
-      return res.status(400).send("Invalid sort param");
-    }
-    sort[param] = order === "desc" ? -1 : 1;
-  }
+  const sort = getSort(req.query.sortBy);
+  const filters = getFilter(req.query.filterBy);
 
   try {
     let restaurants = await Restaurant.find();
@@ -138,7 +123,7 @@ router.get("/restaurants", authNoError, async (req, res) => {
       })
     );
 
-    restaurants = await Restaurant.find()
+    restaurants = await Restaurant.find(filters)
       .sort(sort)
       .limit(limit)
       .skip(skip * limit);
@@ -152,5 +137,45 @@ router.get("/restaurants", authNoError, async (req, res) => {
     catchServerError(error, res);
   }
 });
+
+/**
+ * Get the mongoose sort parameter
+ * @param {String} sortBy from query string
+ */
+const getSort = (sortBy) => {
+  const sort = {};
+  if (sortBy) {
+    const allowedSorts = [
+      "name",
+      "rating",
+      "updatedAt",
+      "distance",
+      "duration",
+      "weightedRating",
+      "myRating",
+    ];
+    const [param, order] = sortBy.split(":");
+    if (!allowedSorts.includes(param)) {
+      throw new ServerError("Invalid sort param");
+    }
+    sort[param] = order === "desc" ? -1 : 1;
+  }
+  return sort;
+};
+
+const getFilter = (filterBy) => {
+  const filters = {};
+  if (filterBy) {
+    const keys = filterBy.split(",");
+    const allowedFilters = { hasBreakfast: true, myRating: { $gt: 0 } };
+    keys.forEach((key) => {
+      if (!(key in allowedFilters)) {
+        throw new ServerError("Invalid key param", key);
+      }
+      filters[key] = allowedFilters[key];
+    });
+  }
+  return filters;
+};
 
 module.exports = router;
