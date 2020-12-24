@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Card, Space } from "antd";
+import { Card, Row, Col, Space } from "antd";
 import StarRatings from "react-star-ratings";
 import Context from "../../context/Context";
 import API from "../../api/API";
-import LeftRightRow from "../left-right-row/LeftRightRow";
 import { setRestaurants } from "../../context/actionCreators";
 import RestaurantCardDetails from "./RestaurantCardDetails";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 /**
  * Render a Restaurant into a card
@@ -15,6 +15,8 @@ import RestaurantCardDetails from "./RestaurantCardDetails";
  * @returns {JSX}
  */
 const RestaurantCard = ({ restaurant }) => {
+  const { width } = useWindowDimensions();
+
   const { state, dispatch } = useContext(Context);
 
   const makeReview = async (rating) => {
@@ -25,17 +27,29 @@ const RestaurantCard = ({ restaurant }) => {
     dispatch(setRestaurants(updatedRestaurants));
   };
 
+  // Medium width from antd
+  const md = width > 768;
+  // react-star-ratings doesn't allow CSS styling
+  const starSize = md ? "30px" : "15px";
+
   return (
     <Card>
-      <LeftRightRow
-        left={<RestaurantCardDetails restaurant={restaurant} />}
-        right={
-          state.user ? (
-            <Space direction="vertical" align="end">
+      <Row>
+        <Col xs={24} md={12}>
+          <RestaurantCardDetails restaurant={restaurant} />
+        </Col>
+        <Col
+          xs={24}
+          md={12}
+          align={md ? "right" : "left"}
+          style={!md && { marginTop: 8, marginBottom: 8 }}
+        >
+          {state.user ? (
+            <Space direction="vertical">
               <Space>
                 Your Rating
                 <StarRatings
-                  starDimension="30px"
+                  starDimension={starSize}
                   starHoverColor="#FFD203"
                   starRatedColor="#FFD203"
                   changeRating={makeReview}
@@ -46,7 +60,7 @@ const RestaurantCard = ({ restaurant }) => {
                 <Space>
                   {`${state.group.name}'s Rating`}
                   <StarRatings
-                    starDimension="30px"
+                    starDimension={starSize}
                     rating={restaurant.weightedRating || 0}
                   />
                 </Space>
@@ -56,9 +70,9 @@ const RestaurantCard = ({ restaurant }) => {
             <p>
               <Link to="/signup">Create </Link> an account to make reviews
             </p>
-          )
-        }
-      />
+          )}
+        </Col>
+      </Row>
     </Card>
   );
 };
