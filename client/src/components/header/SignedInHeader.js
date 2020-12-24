@@ -3,7 +3,9 @@ import { Col, Card, Row } from "antd";
 
 import SortDropDown from "./SortDropDown";
 import GroupDropDown from "./GroupDropDown";
+
 import "./header.css";
+import FilterDropDown from "./FilterDropDown";
 
 const SignedInHeader = () => {
   // Since ant select uses anticon svg, we can't style with CSS
@@ -19,8 +21,9 @@ const SignedInHeader = () => {
           </Col>
           <Col xs={24} md={18}>
             <Row>
-              <SortDropDown iconStyle={iconStyle} />
               <GroupDropDown iconStyle={iconStyle} />
+              <SortDropDown iconStyle={iconStyle} />
+              <FilterDropDown iconStyle={iconStyle} />
             </Row>
           </Col>
         </Row>

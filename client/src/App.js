@@ -16,7 +16,10 @@ import {
 import Routes from "./pages/Routes";
 
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, { restaurants: [] });
+  const [state, dispatch] = useReducer(reducer, {
+    restaurants: [],
+    filters: [],
+  });
 
   useEffect(() => {
     async function loadUser() {
