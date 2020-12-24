@@ -9,10 +9,12 @@ const GroupButton = ({ group, userInGroup }) => {
   const { state } = useContext(Context);
   const deleteGroup = async () => {
     await API.deleteGroup(group._id);
+    window.location.reload();
   };
 
   const joinGroup = async () => {
     await API.joinGroup(group._id);
+    window.location.reload();
   };
 
   if (group.owner === state.user._id) {

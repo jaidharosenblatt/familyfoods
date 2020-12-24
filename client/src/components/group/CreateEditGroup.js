@@ -4,7 +4,6 @@ import ModalWithButton from "../modal/ModalWithButton";
 import API from "../../api/API";
 import Context from "../../context/Context";
 import {
-  addGroup,
   setError,
   startLoading,
   stopLoading,
@@ -19,11 +18,15 @@ const CreateEditGroup = ({ group }) => {
     try {
       const values = { ...form, public: !locked };
       dispatch(startLoading);
-      const res = group
-        ? await API.editGroup(group._id, values)
-        : await API.createGroup(values);
-      dispatch(addGroup(res));
+      if (group) {
+        await API.editGroup(group._id, values);
+      } else {
+        await API.createGroup(values);
+      }
+
       dispatch(stopLoading());
+      window.location.reload();
+
       setVisible(false);
     } catch (error) {
       dispatch(setError(error));

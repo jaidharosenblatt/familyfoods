@@ -17,8 +17,8 @@ const JoinGroupPassword = ({ group }) => {
   const onFinish = async (form) => {
     try {
       dispatch(startLoading());
-      const res = await API.joinGroup(group._id, form.password);
-      dispatch(addGroup(res));
+      await API.joinGroup(group._id, form.password);
+      window.location.reload();
       dispatch(stopLoading());
       setVisible(false);
     } catch (error) {

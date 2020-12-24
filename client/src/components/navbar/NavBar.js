@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Space } from "antd";
 import {
+  HomeOutlined,
   HomeFilled,
   PlusCircleOutlined,
   TeamOutlined,
@@ -26,7 +27,7 @@ const NavBar = () => {
           <Space size="large">
             <Link to="/">
               <Space align="center" size={4}>
-                <HomeFilled />
+                <HomeOutlined />
                 <p>Family Foods</p>
               </Space>
             </Link>
