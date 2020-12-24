@@ -1,13 +1,21 @@
 import React, { useContext } from "react";
-import { Col, Card, Select } from "antd";
+import { Col, Card, Select, Space } from "antd";
+import { TeamOutlined } from "@ant-design/icons";
+
 import LeftRightRow from "../left-right-row/LeftRightRow";
-import "./header.css";
 import Context from "../../context/Context";
 import { setGroup } from "../../context/actionCreators";
+import "./header.css";
 
 const SignedInHeader = () => {
   const { state, dispatch } = useContext(Context);
 
+  const handleGroupSelect = (key, atr) => {
+    if (!key) {
+      return dispatch(setGroup(undefined));
+    }
+    dispatch(setGroup({ _id: key, name: atr?.name }));
+  };
   return (
     <div className="header">
       <Col span={24}>
@@ -20,16 +28,22 @@ const SignedInHeader = () => {
               </>
             }
             right={
-              <Select
-                onChange={(key) => dispatch(setGroup(key))}
-                allowClear={true}
-                placeholder="Select a group"
-                style={{ width: "100%", minWidth: 200 }}
-              >
-                {state.user.groups.map((group, i) => (
-                  <Select.Option key={group._id}>{group.name}</Select.Option>
-                ))}
-              </Select>
+              <Space>
+                <TeamOutlined style={{ color: "#BFBFBF", fontSize: 20 }} />
+                <Select
+                  onChange={handleGroupSelect}
+                  value={state.group?._id}
+                  allowClear={true}
+                  placeholder="Select a group"
+                  style={{ width: "100%", minWidth: 200 }}
+                >
+                  {state.user.groups.map((group, i) => (
+                    <Select.Option key={group._id} name={group.name}>
+                      {group.name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Space>
             }
           />
         </Card>

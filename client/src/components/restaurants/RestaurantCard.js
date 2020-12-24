@@ -59,13 +59,27 @@ const RestaurantCard = ({ restaurant, hideCard }) => {
       right={
         !hideCard &&
         (state.user ? (
-          <StarRatings
-            starDimension="30px"
-            starHoverColor="#FFD203"
-            starRatedColor="#FFD203"
-            changeRating={makeReview}
-            rating={restaurant.myRating || 0}
-          />
+          <Space direction="vertical" align="end">
+            <Space>
+              Your Rating
+              <StarRatings
+                starDimension="30px"
+                starHoverColor="#FFD203"
+                starRatedColor="#FFD203"
+                changeRating={makeReview}
+                rating={restaurant.myRating || 0}
+              />
+            </Space>
+            {state.group && (
+              <Space>
+                {`${state.group.name}'s Rating`}
+                <StarRatings
+                  starDimension="30px"
+                  rating={restaurant.weightedRating || 0}
+                />
+              </Space>
+            )}
+          </Space>
         ) : (
           <p>
             <Link to="/signup">Create </Link> an account to make reviews
