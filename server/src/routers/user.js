@@ -103,7 +103,8 @@ router.patch("/users/me", auth, async (req, res) => {
     updates.forEach((update) => (req.user[update] = req.body[update]));
     await req.user.save();
 
-    res.send(req.user);
+    const userWithGroups = await getUserWithGroups(req.user);
+    res.send(userWithGroups);
   } catch (e) {
     if (e.code === 11000) {
       return res.status(400).send({ error: "Username already exists" });

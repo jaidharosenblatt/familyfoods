@@ -20,9 +20,15 @@ const SignedInHeader = () => {
               </>
             }
             right={
-              <Select>
+              <Select
+                allowClear={true}
+                placeholder="Select a group"
+                style={{ width: "100%", minWidth: 200 }}
+              >
                 {state.user.groups.map((group, i) => (
-                  <Select.Option key={i}>{group.name}</Select.Option>
+                  <Select.Option name={group._id} key={i}>
+                    {group.name}
+                  </Select.Option>
                 ))}
               </Select>
             }
