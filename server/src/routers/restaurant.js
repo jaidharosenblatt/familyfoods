@@ -107,12 +107,15 @@ router.get("/restaurants", authNoError, async (req, res) => {
         restaurant.distance = distance;
         restaurant.duration = duration;
 
-        const myReview = await Review.findOne({
-          restaurant: restaurant._id,
-          owner: req.user._id,
-        });
-        if (myReview) {
-          restaurant.myRating = myReview.rating;
+        // check if user has rated the restaurant otherwise set to 0
+        restaurant.myRating = 0;
+
+        if (req.user) {
+          const myReview = await Review.findOne({
+            restaurant: restaurant._id,
+            owner: req.user._id,
+          });
+          restaurant.myRating = myReview && myReview.rating;
         }
 
         // If group in query then get weighted ratings

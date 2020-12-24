@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { Card, Space } from "antd";
 import { StarFilled, CarFilled, EnvironmentFilled } from "@ant-design/icons";
 import StarRatings from "react-star-ratings";
 import LeftRightRow from "../left-right-row/LeftRightRow";
+import Context from "../../context/Context";
 
 /**
  * Render a Restaurant into a card
@@ -13,6 +15,8 @@ import LeftRightRow from "../left-right-row/LeftRightRow";
  * @returns {JSX}
  */
 const RestaurantCard = ({ restaurant, hideCard, makeReview }) => {
+  const { state } = useContext(Context);
+
   // Map restaurant properties to an icon
   const icons = {
     duration: <CarFilled />,
@@ -44,7 +48,7 @@ const RestaurantCard = ({ restaurant, hideCard, makeReview }) => {
         </>
       }
       right={
-        !hideCard && (
+        !hideCard && state.user ? (
           <StarRatings
             starDimension="30px"
             starHoverColor="#FFD203"
@@ -52,6 +56,10 @@ const RestaurantCard = ({ restaurant, hideCard, makeReview }) => {
             changeRating={(rating) => makeReview(restaurant._id, rating)}
             rating={restaurant.myRating || 0}
           />
+        ) : (
+          <p>
+            <Link to="/signup">Create </Link> an account to make reviews
+          </p>
         )
       }
     />
