@@ -11,11 +11,9 @@ const Group = require("../models/group");
  * @returns {Float} its weighted rating
  */
 const getGroupRatings = async (group, restaurant) => {
-  const members = group.members.toObject();
-
-  const ratings = await getRestaurantRatings(group, members, restaurant);
+  const ratings = await getRestaurantRatings(group, group.members, restaurant);
   const groupRatings = shiftRatings(ratings, group.turns);
-  const weightedRating = getWeightedAverage(shiftedRatings);
+  const weightedRating = getWeightedAverage(groupRatings);
 
   return { groupRatings, weightedRating };
 };
@@ -36,6 +34,7 @@ const getRestaurantRatings = async (group, members, restaurant) => {
         restaurant: restaurant._id,
         owner: member._id,
       });
+
       const name = member.username;
       const rating = review ? review.rating : member.averageReview;
 

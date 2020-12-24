@@ -20,6 +20,13 @@ const reducer = (state, action) => {
         filters: action.payload,
         error: false,
       };
+    case actionTypes.SET_GROUP:
+      return {
+        ...state,
+        loading: false,
+        group: action.payload,
+        error: false,
+      };
     case actionTypes.SET_SORT:
       return { ...state, loading: false, sort: action.payload, error: false };
     case actionTypes.START_LOADING:

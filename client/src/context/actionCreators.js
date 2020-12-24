@@ -98,3 +98,14 @@ export const setSort = (sortKey) => {
     payload: sortKey,
   };
 };
+
+/**
+ * Set the group to use for restaurants call
+ * @param {ObjectId} groupId from user's groups
+ */
+export const setGroup = (group) => {
+  return {
+    type: actionTypes.SET_GROUP,
+    payload: group,
+  };
+};

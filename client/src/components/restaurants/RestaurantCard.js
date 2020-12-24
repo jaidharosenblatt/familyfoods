@@ -57,7 +57,8 @@ const RestaurantCard = ({ restaurant, hideCard }) => {
         </>
       }
       right={
-        !hideCard && state.user ? (
+        !hideCard &&
+        (state.user ? (
           <StarRatings
             starDimension="30px"
             starHoverColor="#FFD203"
@@ -69,7 +70,7 @@ const RestaurantCard = ({ restaurant, hideCard }) => {
           <p>
             <Link to="/signup">Create </Link> an account to make reviews
           </p>
-        )
+        ))
       }
     />
   );

@@ -3,10 +3,10 @@ import { Col, Card, Select } from "antd";
 import LeftRightRow from "../left-right-row/LeftRightRow";
 import "./header.css";
 import Context from "../../context/Context";
+import { setGroup } from "../../context/actionCreators";
 
 const SignedInHeader = () => {
-  const { state } = useContext(Context);
-  console.log(state.user);
+  const { state, dispatch } = useContext(Context);
 
   return (
     <div className="header">
@@ -21,14 +21,13 @@ const SignedInHeader = () => {
             }
             right={
               <Select
+                onChange={(key) => dispatch(setGroup(key))}
                 allowClear={true}
                 placeholder="Select a group"
                 style={{ width: "100%", minWidth: 200 }}
               >
                 {state.user.groups.map((group, i) => (
-                  <Select.Option name={group._id} key={i}>
-                    {group.name}
-                  </Select.Option>
+                  <Select.Option key={group._id}>{group.name}</Select.Option>
                 ))}
               </Select>
             }
