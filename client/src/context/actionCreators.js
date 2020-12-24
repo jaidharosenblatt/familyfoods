@@ -65,3 +65,36 @@ export const clearError = () => {
     payload: undefined,
   };
 };
+
+/**
+ * Set restaurants to context
+ * @param {Array} restaurants
+ */
+export const setRestaurants = (restaurants) => {
+  return {
+    type: actionTypes.SET_RESTAURANTS,
+    payload: restaurants,
+  };
+};
+
+/**
+ * Set filters for restaurants to context
+ * @param {Array} filters filters to apply to search
+ */
+export const setFilters = (filters) => {
+  return {
+    type: actionTypes.SET_FILTERS,
+    payload: filters,
+  };
+};
+
+/**
+ * Set filters for restaurants to context
+ * @param {String} sortKey filters to apply to search
+ */
+export const setSort = (sortKey) => {
+  return {
+    type: actionTypes.SET_SORT,
+    payload: sortKey,
+  };
+};

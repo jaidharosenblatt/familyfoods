@@ -3,25 +3,34 @@ import { Link } from "react-router-dom";
 import { Card, Space } from "antd";
 import { StarFilled, CarFilled, EnvironmentFilled } from "@ant-design/icons";
 import StarRatings from "react-star-ratings";
-import LeftRightRow from "../left-right-row/LeftRightRow";
 import Context from "../../context/Context";
+import API from "../../api/API";
+import LeftRightRow from "../left-right-row/LeftRightRow";
+import { setRestaurants } from "../../context/actionCreators";
 
 /**
  * Render a Restaurant into a card
  * Iterates through icons map to determine properties to display
  * @param {Restaurant} restaurant
  * @param {Boolean} hideCard render restaurant without the card and rating
- * @param {Function} makeReview callback to review this restaurant
  * @returns {JSX}
  */
-const RestaurantCard = ({ restaurant, hideCard, makeReview }) => {
-  const { state } = useContext(Context);
+const RestaurantCard = ({ restaurant, hideCard }) => {
+  const { state, dispatch } = useContext(Context);
 
   // Map restaurant properties to an icon
   const icons = {
     duration: <CarFilled />,
     distance: <EnvironmentFilled />,
     rating: <StarFilled style={{ color: "#FFD203" }} />,
+  };
+
+  const makeReview = async (rating) => {
+    await API.createReview(restaurant._id, rating);
+    const updatedRestaurants = state.restaurants.map((r) => {
+      return r._id === restaurant._id ? { ...r, myRating: rating } : r;
+    });
+    dispatch(setRestaurants(updatedRestaurants));
   };
 
   const fields = Object.keys(restaurant);
@@ -53,7 +62,7 @@ const RestaurantCard = ({ restaurant, hideCard, makeReview }) => {
             starDimension="30px"
             starHoverColor="#FFD203"
             starRatedColor="#FFD203"
-            changeRating={(rating) => makeReview(restaurant._id, rating)}
+            changeRating={makeReview}
             rating={restaurant.myRating || 0}
           />
         ) : (

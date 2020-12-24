@@ -11,7 +11,7 @@ import { setUser, startLoading, stopLoading } from "./context/actionCreators";
 import Routes from "./pages/Routes";
 
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, {});
+  const [state, dispatch] = useReducer(reducer, { restaurants: [] });
 
   useEffect(() => {
     async function loadUser() {
