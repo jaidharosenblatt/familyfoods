@@ -51,3 +51,13 @@ export async function editGroup(id, values) {
   let { data } = await client.patch(`/groups/${id}`, values);
   return data;
 }
+
+/**
+ * Increment group's turn
+ * @param {ObjectId} id of a group
+ * @returns {Group} the group from db
+ */
+export async function takeTurn(id) {
+  let { data } = await client.post(`/groups/${id}/turn`);
+  return data;
+}

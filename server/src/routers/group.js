@@ -1,9 +1,10 @@
 const express = require("express");
 
 const Group = require("../models/group");
-const { auth, authNoError } = require("../middleware/auth");
+const { auth } = require("../middleware/auth");
 const { fieldsAreValid } = require("../util/validation");
 const { catchServerError, ServerError } = require("../util/errors");
+const { shiftRatings } = require("../util/weighting-algorithms");
 
 const router = new express.Router();
 const userFieldsToOmit = "-tokens -password -groups";
@@ -149,14 +150,17 @@ router.patch("/groups/:id", auth, async (req, res) => {
  * Increment this group's turn count
  * @param {ObjectId} id from query params
  * @returns {Group} updated group
+ * @returns {Array} shifted members
  */
 router.post("/groups/:id/turn", auth, async (req, res) => {
   try {
-    const group = await getGroupById(req, res);
+    const group = await getGroupById(req, res, true);
     group.turns++;
+
+    const shiftedMembers = shiftRatings(group.members, group.turns);
     await group.save();
 
-    res.send(group);
+    res.send({ ...group._doc, shiftedMembers });
   } catch (error) {
     catchServerError(error, res);
   }

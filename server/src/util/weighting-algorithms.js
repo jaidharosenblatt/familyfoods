@@ -64,22 +64,22 @@ const getWeightedAverage = (ratings) => {
 };
 
 /**
- * Shift the inputted ratings array based off the number of turns taken
- * @param {Array} ratings to shift
- * @param {Integer} turns number of iterations done by current group
+ * Shift the inputted array based off the number of turns taken
+ * @param {Array} array to shift
+ * @param {Integer} turns number of iterations
  * @returns {Array} shifted array
  */
-const shiftRatings = (ratings, turns) => {
-  const n = ratings.length;
-  if (!ratings || n === 0) {
+const shiftRatings = (array, turns) => {
+  const n = array.length;
+  if (!array || n === 0) {
     return [];
   }
   const shift = turns % n;
   const shifted = new Array(n);
   for (let i = 0; i < n; i++) {
-    shifted[(i + shift) % n] = ratings[i];
+    shifted[(i + shift) % n] = array[i];
   }
   return shifted;
 };
 
-module.exports = { getGroupRatings };
+module.exports = { getGroupRatings, shiftRatings };
