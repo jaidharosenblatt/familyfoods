@@ -66,7 +66,7 @@ Web-app to help my family choose a restaurant to go out to eat to
 - Add additional attributes to restaurants (done)
 - Filter (done)
 - Filter by not rated (done)
-- Take turn
+- Take turn (done)
 - Update additional attr
 - Update location
 - Fix mobile
