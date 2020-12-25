@@ -38,6 +38,7 @@ router.post("/restaurants", authNoError, async (req, res) => {
 
     const restaurant = new Restaurant(withLocation);
     const startingLocation = req.user ? req.user.location : req.query.location;
+
     const distance = await addDistanceToRestaurant(
       startingLocation,
       restaurant.location
@@ -52,6 +53,8 @@ router.post("/restaurants", authNoError, async (req, res) => {
         error: "This restaurant already exists",
       });
     }
+    console.log(error);
+    res.status(500).send({ error: "Error loading restaurant" });
   }
 });
 

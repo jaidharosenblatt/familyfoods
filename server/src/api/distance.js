@@ -29,6 +29,9 @@ const findDistance = async (origin, destination) => {
  * @param {Restaurant} restaurant containing location
  */
 const addDistanceToRestaurant = async (startingLocation, location) => {
+  if (!location) {
+    return {};
+  }
   const res = await findDistance(startingLocation, location);
   const path = res.rows[0].elements[0];
   const distance = path.distance.text;
