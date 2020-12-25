@@ -1,17 +1,17 @@
 import React, { useContext, useState } from "react";
 import { Form, Input, Button, Space } from "antd";
 import API from "../api/API";
-import RestaurantCardDetails from "../components/restaurants/RestaurantCardDetails";
 import CenteredCard from "../components/centered-card/CenteredCard";
 import Context from "../context/Context";
 import { clearError, startLoading, setError } from "../context/actionCreators";
+import RestaurantDetailsForm from "../components/restaurants/RestaurantDetailsForm";
 
 /**
  * Form for adding a restaurant to the DB
  * @returns {JSX}
  */
 const AddRestaurant = () => {
-  const [restaurant, setRestaurant] = useState();
+  const [restaurant, setRestaurant] = useState({});
   const { state, dispatch } = useContext(Context);
 
   const onFinish = async (values) => {
@@ -32,14 +32,10 @@ const AddRestaurant = () => {
   return (
     <CenteredCard>
       {restaurant ? (
-        <Space direction="vertical" style={{ width: "100vh", maxWidth: 450 }}>
-          <h1>New restaurant! </h1>
-
-          <RestaurantCardDetails restaurant={restaurant} />
-          <Button type="primary" block onClick={() => setRestaurant(undefined)}>
-            Add another restaurant
-          </Button>
-        </Space>
+        <RestaurantDetailsForm
+          setRestaurant={setRestaurant}
+          restaurant={restaurant}
+        />
       ) : (
         <Space direction="vertical">
           <h1>Add a new restaurant</h1>
@@ -59,7 +55,7 @@ const AddRestaurant = () => {
                 block
                 htmlType="submit"
               >
-                Add restaurant
+                Search
               </Button>
             </Form.Item>
           </Form>
