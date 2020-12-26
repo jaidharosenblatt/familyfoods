@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
  * @returns {Location} matching backend model
  */
 const useGeolocation = () => {
-  const [location, setLocation] = useState({});
+  const [location, setLocation] = useState();
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {

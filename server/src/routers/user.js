@@ -108,7 +108,7 @@ router.patch("/users/me", auth, async (req, res) => {
     if (e.code === 11000) {
       return res.status(400).send({ error: "Username already exists" });
     }
-    res.sendStatus(400).send({ error: "Unable to update profile" });
+    return res.sendStatus(400).send({ error: "Unable to update profile" });
   }
 });
 
