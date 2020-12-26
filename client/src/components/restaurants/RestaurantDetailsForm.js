@@ -1,7 +1,9 @@
 import { Form, Space, Button, Col, Row } from "antd";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import API from "../../api/API";
+import { refreshRestaurants } from "../../context/actionCreators";
+import Context from "../../context/Context";
 import YesNoSegmentedControl from "../form/YesNoSegmentedControl";
 import RestaurantCardDetails from "./RestaurantCardDetails";
 import "./restaurants.css";
@@ -19,7 +21,7 @@ export default function RestaurantDetailsForm({
 }) {
   const [error, setError] = useState();
   const [success, setSuccess] = useState(false);
-
+  const { dispatch } = useContext(Context);
   const { name } = restaurant;
   const clearRestaurant = () => setRestaurant(undefined);
 
@@ -28,6 +30,7 @@ export default function RestaurantDetailsForm({
       const res = await API.editRestaurant(restaurant._id, changes);
       setRestaurant(res);
       setSuccess(true);
+      dispatch(refreshRestaurants());
     } catch (e) {
       setError(e);
     }

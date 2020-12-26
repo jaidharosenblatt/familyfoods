@@ -23,7 +23,7 @@ export default function SortDropDown({ iconStyle }) {
     { field: "distance", name: "Distance" },
     { field: "name", name: "Name" },
     { field: "rating", name: "Google Rating" },
-    { field: "updatedAt", name: "Last Updated" },
+    { field: "createdAt", name: "Created" },
   ];
 
   if (state.group?.name) {

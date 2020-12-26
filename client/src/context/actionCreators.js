@@ -109,3 +109,12 @@ export const setGroup = (group) => {
     payload: group,
   };
 };
+
+/**
+ * Refresh all restaurants
+ */
+export const refreshRestaurants = () => {
+  return {
+    type: actionTypes.REFRESH_RESTAURANTS,
+  };
+};

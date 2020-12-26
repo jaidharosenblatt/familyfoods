@@ -11,6 +11,15 @@ const reducer = (state, action) => {
         ...state,
         loading: false,
         restaurants: action.payload,
+        refreshRestaurants: false,
+        error: false,
+      };
+    case actionTypes.REFRESH_RESTAURANTS:
+      return {
+        ...state,
+        loading: false,
+        restaurants: [],
+        refreshRestaurants: true,
         error: false,
       };
     case actionTypes.SET_FILTERS:
@@ -18,17 +27,25 @@ const reducer = (state, action) => {
         ...state,
         loading: false,
         filters: action.payload,
+        refreshRestaurants: true,
         error: false,
       };
     case actionTypes.SET_GROUP:
       return {
         ...state,
         loading: false,
+        refreshRestaurants: true,
         group: action.payload,
         error: false,
       };
     case actionTypes.SET_SORT:
-      return { ...state, loading: false, sort: action.payload, error: false };
+      return {
+        ...state,
+        loading: false,
+        refreshRestaurants: true,
+        sort: action.payload,
+        error: false,
+      };
     case actionTypes.START_LOADING:
       return { ...state, loading: true };
     case actionTypes.STOP_LOADING:

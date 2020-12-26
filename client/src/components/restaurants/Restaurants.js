@@ -32,9 +32,12 @@ const Restaurants = () => {
       setRestaurantsCount(res.count);
       setLoading(false);
     }
-    setInitialRestaurants();
+    if (state.refreshRestaurants) {
+      setInitialRestaurants();
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.group, state.sort, state.filters]);
+  }, [state.group, state.sort, state.filters, state.refreshRestaurants]);
 
   async function fetchData() {
     const fetch = await API.getRestaurants({ ...params, skip });

@@ -185,7 +185,7 @@ const getSort = (sortBy) => {
     const allowedSorts = [
       "name",
       "rating",
-      "updatedAt",
+      "createdAt",
       "distance",
       "duration",
       "weightedRating",
