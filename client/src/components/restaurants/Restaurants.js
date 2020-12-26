@@ -7,11 +7,10 @@ import { FieldTimeOutlined } from "@ant-design/icons";
 import InfiniteScroll from "react-infinite-scroll-component";
 import API from "../../api/API";
 import Context from "../../context/Context";
-import { setRestaurants } from "../../context/actionCreators";
+import { setRestaurants, startLoading } from "../../context/actionCreators";
 
 const Restaurants = () => {
   const { state, dispatch } = useContext(Context);
-  const [loading, setLoading] = useState(true);
   const [restaurantsCount, setRestaurantsCount] = useState(0);
   const [skip, setSkip] = useState(1);
 
@@ -27,10 +26,10 @@ const Restaurants = () => {
 
   useEffect(() => {
     async function setInitialRestaurants() {
+      dispatch(startLoading());
       const res = await API.getRestaurants({ ...params, count: true });
       dispatch(setRestaurants(res.restaurants));
       setRestaurantsCount(res.count);
-      setLoading(false);
     }
     if (state.refreshRestaurants) {
       setInitialRestaurants();
@@ -54,14 +53,14 @@ const Restaurants = () => {
         hasMore={doMoreRestaurantsExist}
         loader={<Loading />}
       >
-        {loading && <Loading />}
+        {state.loading && <Loading />}
         <Space direction="vertical" style={{ width: "100%" }}>
           {state.restaurants.map((restaurant, i) => {
             return <RestaurantCard key={i} restaurant={restaurant} />;
           })}
         </Space>
       </InfiniteScroll>
-      {!loading && restaurantsCount === 0 && (
+      {!state.loading && restaurantsCount === 0 && (
         <Col span={24} align="middle">
           <FieldTimeOutlined style={{ fontSize: 32, color: "#262626" }} />
           <p>No groups yet</p>

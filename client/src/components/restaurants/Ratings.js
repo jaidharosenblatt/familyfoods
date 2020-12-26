@@ -4,7 +4,7 @@ import { Space } from "antd";
 import StarRatings from "react-star-ratings";
 import Context from "../../context/Context";
 import API from "../../api/API";
-import { setRestaurants } from "../../context/actionCreators";
+import { refreshRestaurants } from "../../context/actionCreators";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 /**
@@ -19,10 +19,7 @@ export default function Ratings({ restaurant }) {
   const md = width > 768;
   const makeReview = async (rating) => {
     await API.createReview(restaurant._id, rating);
-    const updatedRestaurants = state.restaurants.map((r) => {
-      return r._id === restaurant._id ? { ...r, myRating: rating } : r;
-    });
-    dispatch(setRestaurants(updatedRestaurants));
+    dispatch(refreshRestaurants());
   };
 
   const starSize = md ? "30px" : "15px";

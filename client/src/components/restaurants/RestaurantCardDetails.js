@@ -7,6 +7,7 @@ import {
   CheckOutlined,
   CloseOutlined,
 } from "@ant-design/icons";
+import GroupRatings from "./GroupRatings";
 
 export default function RestaurantCardDetails({ restaurant }) {
   const colors = { green: { color: "#198038" }, red: { color: "#D93025" } };
@@ -24,6 +25,15 @@ export default function RestaurantCardDetails({ restaurant }) {
   };
 
   const fields = Object.keys(restaurant);
+  const booleanFields = [];
+  const iconFields = [];
+  fields.forEach((field) => {
+    if (field in booleans) {
+      booleanFields.push(field);
+    } else if (field in icons || field === "price_level") {
+      iconFields.push(field);
+    }
+  });
 
   return (
     <Space direction="vertical">
@@ -31,15 +41,7 @@ export default function RestaurantCardDetails({ restaurant }) {
         <h2>{restaurant.name}</h2>
       </div>
       <Space>
-        {fields.map((field, i) => {
-          if (field in icons) {
-            return (
-              <Space size={2} key={i}>
-                {icons[field]}
-                <p>{restaurant[field]} </p>
-              </Space>
-            );
-          }
+        {iconFields.map((field, i) => {
           if (field === "price_level") {
             return (
               <p key={i} style={colors.green}>
@@ -48,12 +50,17 @@ export default function RestaurantCardDetails({ restaurant }) {
             );
           }
 
-          return null;
+          return (
+            <Space size={2} key={i}>
+              {icons[field]}
+              <p>{restaurant[field]} </p>
+            </Space>
+          );
         })}
       </Space>
-      <Space>
-        {fields.map((field, i) => {
-          if (field in booleans) {
+      {booleanFields.length !== 0 && (
+        <Space>
+          {booleanFields.map((field, i) => {
             return (
               <Space size={2} key={i}>
                 {restaurant[field] ? (
@@ -64,11 +71,11 @@ export default function RestaurantCardDetails({ restaurant }) {
                 <p>{booleans[field]} </p>
               </Space>
             );
-          }
+          })}
+        </Space>
+      )}
 
-          return null;
-        })}
-      </Space>
+      <GroupRatings restaurant={restaurant} />
     </Space>
   );
 }

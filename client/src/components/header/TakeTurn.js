@@ -3,14 +3,13 @@ import { Button, Space } from "antd";
 import Context from "../../context/Context";
 import API from "../../api/API";
 import GroupMembersAvatars from "../group/GroupMembersAvatars";
-import { refreshRestaurants, startLoading } from "../../context/actionCreators";
+import { refreshRestaurants } from "../../context/actionCreators";
 
 export default function TakeTurn() {
   const [group, setGroup] = useState();
   const { state, dispatch } = useContext(Context);
 
   const takeTurn = async () => {
-    dispatch(startLoading());
     const res = await API.takeTurn(state.group._id);
     dispatch(refreshRestaurants());
     setGroup(res);

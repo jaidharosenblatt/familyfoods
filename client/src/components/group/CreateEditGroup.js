@@ -3,11 +3,7 @@ import { Form, Input, Button, Space, Switch } from "antd";
 import ModalWithButton from "../modal/ModalWithButton";
 import API from "../../api/API";
 import Context from "../../context/Context";
-import {
-  setError,
-  startLoading,
-  stopLoading,
-} from "../../context/actionCreators";
+import { setError, stopLoading } from "../../context/actionCreators";
 
 /**
  * Edit or create a group
@@ -22,7 +18,6 @@ const CreateEditGroup = ({ group }) => {
   const onFinish = async (form) => {
     try {
       const values = { ...form, public: !locked };
-      dispatch(startLoading);
       if (group) {
         await API.editGroup(group._id, values);
       } else {
