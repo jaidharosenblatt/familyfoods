@@ -97,7 +97,6 @@ router.patch("/users/me", auth, async (req, res) => {
   if (!fieldsAreValid(["username", "location", "password"], req.body)) {
     return res.status(400).send({ error: "Invalid updates" });
   }
-
   try {
     const updates = Object.keys(req.body);
     updates.forEach((update) => (req.user[update] = req.body[update]));
@@ -109,7 +108,7 @@ router.patch("/users/me", auth, async (req, res) => {
     if (e.code === 11000) {
       return res.status(400).send({ error: "Username already exists" });
     }
-    res.sendStatus(400).send({ error: "Invalid username" });
+    res.sendStatus(400).send({ error: "Unable to update profile" });
   }
 });
 
@@ -132,6 +131,7 @@ router.delete("/users/me", auth, async (req, res) => {
  * @returns {User} with group
  */
 const getUserWithGroups = async (user) => {
+  if (!user.groups) return user;
   const groups = await Promise.all(
     user.groups.map(async (id) => {
       const group = await Group.findById(id);

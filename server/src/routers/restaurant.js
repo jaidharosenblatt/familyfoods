@@ -37,10 +37,9 @@ router.post("/restaurants", authNoError, async (req, res) => {
     const withLocation = { ...candidates[0], location };
 
     const restaurant = new Restaurant(withLocation);
-    const startingLocation = req.user ? req.user.location : req.query.location;
 
     const distance = await addDistanceToRestaurant(
-      startingLocation,
+      req.user.location,
       restaurant.location
     );
 
@@ -109,20 +108,12 @@ router.get("/restaurants", authNoError, async (req, res) => {
 
   try {
     let restaurants = await Restaurant.find();
-
-    // Update user's location if it exists
-    if (req.query.location && req.user) {
-      req.user.location = JSON.parse(req.query.location);
-      await req.user.save();
-    }
-    const startingLocation = req.user ? req.user.location : req.query.location;
-
     // Update each restaurant to add distance and ratings properties
     // @TODO figure out how to avoid slow query then update
     await Promise.all(
       restaurants.map(async (restaurant) => {
         const { distance, duration } = await addDistanceToRestaurant(
-          startingLocation,
+          req.user.location,
           restaurant.location
         );
         restaurant.distance = distance;
