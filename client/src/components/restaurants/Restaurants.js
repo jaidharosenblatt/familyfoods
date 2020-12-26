@@ -7,12 +7,19 @@ import { FieldTimeOutlined } from "@ant-design/icons";
 import InfiniteScroll from "react-infinite-scroll-component";
 import API from "../../api/API";
 import Context from "../../context/Context";
-import { setRestaurants, startLoading } from "../../context/actionCreators";
+import {
+  refreshRestaurants,
+  setRestaurants,
+  startLoading,
+} from "../../context/actionCreators";
 
 const Restaurants = () => {
   const { state, dispatch } = useContext(Context);
   const [restaurantsCount, setRestaurantsCount] = useState(0);
+  // page number for seen restaurants
   const [skip, setSkip] = useState(1);
+  // the number of api calls on error
+  const [resets, setResets] = useState(0);
 
   const limit = 10;
   const filterBy = state.filters.join(",");
@@ -27,9 +34,17 @@ const Restaurants = () => {
   useEffect(() => {
     async function setInitialRestaurants() {
       dispatch(startLoading());
-      const res = await API.getRestaurants({ ...params, count: true });
-      dispatch(setRestaurants(res.restaurants));
-      setRestaurantsCount(res.count);
+      try {
+        const res = await API.getRestaurants({ ...params, count: true });
+        dispatch(setRestaurants(res.restaurants));
+        setRestaurantsCount(res.count);
+      } catch (error) {
+        console.log(error);
+        if (resets < 3) {
+          dispatch(refreshRestaurants());
+          setResets(resets + 1);
+        }
+      }
     }
     if (state.refreshRestaurants) {
       setInitialRestaurants();

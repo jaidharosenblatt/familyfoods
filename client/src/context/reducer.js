@@ -17,7 +17,6 @@ const reducer = (state, action) => {
     case actionTypes.REFRESH_RESTAURANTS:
       return {
         ...state,
-        loading: true,
         restaurants: [],
         refreshRestaurants: true,
         error: false,
