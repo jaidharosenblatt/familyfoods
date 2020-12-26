@@ -26,10 +26,12 @@ const NavBar = () => {
         <div className="left">
           <Space size="large">
             <Link to="/">
-              <Space align="center" size={4}>
-                <HeartOutlined />
-                <p>Eat Together</p>
-              </Space>
+              <span className="fake-link">
+                <Space align="center" size={4}>
+                  <HeartOutlined />
+                  <p>Eat Together</p>
+                </Space>
+              </span>
             </Link>
             {state.user && (
               <Link to="/groups">

@@ -78,6 +78,17 @@ export const setRestaurants = (restaurants) => {
 };
 
 /**
+ * Set restaurants to context
+ * @param {Integer} count of restaurants matching filter criteria
+ */
+export const setRestaurantsCount = (count) => {
+  return {
+    type: actionTypes.SET_RESTAURANTS_COUNT,
+    payload: count,
+  };
+};
+
+/**
  * Set filters for restaurants to context
  * @param {Array} filters filters to apply to search
  */

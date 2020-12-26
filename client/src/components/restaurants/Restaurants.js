@@ -10,12 +10,12 @@ import Context from "../../context/Context";
 import {
   refreshRestaurants,
   setRestaurants,
+  setRestaurantsCount,
   startLoading,
 } from "../../context/actionCreators";
 
 const Restaurants = () => {
   const { state, dispatch } = useContext(Context);
-  const [restaurantsCount, setRestaurantsCount] = useState(0);
   // page number for seen restaurants
   const [skip, setSkip] = useState(1);
   // the number of api calls on error
@@ -29,7 +29,7 @@ const Restaurants = () => {
     sortBy: state.sort,
     filterBy,
   };
-  const doMoreRestaurantsExist = skip * limit <= restaurantsCount;
+  const doMoreRestaurantsExist = skip * limit <= state.restaurantsCount;
 
   useEffect(() => {
     async function setInitialRestaurants() {
@@ -37,7 +37,7 @@ const Restaurants = () => {
       try {
         const res = await API.getRestaurants({ ...params, count: true });
         dispatch(setRestaurants(res.restaurants));
-        setRestaurantsCount(res.count);
+        dispatch(setRestaurantsCount(res.count));
       } catch (error) {
         console.log(error);
         if (resets < 3) {
@@ -75,7 +75,7 @@ const Restaurants = () => {
           })}
         </Space>
       </InfiniteScroll>
-      {!state.loading && restaurantsCount === 0 && (
+      {!state.loading && state.restaurantsCount === 0 && (
         <Col span={24} align="middle">
           <FieldTimeOutlined style={{ fontSize: 32, color: "#262626" }} />
           <p>No restaurants yet</p>

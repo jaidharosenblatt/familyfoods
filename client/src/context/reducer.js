@@ -14,6 +14,13 @@ const reducer = (state, action) => {
         refreshRestaurants: false,
         error: false,
       };
+    case actionTypes.SET_RESTAURANTS_COUNT:
+      return {
+        ...state,
+        loading: false,
+        restaurantsCount: action.payload,
+        error: false,
+      };
     case actionTypes.REFRESH_RESTAURANTS:
       return {
         ...state,

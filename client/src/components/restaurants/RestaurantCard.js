@@ -19,7 +19,7 @@ const RestaurantCard = ({ restaurant }) => {
 
   return (
     <Card loading={state.loading}>
-      <Row>
+      <Row align="middle">
         <Col xs={24} md={12}>
           <RestaurantCardDetails restaurant={restaurant} />
         </Col>
