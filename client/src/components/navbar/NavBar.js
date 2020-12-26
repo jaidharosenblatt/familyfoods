@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Space } from "antd";
 import {
-  HomeOutlined,
-  HomeFilled,
+  HeartOutlined,
+  HeartFilled,
   PlusCircleOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
@@ -18,8 +18,8 @@ const NavBar = () => {
     <div className="navbar">
       <div className="mobile">
         <Space>
-          <HomeFilled className="logo" />
-          <h1>Family Foods</h1>
+          <HeartFilled className="logo" />
+          <h1>Eat Together</h1>
         </Space>
       </div>
       <div className="desktop">
@@ -27,8 +27,8 @@ const NavBar = () => {
           <Space size="large">
             <Link to="/">
               <Space align="center" size={4}>
-                <HomeOutlined />
-                <p>Family Foods</p>
+                <HeartOutlined />
+                <p>Eat Together</p>
               </Space>
             </Link>
             {state.user && (

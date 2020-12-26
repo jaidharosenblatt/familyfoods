@@ -1,4 +1,4 @@
-# [Family Foods](https://family-foods.netlify.app)
+# [Eat Together](https://family-foods.netlify.app)
 
 ## Author: Jaidha Rosenblatt
 
@@ -12,19 +12,22 @@ Web-app to help my family choose a restaurant to go out to eat to
 
 ### Features
 
-- Sort restaurants by a weighted score based on my family's specified preferences
-- Allow users to take turns having the highest preference weighting
-- Change weighting real time
-- Filter by restaurant attributes
-- Collapse filter cards
+- Add restaurants from Google Places API (also gets driving distance)
+- Infinite scroll using pagination to efficiently load restaurants
+- Join food groups to see reviews of your friends and family
+- Sort restaurants by a weighted score based on your group preferences, distance, name, or rating from Google
+- Take turns having the highest preference weighting
+- Filter by restaurant attributes and whether or not user has rated
+- JWT authentication using HTTP only cookies
+- Default profile photos uploaded to cloudinary
 - Mobile navbar and footer
-- See all restaurants
 
 ### Tech Stack
 
-- React, Ant.design
-- Node, Express
+- React, Context (following simple Redux pattern), and Ant.design
+- Node and Express
 - MongoDB
+- Google Places, ui-avatars, and cloudinary APIs
 
 ### Getting Started
 
@@ -71,11 +74,6 @@ Web-app to help my family choose a restaurant to go out to eat to
 - Filter by not rated (done)
 - Take turn (done)
 - Update additional attr (done)
-- Update location
+- Update location (done)
 - Fix mobile
 - Deploy
-
-#### Extra
-
-- Photo upload
-- Restaurant photo

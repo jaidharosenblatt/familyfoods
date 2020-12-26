@@ -26,7 +26,7 @@ const SignUp = () => {
   };
   return (
     <CenteredCard>
-      <h1>Welcome to Family Foods</h1>
+      <h1>Welcome to Eat Together</h1>
       <Form
         layout="vertical"
         onFinish={onFinish}
