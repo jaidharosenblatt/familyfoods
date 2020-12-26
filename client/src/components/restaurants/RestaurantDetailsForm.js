@@ -26,7 +26,7 @@ export default function RestaurantDetailsForm({
   const handleSubmit = async (changes) => {
     try {
       const res = await API.editRestaurant(restaurant._id, changes);
-      console.log(res);
+      setRestaurant(res);
       setSuccess(true);
     } catch (e) {
       setError(e);

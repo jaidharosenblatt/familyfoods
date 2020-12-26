@@ -34,6 +34,9 @@ const addDistanceToRestaurant = async (startingLocation, location) => {
   }
   const res = await findDistance(startingLocation, location);
   const path = res.rows[0].elements[0];
+  if (!path?.distance || !path?.duration) {
+    return {};
+  }
   const distance = path.distance.text;
   const duration = path.duration.text;
 

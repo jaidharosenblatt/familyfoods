@@ -22,9 +22,6 @@ const restaurantSchema = new mongoose.Schema(
       type: String,
     },
 
-    price_level: {
-      type: Number,
-    },
     hasBreakfast: {
       type: Boolean,
     },
@@ -41,6 +38,10 @@ const restaurantSchema = new mongoose.Schema(
       type: Number,
     },
     myRating: {
+      type: Number,
+    },
+
+    price_level: {
       type: Number,
     },
     groupRatings: {
