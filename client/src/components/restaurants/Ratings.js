@@ -19,6 +19,7 @@ export default function Ratings({ restaurant }) {
   const md = width > 768;
   const makeReview = async (rating) => {
     await API.createReview(restaurant._id, rating);
+
     dispatch(refreshRestaurants());
   };
 

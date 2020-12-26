@@ -63,7 +63,7 @@ const Restaurants = () => {
       {!state.loading && restaurantsCount === 0 && (
         <Col span={24} align="middle">
           <FieldTimeOutlined style={{ fontSize: 32, color: "#262626" }} />
-          <p>No groups yet</p>
+          <p>No restaurants yet</p>
         </Col>
       )}
     </LoadingWrapper>

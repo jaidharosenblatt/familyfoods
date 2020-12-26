@@ -16,9 +16,7 @@ const groupSchema = new mongoose.Schema(
       ref: "User",
     },
     members: {
-      type: [
-        { type: mongoose.Schema.Types.ObjectId, ref: "User", unique: true },
-      ],
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
       default: [],
     },
     turns: {

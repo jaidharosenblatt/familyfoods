@@ -45,12 +45,14 @@ const CreateEditGroup = ({ group }) => {
         initialValues={group}
         layout="vertical"
         onFinish={onFinish}
-        onFinishFailed={() => dispatch(setError("Please input a password"))}
+        onFinishFailed={() => dispatch(setError("Please input a name"))}
       >
         <Form.Item
           name="name"
           label="Group Name"
-          rules={[{ required: true, message: "Please input a name" }]}
+          help={state.error}
+          validateStatus={state.error ? "error" : "validating"}
+          rules={[{ required: true }]}
         >
           <Input />
         </Form.Item>
@@ -69,9 +71,7 @@ const CreateEditGroup = ({ group }) => {
           <Form.Item
             name="password"
             label="Group Password"
-            help={state.error}
-            validateStatus={state.error ? "error" : "validating"}
-            rules={[{ required: true }]}
+            rules={[{ required: true, message: "Please input a password" }]}
           >
             <Input.Password />
           </Form.Item>

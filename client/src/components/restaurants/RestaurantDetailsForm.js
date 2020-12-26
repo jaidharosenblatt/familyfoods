@@ -12,13 +12,8 @@ import "./restaurants.css";
  * Edit the details for a restaurant
  * @param {Restaurant} restaurant
  * @param {Function} setRestaurant
- * @param {Boolean} edit if restaurant is being edited
  */
-export default function RestaurantDetailsForm({
-  restaurant,
-  setRestaurant,
-  edit,
-}) {
+export default function RestaurantDetailsForm({ restaurant, setRestaurant }) {
   const [error, setError] = useState();
   const [success, setSuccess] = useState(false);
   const { dispatch } = useContext(Context);
@@ -39,7 +34,7 @@ export default function RestaurantDetailsForm({
   return (
     <Space className="add-details-form" direction="vertical">
       <RestaurantCardDetails restaurant={restaurant} />
-      {!edit && !success && (
+      {!success && (
         <h3>
           Not what you were looking for? Try searching again{" "}
           <span className="fake-link" onClick={clearRestaurant}>

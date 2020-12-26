@@ -45,6 +45,9 @@ Web-app to help my family choose a restaurant to go out to eat to
    - DEFAULT_LAT (float)
    - DEFAULT_LNG (float)
    - WEIGHT_CONST (float)
+   - CLOUDINARY_API_KEY (string)
+   - CLOUDINARY_CLOUD (string)
+   - CLOUDINARY_API_SECRET (string)
 3. npm install
 4. npm run dev
 
@@ -67,7 +70,7 @@ Web-app to help my family choose a restaurant to go out to eat to
 - Filter (done)
 - Filter by not rated (done)
 - Take turn (done)
-- Update additional attr
+- Update additional attr (done)
 - Update location
 - Fix mobile
 - Deploy
