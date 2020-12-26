@@ -13,10 +13,9 @@ import Context from "../../context/Context";
  */
 const RestaurantCard = ({ restaurant }) => {
   const { state } = useContext(Context);
-  const { width } = useWindowDimensions();
-  // Medium width from antd
-  const md = width > 768;
+
   // react-star-ratings doesn't allow CSS styling
+  const { md } = useWindowDimensions();
 
   return (
     <Card loading={state.loading}>

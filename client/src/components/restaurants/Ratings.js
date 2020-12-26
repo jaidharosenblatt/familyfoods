@@ -14,9 +14,8 @@ import useWindowDimensions from "../../hooks/useWindowDimensions";
  */
 export default function Ratings({ restaurant }) {
   const { state, dispatch } = useContext(Context);
-  const { width } = useWindowDimensions();
+  const { md } = useWindowDimensions();
   // Medium width from antd
-  const md = width > 768;
   const makeReview = async (rating) => {
     await API.createReview(restaurant._id, rating);
 

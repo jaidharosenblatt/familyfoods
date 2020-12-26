@@ -2,9 +2,13 @@ import { useState, useEffect } from "react";
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
+  // antd mobile breakpoint
+  const md = width > 768;
+
   return {
     width,
     height,
+    md,
   };
 }
 
