@@ -11,7 +11,7 @@ import RestaurantDetailsForm from "../components/restaurants/RestaurantDetailsFo
  * @returns {JSX}
  */
 const AddRestaurant = () => {
-  const [restaurant, setRestaurant] = useState({});
+  const [restaurant, setRestaurant] = useState();
   const { state, dispatch } = useContext(Context);
 
   const onFinish = async (values) => {
