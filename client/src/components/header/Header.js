@@ -1,19 +1,40 @@
 import React from "react";
-import { Col, Card } from "antd";
-import "./header.css";
+import { Col, Card, Row } from "antd";
 
-const Header = () => {
+import SortDropDown from "./SortDropDown";
+import GroupDropDown from "./GroupDropDown";
+
+import "./header.css";
+import FilterDropDown from "./FilterDropDown";
+import TakeTurn from "./TakeTurn";
+import UpdateLocation from "./UpdateLocation";
+
+const SignedInHeader = () => {
+  // Since ant select uses anticon svg, we can't style with CSS
+  const iconStyle = { color: "#BFBFBF", fontSize: 20 };
+
   return (
     <div className="header">
-      <Col span={24}>
-        <Card>
-          <h1>Restaurants</h1>
-          <p>Find where you should eat</p>
-        </Card>
-      </Col>
+      <Card>
+        <Row gutter={24}>
+          <Col xs={24} md={6}>
+            <h1>Restaurants</h1>
+            <p>Find where you should eat</p>
+          </Col>
+          <Col xs={24} md={18}>
+            <Row>
+              <GroupDropDown iconStyle={iconStyle} />
+              <TakeTurn />
+              <UpdateLocation />
+              <SortDropDown iconStyle={iconStyle} />
+              <FilterDropDown iconStyle={iconStyle} />
+            </Row>
+          </Col>
+        </Row>
+      </Card>
       <div className="blur" />
     </div>
   );
 };
 
-export default Header;
+export default SignedInHeader;
