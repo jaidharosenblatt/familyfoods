@@ -3,7 +3,7 @@ import { Space, Avatar } from "antd";
 
 export default function GroupMembersAvatars({ members }) {
   return (
-    <Space>
+    <Space wrap>
       {members.map((user, i) => {
         return (
           <p key={i}>

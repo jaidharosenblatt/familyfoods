@@ -6,13 +6,19 @@ import TakeTurn from "./TakeTurn";
 import UpdateLocation from "./UpdateLocation";
 import "./filters.css";
 
-export default function FilterPane() {
+export default function FilterPane({ mobile }) {
   const iconStyle = { color: "#BFBFBF", fontSize: 20 };
 
   return (
     <div className="filters-pane">
-      <h1>Restaurants</h1>
-      <p>Find where you should eat</p>
+      {mobile && (
+        <>
+          <h1>Options</h1>
+          <p>
+            Filter, sort, and take turns choosing restaurants with your groups
+          </p>
+        </>
+      )}
       <GroupDropDown iconStyle={iconStyle} />
       <SortDropDown iconStyle={iconStyle} />
       <FilterDropDown iconStyle={iconStyle} />

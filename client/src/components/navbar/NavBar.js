@@ -19,8 +19,9 @@ const NavBar = () => {
       <div className="navbar">
         <div className="mobile">
           <Space>
-            <HeartFilled className="logo" />
-            <h1>Eat Together</h1>
+            <h1>
+              <HeartFilled /> Eat Together
+            </h1>
           </Space>
         </div>
         <div className="desktop">

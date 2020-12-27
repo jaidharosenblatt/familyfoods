@@ -60,16 +60,10 @@
 
   .navbar h1 {
     font-size: 20px;
-    color: white;
     font-weight: bold;
   }
 
-  .navbar .mobile .logo {
-    color: white;
-    font-size: 20px;
-  }
   .navbar {
     height: 50px;
-    background-color: #fa541c;
   }
 }

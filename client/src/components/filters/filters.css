@@ -11,3 +11,21 @@
   margin: 4px;
   width: 100%;
 }
+
+.filter-modal {
+  display: none;
+}
+.filter-modal h1 {
+  font-size: 18px;
+  color: white;
+}
+
+@media only screen and (max-width: 768px) {
+  .filter-modal {
+    display: flex;
+    position: fixed;
+    top: 60px;
+
+    z-index: 99;
+  }
+}
