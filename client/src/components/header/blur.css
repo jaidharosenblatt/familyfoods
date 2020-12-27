@@ -1,0 +1,10 @@
+.blur {
+  filter: blur(20px);
+  width: 100vw;
+  position: fixed;
+  top: 0px;
+  height: 80px;
+  z-index: 2;
+
+  background-color: white;
+}
