@@ -19,6 +19,7 @@ const App = () => {
   const [state, dispatch] = useReducer(reducer, {
     restaurants: [],
     filters: [],
+    refreshRestaurants: true,
   });
 
   useEffect(() => {

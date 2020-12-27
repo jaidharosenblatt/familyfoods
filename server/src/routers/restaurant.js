@@ -39,7 +39,7 @@ router.post("/restaurants", authNoError, async (req, res) => {
     const restaurant = new Restaurant(withLocation);
 
     const distance = await addDistanceToRestaurant(
-      req.user.location,
+      req.user?.location,
       restaurant.location
     );
 
@@ -113,7 +113,7 @@ router.get("/restaurants", authNoError, async (req, res) => {
     await Promise.all(
       restaurants.map(async (restaurant) => {
         const { distance, duration } = await addDistanceToRestaurant(
-          req.user.location,
+          req.user?.location,
           restaurant.location
         );
         restaurant.distance = distance;
