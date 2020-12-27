@@ -1,12 +1,12 @@
 .navbar {
   font-family: "DM Sans";
   height: 50px;
-  z-index: 99;
   background-color: white;
   overflow: hidden;
   position: fixed;
   top: 0;
   width: 100vw;
+  z-index: 99;
 }
 
 .navbar a {

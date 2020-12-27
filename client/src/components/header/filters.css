@@ -1,0 +1,8 @@
+.filter-dropdown {
+  display: flex;
+  align-items: center;
+}
+
+.filter-dropdown > * {
+  margin: 4px;
+}

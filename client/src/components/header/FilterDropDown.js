@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Select, Space } from "antd";
+import { Select } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
 import Context from "../../context/Context";
 import { setFilters } from "../../context/actionCreators";
@@ -32,7 +32,7 @@ export default function FilterDropDown({ iconStyle }) {
   };
 
   return (
-    <Space className="dropdown">
+    <div className="filter-dropdown">
       <FilterOutlined style={iconStyle} />
       <Select
         mode="tags"
@@ -45,6 +45,6 @@ export default function FilterDropDown({ iconStyle }) {
           <Select.Option key={option.field}>{option.name}</Select.Option>
         ))}
       </Select>
-    </Space>
+    </div>
   );
 }

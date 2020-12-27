@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Select, Space } from "antd";
+import { Select } from "antd";
 import {
   SortAscendingOutlined,
   SortDescendingOutlined,
@@ -52,7 +52,7 @@ export default function SortDropDown({ iconStyle }) {
     }
   };
   return (
-    <Space className="dropdown">
+    <div className="filter-dropdown">
       {sortDirection === "desc" ? (
         <SortDescendingOutlined
           onClick={handleSortDirection}
@@ -73,6 +73,6 @@ export default function SortDropDown({ iconStyle }) {
           <Select.Option key={option.field}>{option.name}</Select.Option>
         ))}
       </Select>
-    </Space>
+    </div>
   );
 }

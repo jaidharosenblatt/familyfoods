@@ -18,7 +18,7 @@ export default function UpdateLocation() {
   }
 
   return (
-    <Button loading={loading} onClick={updateLocation}>
+    <Button block loading={loading} onClick={updateLocation}>
       Update Location
     </Button>
   );

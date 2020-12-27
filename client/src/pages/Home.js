@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div>
       <div className="home-body">
-        <Row>
+        <Row gutter={24}>
           <Col md={6}>
             <FilterPane />
           </Col>

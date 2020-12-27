@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Select, Space } from "antd";
+import { Select } from "antd";
 import { TeamOutlined } from "@ant-design/icons";
 import Context from "../../context/Context";
 import { setGroup } from "../../context/actionCreators";
@@ -24,7 +24,7 @@ export default function GroupDropDown({ iconStyle }) {
   };
 
   return (
-    <Space className="dropdown">
+    <div className="filter-dropdown">
       <TeamOutlined style={iconStyle} />
       <Select
         onChange={handleGroupSelect}
@@ -38,6 +38,6 @@ export default function GroupDropDown({ iconStyle }) {
           </Select.Option>
         ))}
       </Select>
-    </Space>
+    </div>
   );
 }
