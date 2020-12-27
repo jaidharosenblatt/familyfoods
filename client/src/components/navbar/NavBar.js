@@ -49,7 +49,7 @@ const NavBar = () => {
             </Link>
           </Space>
         </div>
-
+        <div className="blur" />;
         <div className="right">
           <AuthNavBar />
         </div>

@@ -36,6 +36,18 @@
   display: none;
 }
 
+/* Create a div below the header card to create fade */
+.blur {
+  filter: blur(10px);
+  width: 100vw;
+  position: fixed;
+  top: 0px;
+  height: 70px;
+  z-index: 2;
+
+  background-color: white;
+}
+
 @media only screen and (max-width: 768px) {
   .navbar .desktop {
     display: none;
