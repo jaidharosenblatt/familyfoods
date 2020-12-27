@@ -21,7 +21,7 @@ export default function TakeTurn() {
   return (
     <>
       <Button onClick={takeTurn} block type="primary">
-        Take a turn
+        Take a Turn
       </Button>
       <Space>
         {group && <GroupMembersAvatars members={group.shiftedMembers} />}

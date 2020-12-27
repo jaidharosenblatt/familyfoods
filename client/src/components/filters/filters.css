@@ -4,5 +4,10 @@
 }
 
 .filter-dropdown > * {
+  margin: 8px;
+}
+
+.filters-pane > * {
   margin: 4px;
+  width: 100%;
 }
