@@ -48,7 +48,7 @@ const MobileFooter = () => {
     <div className="footer">
       <Row align="middle" gutter={8}>
         <Col span={6} align="center">
-          <Link to="/signup">
+          <Link to="/profile">
             <UserOutlined />
             <p>{state.user.username}</p>
           </Link>

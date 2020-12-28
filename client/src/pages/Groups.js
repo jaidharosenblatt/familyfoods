@@ -31,7 +31,9 @@ const Groups = () => {
         left={
           <Space direction="vertical" size={0}>
             <h1>{!joinGroups && "My"} Groups</h1>
-            <p>Join or create a group to use personalized ratings </p>{" "}
+            <p className="hide-mobile">
+              Join or create a group to use personalized ratings
+            </p>
           </Space>
         }
         right={

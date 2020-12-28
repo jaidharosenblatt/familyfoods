@@ -75,5 +75,5 @@ Web-app to help my family choose a restaurant to go out to eat to
 - Take turn (done)
 - Update additional attr (done)
 - Update location (done)
-- Fix mobile
+- Fix mobile (done)
 - Deploy
