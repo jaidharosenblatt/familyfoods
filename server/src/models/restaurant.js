@@ -51,6 +51,9 @@ const restaurantSchema = new mongoose.Schema(
     weightedRating: {
       type: Number,
     },
+    weightedRatingRounded: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );

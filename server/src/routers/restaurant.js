@@ -103,7 +103,7 @@ router.patch("/restaurants/:id", async (req, res) => {
 router.get("/restaurants", authNoError, async (req, res) => {
   const skip = parseInt(req.query.skip);
   const limit = parseInt(req.query.limit) || 5;
-  const sort = getSort(req.query.sortBy);
+  let sort = getSort(req.query.sortBy);
   const filters = getFilter(req.query.filterBy);
 
   try {
@@ -145,6 +145,9 @@ router.get("/restaurants", authNoError, async (req, res) => {
           );
           restaurant.groupRatings = groupRatings;
           restaurant.weightedRating = weightedRating;
+
+          // Add this as first sort param
+          sort = { weightedRating: -1, ...sort };
         }
 
         restaurant.save();
@@ -179,7 +182,6 @@ const getSort = (sortBy) => {
       "createdAt",
       "distance",
       "duration",
-      "weightedRating",
       "myRating",
     ];
     const [param, order] = sortBy.split(":");

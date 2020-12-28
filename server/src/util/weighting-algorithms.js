@@ -9,13 +9,15 @@ const Group = require("../models/group");
  * @returns {Restaurant} initial properties
  * @returns {Array} array of ratings for this group shifted according to the current turn
  * @returns {Float} its weighted rating
+ * @returns {Integer} weighted rating rounded to nearest 0.5
  */
 const getGroupRatings = async (group, restaurant) => {
   const ratings = await getRestaurantRatings(group, group.members, restaurant);
   const groupRatings = shiftRatings(ratings, group.turns);
   const weightedRating = getWeightedAverage(groupRatings);
+  const weightedRatingRounded = roundToNearestHalf(weightedRating);
 
-  return { groupRatings, weightedRating };
+  return { groupRatings, weightedRating: weightedRatingRounded };
 };
 
 /**
@@ -36,7 +38,9 @@ const getRestaurantRatings = async (group, members, restaurant) => {
       });
 
       const name = member.username;
-      const rating = review ? review.rating : member.averageReview;
+      const rating = review
+        ? review.rating
+        : roundToNearestHalf(member.averageReview);
 
       return { name, rating };
     })
@@ -80,6 +84,15 @@ const shiftRatings = (array, turns) => {
     shifted[(i + shift) % n] = array[i];
   }
   return shifted;
+};
+
+/**
+ * Round number to nearest 0.5
+ * @param {Float} num
+ * @returns {Float}  number rounded to 0.5 ex 4.52 -> 4.5
+ */
+const roundToNearestHalf = (num) => {
+  return Math.round(num * 2) / 2;
 };
 
 module.exports = { getGroupRatings, shiftRatings };

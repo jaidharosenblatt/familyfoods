@@ -22,15 +22,9 @@ export default function SortDropDown({ iconStyle }) {
     { field: "myRating", name: "My Rating" },
     { field: "distance", name: "Distance" },
     { field: "name", name: "Name" },
-    { field: "rating", name: "Google Rating" },
+    { field: "rating", name: "Google's Rating" },
     { field: "createdAt", name: "Created" },
   ];
-
-  if (state.group?.name) {
-    sortOptions = [
-      { field: "weightedRating", name: `${state.group.name}'s Rating` },
-    ].concat(sortOptions);
-  }
 
   const handleSort = (key) => {
     if (!key) {
