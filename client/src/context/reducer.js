@@ -5,7 +5,7 @@ const reducer = (state, action) => {
     case actionTypes.SET_USER:
       return { ...state, loading: false, user: action.payload, error: false };
     case actionTypes.CLEAR_USER:
-      return { ...state, loading: false, user: undefined, error: false };
+      return { restaurants: [], filters: [], refreshRestaurants: true };
     case actionTypes.SET_RESTAURANTS:
       return {
         ...state,
