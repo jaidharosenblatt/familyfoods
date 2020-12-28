@@ -6,6 +6,10 @@ import TakeTurn from "./TakeTurn";
 
 export default function GroupFilter({ iconStyle }) {
   const { state } = useContext(Context);
+  if (!state.user) {
+    return null;
+  }
+
   return (
     <>
       <GroupDropDown iconStyle={iconStyle} />
