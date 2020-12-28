@@ -36,7 +36,7 @@ export default function RestaurantCardDetails({ restaurant }) {
   });
 
   return (
-    <Space direction="vertical">
+    <Space direction="vertical" style={{ minWidth: 300 }}>
       <div className="card-header">
         <h2>{restaurant.name}</h2>
       </div>

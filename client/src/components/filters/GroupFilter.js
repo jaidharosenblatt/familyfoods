@@ -10,7 +10,7 @@ export default function GroupFilter({ iconStyle }) {
     <>
       <GroupDropDown iconStyle={iconStyle} />
       {state.group && (
-        <GroupMembersAvatars members={state.group.shiftedMembers} />
+        <GroupMembersAvatars numbers members={state.group.shiftedMembers} />
       )}
       <TakeTurn />
     </>

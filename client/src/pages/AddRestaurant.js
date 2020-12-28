@@ -3,11 +3,7 @@ import { Form, Input, Button, Space } from "antd";
 import API from "../api/API";
 import CenteredCard from "../components/centered-card/CenteredCard";
 import Context from "../context/Context";
-import {
-  setError,
-  refreshRestaurants,
-  startLoading,
-} from "../context/actionCreators";
+import { setError, startLoading, stopLoading } from "../context/actionCreators";
 import RestaurantDetailsForm from "../components/restaurants/RestaurantDetailsForm";
 
 /**
@@ -27,7 +23,7 @@ const AddRestaurant = () => {
       dispatch(startLoading());
       const res = await API.createRestaurant(values.search);
       setRestaurant(res);
-      dispatch(refreshRestaurants());
+      dispatch(stopLoading());
     } catch (e) {
       dispatch(setError(e));
     }
