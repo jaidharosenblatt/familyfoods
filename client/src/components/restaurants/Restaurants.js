@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Space, Col } from "antd";
 import RestaurantCard from "./RestaurantCard";
-import LoadingWrapper from "../loading/LoadingWrapper";
 import Loading from "../loading/Loading";
 import { FieldTimeOutlined } from "@ant-design/icons";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -11,7 +10,6 @@ import {
   refreshRestaurants,
   setRestaurants,
   setRestaurantsCount,
-  startLoading,
 } from "../../context/actionCreators";
 
 const Restaurants = () => {
