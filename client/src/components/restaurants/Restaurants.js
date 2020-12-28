@@ -20,6 +20,7 @@ const Restaurants = () => {
   const [skip, setSkip] = useState(1);
   // the number of api calls on error
   const [resets, setResets] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const limit = 10;
   const filterBy = state.filters.join(",");
@@ -30,20 +31,23 @@ const Restaurants = () => {
     filterBy,
   };
   const doMoreRestaurantsExist = skip * limit <= state.restaurantsCount;
+  const noRestaurants =
+    state.restaurantsCount === 0 || state.restaurants?.length === 0;
 
   useEffect(() => {
     async function setInitialRestaurants() {
-      dispatch(startLoading());
+      setLoading(true);
       try {
         const res = await API.getRestaurants({ ...params, count: true });
         dispatch(setRestaurants(res.restaurants));
         dispatch(setRestaurantsCount(res.count));
       } catch (error) {
-        console.log(error);
         if (resets < 3) {
           dispatch(refreshRestaurants());
           setResets(resets + 1);
         }
+      } finally {
+        setLoading(false);
       }
     }
     if (state.refreshRestaurants) {
@@ -61,27 +65,33 @@ const Restaurants = () => {
   }
 
   return (
-    <LoadingWrapper>
+    <div>
       <InfiniteScroll
         dataLength={state.restaurants.length}
         next={fetchData}
         hasMore={doMoreRestaurantsExist}
         loader={<Loading />}
       >
-        {state.loading && <Loading />}
+        {loading && noRestaurants && <Loading />}
         <Space direction="vertical" style={{ width: "100%" }}>
           {state.restaurants.map((restaurant, i) => {
-            return <RestaurantCard key={i} restaurant={restaurant} />;
+            return (
+              <RestaurantCard
+                loading={loading}
+                key={i}
+                restaurant={restaurant}
+              />
+            );
           })}
         </Space>
       </InfiniteScroll>
-      {!state.loading && state.restaurantsCount === 0 && (
+      {!loading && noRestaurants && (
         <Col span={24} align="middle">
           <FieldTimeOutlined style={{ fontSize: 32, color: "#262626" }} />
           <p>No restaurants yet</p>
         </Col>
       )}
-    </LoadingWrapper>
+    </div>
   );
 };
 

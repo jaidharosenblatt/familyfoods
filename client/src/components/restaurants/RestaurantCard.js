@@ -1,24 +1,22 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Card, Row, Col } from "antd";
 
 import RestaurantCardDetails from "./RestaurantCardDetails";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import Ratings from "./Ratings";
-import Context from "../../context/Context";
 
 /**
  * Render a Restaurant into a card
  * @param {Restaurant} restaurant
+ * @param {Boolean} loading from parent
  * @returns {JSX}
  */
-const RestaurantCard = ({ restaurant }) => {
-  const { state } = useContext(Context);
-
+const RestaurantCard = ({ restaurant, loading }) => {
   // react-star-ratings doesn't allow CSS styling
   const { md } = useWindowDimensions();
 
   return (
-    <Card loading={state.loading}>
+    <Card loading={loading}>
       <Row align="middle">
         <Col xs={24} md={12}>
           <RestaurantCardDetails restaurant={restaurant} />
