@@ -7,12 +7,7 @@ import Context from "./context/Context";
 import NavBar from "./components/navbar/NavBar";
 import MobileFooter from "./components/navbar/MobileFooter";
 import API from "./api/API";
-import {
-  setGroup,
-  setUser,
-  startLoading,
-  stopLoading,
-} from "./context/actionCreators";
+import { setUser, startLoading, stopLoading } from "./context/actionCreators";
 import Routes from "./pages/Routes";
 
 const App = () => {
@@ -25,9 +20,6 @@ const App = () => {
   useEffect(() => {
     async function loadUser() {
       const user = await API.loadUser();
-      if (user.groups) {
-        dispatch(setGroup(user.groups[0]));
-      }
       dispatch(setUser(user));
     }
     dispatch(startLoading());

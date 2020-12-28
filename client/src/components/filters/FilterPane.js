@@ -1,10 +1,9 @@
 import React from "react";
 import SortDropDown from "./SortDropDown";
-import GroupDropDown from "./GroupDropDown";
 import FilterDropDown from "./FilterDropDown";
-import TakeTurn from "./TakeTurn";
 import UpdateLocation from "./UpdateLocation";
 import "./filters.css";
+import GroupFilter from "./GroupFilter";
 
 export default function FilterPane({ mobile }) {
   const iconStyle = { color: "#BFBFBF", fontSize: 20 };
@@ -19,10 +18,10 @@ export default function FilterPane({ mobile }) {
           </p>
         </>
       )}
-      <GroupDropDown iconStyle={iconStyle} />
+      <GroupFilter iconStyle={iconStyle} />
+
       <SortDropDown iconStyle={iconStyle} />
       <FilterDropDown iconStyle={iconStyle} />
-      <TakeTurn />
       <UpdateLocation />
     </div>
   );

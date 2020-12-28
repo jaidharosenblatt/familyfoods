@@ -36,6 +36,16 @@ export async function joinGroup(id, password) {
  * @param {ObjectId} id of a group
  * @returns {Group} the group from db
  */
+export async function getGroup(id) {
+  let { data } = await client.get(`/groups/${id}`);
+  return data;
+}
+
+/**
+ * Leave/delete a group depending on whether user is last in group
+ * @param {ObjectId} id of a group
+ * @returns {Group} the group from db
+ */
 export async function deleteGroup(id) {
   let { data } = await client.delete(`/groups/${id}`);
   return data;

@@ -115,7 +115,10 @@ router.get("/groups", auth, async (req, res) => {
 router.get("/groups/:id", auth, async (req, res) => {
   try {
     const group = await getGroupById(req, res, true);
-    res.send(group);
+    const shiftedMembers = shiftRatings(group.members, group.turns);
+    await group.save();
+
+    res.send({ ...group._doc, shiftedMembers });
   } catch (error) {
     catchServerError(error, res);
   }

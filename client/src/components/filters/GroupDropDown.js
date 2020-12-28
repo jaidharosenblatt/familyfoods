@@ -3,6 +3,7 @@ import { Select } from "antd";
 import { TeamOutlined } from "@ant-design/icons";
 import Context from "../../context/Context";
 import { setGroup } from "../../context/actionCreators";
+import API from "../../api/API";
 
 /**
  * Render a dropdown with group options
@@ -16,11 +17,12 @@ export default function GroupDropDown({ iconStyle }) {
     return null;
   }
 
-  const handleGroupSelect = (key, atr) => {
+  const handleGroupSelect = async (key) => {
     if (!key) {
       return dispatch(setGroup(undefined));
     }
-    dispatch(setGroup({ _id: key, name: atr?.name }));
+    const group = await API.getGroup(key);
+    dispatch(setGroup(group));
   };
 
   return (
@@ -30,7 +32,7 @@ export default function GroupDropDown({ iconStyle }) {
         onChange={handleGroupSelect}
         value={state.group?._id}
         allowClear={true}
-        placeholder="Select a group"
+        placeholder="Sort by Group"
       >
         {state.user.groups.map((group, i) => (
           <Select.Option key={group._id} name={group.name}>
