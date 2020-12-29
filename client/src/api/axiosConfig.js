@@ -1,8 +1,9 @@
 import axios from "axios";
 const client = axios.create({
   baseURL: "https://eat-together-us.herokuapp.com/",
-  headers: { "Access-Control-Allow-Origin": "*" },
-  withCredentials: true,
+  headers: {
+    "Access-Control-Allow-Origin": "https://eat-together-us.herokuapp.com/",
+  },
 });
 
 /* RESPONSE INTERCEPTORS */

@@ -15,7 +15,16 @@ const app = express();
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://www.eattogether.us",
+      "http://localhost:5000",
+    ],
+    credentials: true,
+  })
+);
 app.use(restaurantRouter, userRouter, groupRouter, reviewRouter);
 
 app.listen(port, () => {

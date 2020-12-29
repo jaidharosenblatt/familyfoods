@@ -40,7 +40,7 @@ router.post("/groups", auth, async (req, res) => {
     if (error.code === 11000) {
       return res.status(400).send({ error: "Group name already exists" });
     }
-    res.sendStatus(400);
+    res.status(500).send({ error: "Error creating group" });
   }
 });
 
@@ -78,7 +78,7 @@ router.post("/groups/join", auth, async (req, res) => {
 
     res.send(group);
   } catch (error) {
-    res.sendStatus(500);
+    res.status(500).send({ error: "Error loading groups" });
   }
 });
 

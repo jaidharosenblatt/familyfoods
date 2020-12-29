@@ -29,7 +29,7 @@ router.post("/users", async (req, res) => {
     if (e.code === 11000) {
       return res.status(400).send({ error: "Username already exists" });
     }
-    res.sendStatus(500);
+    res.status(500).send({ error: "Unable to create user" });
   }
 });
 
@@ -52,7 +52,7 @@ router.post("/users/login", async (req, res) => {
     res.send(userWithGroups);
   } catch (e) {
     console.log(e);
-    res.sendStatus(400);
+    res.status(500).send({ error: "Unable to login" });
   }
 });
 
@@ -121,7 +121,7 @@ router.delete("/users/me", auth, async (req, res) => {
     await req.user.remove();
     res.send(req.user);
   } catch (error) {
-    res.sendStatus(500);
+    res.status(500).send({ error: "Server unable to delete user" });
   }
 });
 
