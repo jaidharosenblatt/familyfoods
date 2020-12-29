@@ -17,7 +17,11 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:5000"],
+    origin: [
+      "http://localhost:3000",
+      "https://www.eattogether.us/",
+      "http://localhost:5000",
+    ],
     credentials: true,
   })
 );
