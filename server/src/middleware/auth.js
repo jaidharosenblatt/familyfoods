@@ -22,7 +22,6 @@ const auth = async (req, res, next) => {
     req.token = token;
     next();
   } catch (error) {
-    console.log(error);
     res.status(401).send({ error: "Please authenticate" });
   }
 };
@@ -47,7 +46,7 @@ const authNoError = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
-    res.sendStatus(500);
+    res.status(500).send({ error: "Something went wrong" });
   }
 };
 

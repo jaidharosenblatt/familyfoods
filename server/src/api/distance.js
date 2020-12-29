@@ -10,7 +10,7 @@ const getQueryFromCoordinate = (coordinate) => {
 };
 
 const findDistance = async (origin, destination) => {
-  const origins = getQueryFromCoordinate(origin || defaultLocation);
+  const origins = getQueryFromCoordinate(origin);
   const destinations = getQueryFromCoordinate(destination);
 
   const { data } = await google.get("/distancematrix/json", {
@@ -28,7 +28,10 @@ const findDistance = async (origin, destination) => {
  * @param {Location} startingLocation the coordinate to begin with
  * @param {Restaurant} restaurant containing location
  */
-const addDistanceToRestaurant = async (startingLocation, location) => {
+const addDistanceToRestaurant = async (
+  startingLocation = defaultLocation,
+  location
+) => {
   if (!location) {
     return {};
   }
