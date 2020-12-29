@@ -19,7 +19,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://www.eattogether.us/",
+      "https://www.eattogether.us",
       "http://localhost:5000",
     ],
     credentials: true,
