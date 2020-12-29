@@ -4,6 +4,7 @@ const client = axios.create({
   headers: {
     "Access-Control-Allow-Origin": "https://eat-together-us.herokuapp.com/",
   },
+  withCredentials: true,
 });
 
 /* RESPONSE INTERCEPTORS */

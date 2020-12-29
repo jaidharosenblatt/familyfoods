@@ -8,6 +8,7 @@ const restaurantRouter = require("./routers/restaurant");
 const userRouter = require("./routers/user");
 const groupRouter = require("./routers/group");
 const reviewRouter = require("./routers/review");
+const corsConfig = require("./middleware/corsConfig");
 
 const port = process.env.PORT;
 
@@ -15,8 +16,7 @@ const app = express();
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors());
-
+app.use(cors(corsConfig));
 app.use(restaurantRouter, userRouter, groupRouter, reviewRouter);
 
 app.listen(port, () => {
