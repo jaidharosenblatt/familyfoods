@@ -17,10 +17,9 @@ const router = new express.Router();
  * @returns {User} user object
  */
 router.post("/users", async (req, res) => {
-  const avatar = await getAvatar(req.body.username);
-  const user = new User({ ...req.body, avatar });
-
   try {
+    const avatar = await getAvatar(req.body.username);
+    const user = new User({ ...req.body, avatar });
     await user.save();
     await user.setJWTCookie(req, res);
     const userWithGroups = await getUserWithGroups(user);
