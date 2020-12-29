@@ -28,6 +28,7 @@ router.post("/users", async (req, res) => {
     if (e.code === 11000) {
       return res.status(400).send({ error: "Username already exists" });
     }
+    console.log(e);
     res.status(500).send({ error: "Unable to create user" });
   }
 });
