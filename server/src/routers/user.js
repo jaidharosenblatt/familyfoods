@@ -77,7 +77,7 @@ router.get("/users/me", auth, async (req, res) => {
 });
 
 /**
- * Logout the current user (just one token)
+ * Logout the current user and clear their JWT cookies
  */
 router.post("/users/logout", auth, async (req, res) => {
   try {
@@ -85,8 +85,10 @@ router.post("/users/logout", auth, async (req, res) => {
       (token) => token.token.toString() !== req.token.toString()
     );
     await req.user.save();
+    res.clearCookie("JWT");
     res.send();
   } catch (error) {
+    console.log(error);
     res.sendStatus(500);
   }
 });
