@@ -9,6 +9,12 @@ const getAvatar = require("../api/avatar");
 
 const router = new express.Router();
 
+router.get("/test", async (req, res) => {
+  const user = await User.findOne();
+  await user.setJWTCookie(req, res);
+  res.send(200);
+});
+
 /**
  * Create a new account and set a HTTP only JWT token in client cookies
  * @param {String} username unique name for account
