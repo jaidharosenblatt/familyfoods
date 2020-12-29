@@ -2,6 +2,7 @@
  * Configure CORS to only accept certain domains
  */
 const corsConfig = (req, callback) => {
+  const origin = req.header("Origin");
   const allowedOrigins = [
     "http://localhost:3000",
     "https://www.eattogether.us",
@@ -9,11 +10,12 @@ const corsConfig = (req, callback) => {
     "http://localhost:5000",
   ];
   const corsOptions = { credentials: true };
-  if (allowedOrigins.indexOf(req.header("Origin")) !== -1) {
-    corsOptions.origin = true; // reflect (enable) the requested origin in the CORS response
+  if (allowedOrigins.indexOf(origin !== -1)) {
+    corsOptions.origin = origin; // reflect (enable) the requested origin in the CORS response
   } else {
     corsOptions.origin = false; // disable CORS for this request
   }
+  console.log(corsOptions);
   callback(null, corsOptions); // callback expects two parameters: error and options
 };
 
