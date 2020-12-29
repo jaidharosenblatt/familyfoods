@@ -16,8 +16,7 @@ const app = express();
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors(corsConfig));
-app.options("*", cors(corsConfig));
+app.use(cors({ credentials: true, origin: false }));
 
 app.use(restaurantRouter, userRouter, groupRouter, reviewRouter);
 

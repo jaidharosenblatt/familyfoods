@@ -1,9 +1,7 @@
 import axios from "axios";
+
 const client = axios.create({
-  baseURL: "https://eat-together-us.herokuapp.com/",
-  headers: {
-    "Access-Control-Allow-Origin": "https://eat-together-us.herokuapp.com/",
-  },
+  baseURL: "https://eat-together-us.herokuapp.com",
   withCredentials: true,
 });
 
@@ -17,6 +15,7 @@ const errorHandler = (error) => {
 };
 
 const successHandler = (response) => {
+  console.log(response);
   return response;
 };
 

@@ -9,6 +9,7 @@ import MobileFooter from "./components/navbar/MobileFooter";
 import API from "./api/API";
 import { setUser, startLoading, stopLoading } from "./context/actionCreators";
 import Routes from "./pages/Routes";
+import axios from "axios";
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, {
@@ -19,6 +20,10 @@ const App = () => {
 
   useEffect(() => {
     async function loadUser() {
+      axios.defaults.withCredentials = true;
+
+      const res = await axios.get("http://localhost:5000/test");
+      console.log(res);
       const user = await API.loadUser();
       dispatch(setUser(user));
     }
