@@ -10,8 +10,8 @@ const corsConfig = (req, callback) => {
     "http://localhost:5000",
   ];
   const corsOptions = { credentials: true };
-  if (allowedOrigins.indexOf(origin !== -1)) {
-    corsOptions.origin = origin; // reflect (enable) the requested origin in the CORS response
+  if (allowedOrigins.indexOf(origin) !== -1) {
+    corsOptions.origin = true; // reflect (enable) the requested origin in the CORS response
   } else {
     corsOptions.origin = false; // disable CORS for this request
   }
