@@ -71,8 +71,8 @@ userSchema.methods.setJWTCookie = async function (req, res) {
 
   res.cookie("JWT", token, {
     httpOnly: true,
+    // secure: true,
     path: "/",
-    sameSite: "None",
     expires: new Date(new Date().getTime() + 604800000), // one week
   });
 };
