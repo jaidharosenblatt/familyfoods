@@ -1,10 +1,10 @@
 import axios from "axios";
 
+axios.defaults.withCredentials = true;
 const client = axios.create({
   baseURL: "http://eat-together-us.herokuapp.com",
-  // baseURL: "http://localhost:5000/",
   withCredentials: true,
-  headers: { crossDomain: true, "Content-Type": "application/json" },
+  // baseURL: "http://localhost:5000/",
 });
 
 /* RESPONSE INTERCEPTORS */
@@ -17,6 +17,7 @@ const errorHandler = (error) => {
 };
 
 const successHandler = (response) => {
+  console.log(response);
   return response;
 };
 
