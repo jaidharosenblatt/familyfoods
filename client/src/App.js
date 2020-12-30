@@ -22,7 +22,7 @@ const App = () => {
     async function loadUser() {
       axios.defaults.withCredentials = true;
 
-      const res = await axios.get("http://localhost:5000/test");
+      const res = await axios.get("https://eat-together-us.herokuapp.com/test");
       console.log(res);
       const user = await API.loadUser();
       dispatch(setUser(user));
