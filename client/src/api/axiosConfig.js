@@ -2,7 +2,7 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 const client = axios.create({
-  baseURL: "http://eat-together-us.herokuapp.com",
+  baseURL: "https://eat-together-us.herokuapp.com",
   withCredentials: true,
   // baseURL: "http://localhost:5000/",
 });
