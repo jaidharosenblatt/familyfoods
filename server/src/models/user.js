@@ -64,17 +64,15 @@ userSchema.virtual("averageReview").get(function () {
 // Create a new JWT token and send it back to res as a cookie
 userSchema.methods.setJWTCookie = async function (req, res) {
   const user = this;
-  const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
+  const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET, {
+    expiresIn: "7d",
+  });
 
   user.tokens = user.tokens.concat({ token });
   await user.save();
 
-  res.cookie("JWT", token, {
+  res.cookie("eat-together", token, {
     httpOnly: true,
-    secure: true,
-    SameSite='None',
-    path: "/",
-    expires: new Date(new Date().getTime() + 604800000), // one week
   });
 };
 
