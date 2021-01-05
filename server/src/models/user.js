@@ -71,9 +71,12 @@ userSchema.methods.setJWTCookie = async function (req, res) {
   user.tokens = user.tokens.concat({ token });
   await user.save();
 
+  console.log("cookie being set");
   res.cookie("eat-together", token, {
     httpOnly: true,
+    secure: true,
   });
+  console.log("cookie should be set", req.headers.cookie);
 };
 
 userSchema.methods.toJSON = function () {

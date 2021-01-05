@@ -20,6 +20,7 @@
 // };
 
 const corsConfig = {
+  // only accept during dev
   origin: [
     "http://localhost:3000",
     "https://localhost:3000",
