@@ -53,6 +53,7 @@ Web-app to help my family choose a restaurant to go out to eat to
    - CLOUDINARY_API_SECRET (string)
 3. npm install
 4. npm run dev
+5. Redeploy using git subtree push --prefix server heroku master
 
 #### TODO
 
